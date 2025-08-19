@@ -1,0 +1,29 @@
+Ngày	Task cần giải quyết	Vấn đề hiện tại	Công việc đã làm	Kết quả hiện tại
+08/07/2025	AIREAD_ARISE-4034【AIRead】位置合わせ機能の強化: tăng độ chính xác của alignment function	Một số biểu mẫu bị lệch do lấy điểm đặc trưng từ ảnh đã tiền xử lý, trong khi template dùng ảnh gốc. Cần đảm bảo input cũng là ảnh gốc. Ngoài ra, bỏ xuất các file debug (SIFT_01_Keypoint_Matches.jpg, SIFT_02_warpPerspective.jpg, SIFT_03_rgb_Image.jpg) và chỉ xuất khi AIREAD_DEBUG_MODE=true.	"Sửa ảnh template thành ảnh trước khi tiền xử lý
+   -> Thay vì truyền binary thì truyền src để lấy warp_affine
+Ảnh input và ảnh template: thử matching các feature khi chưa xóa line và check xem nếu chạy với ảnh template xoay và nghiêng có vấn đề gì không 
+   -> Đã thử với ảnh template nghiêng -2 và xoay +90, -90, 180 độ thì kết quả đều tốt
+Đã có sẵn config IS_DEBUG rồi, chỉ cần truyền vào hàm debug ảnh"	"- Quá trình căn chỉnh hoạt động tốt dù ảnh raw chưa qua bước tiến xử lý
+- Khi bật IS_DEBBUG = false thì các ảnh debug sẽ không in ra nữa"
+08/08/2025	"AIREAD_ARISE-4157 【multi3_jpn】
+Cải thiện độ chính xác mô hình multi3_jpn
+"	"dễ đọc sai component có nhiều chữ
+dễ đọc sai「〃」
+Có trường hợp đọc sai số"	"Test riêng 1 số case components dài (~70 ký tự/câu) trên code PaddleOCRv5 và code dự án
+còn case dấu 「〃」 "	"Code paddleOCRv5 đúng 91/100 ảnh với ảnh tự render, mà test dự án thì đang sai hết, predict ra ký tự lộn xộn, có vẻ do quá trình preprocess đang có vấn đề, ảnh dài nên khi resize làm vỡ ảnh
+case  dấu 「〃」  vẫn phân biệt đc ~100/100 với các case tự render
+Đang check lại phần preprocess của dự án"
+08/11/2025	"AIREAD_ARISE-4157 【multi3_jpn】
+Cải thiện độ chính xác mô hình multi3_jpn
+"	preprocess() cũ resize cố định và padding trắng gây lỗi cho multi3_jpn (PaddleOCRv5): ảnh dài vỡ nét do model chỉ cố định chiều cao 48px, và padding trắng làm sai lệch predict ảnh ngắn (model train với padding xám).	"- Sửa lại phần resize hàm preprocess, cụ thể ảnh dài sẽ được resize về chiều cao 48px cố định, còn chiều rộng sẽ giữ tỉ lệ ban đầu. Phần padding màu xám sẽ được thêm vào bên phải của ảnh tùy thuộc vào width của batch hiện tại
+- Ảnh quá ngắn thì sẽ được resize về chiều cao 48px và chiều rộng theo tỉ lệ ảnh, padding bên phải ảnh sao cho giữ đúng tỉ lệ 320*48px"	"Sau khi test với code dự án:
+Preprocess cũ            | Preprocess mới
+- long_comp: 0/100      |- long_comp: 92/100
+- vban chứa số: 1/100  |- vban chứa số: 99/100
+- ký tự 〃: 19/100         |- ký tự 〃: 92/100 
+- Dilate_num: 94/100   |- Dilate_num: 90/100"
+08/13/2025	 AIREAD_ARISE-4149 【AIRead】Trong folder Temp của USERPROFILE còn tồn tại onnxruntime-java	"Mỗi lần chạy AIRead? sẽ tạo ra một thư mục như dưới đây:
+%USERPROFILE%\AppData\Local\Temp
+　onnxruntime-javaxxxxxxxxxxxxxx
+Mỗi thư mục có dung lượng khoảng 10MB, nếu số lần chạy tăng lên thì sẽ chiếm nhiều dung lượng, nên khách muốn tránh việc để lại quá nhiều thư mục này."	Thêm FileSystemUtil.java vào Core.src.main.java...Core.Utils để sử dụng trong MultiCharRecognitonManager.java với mục đích xóa các file temp của onnxruntime	"Đã xóa được các folder onnxruntime còn trong folder temp mà không làm ảnh hưởng đến các tiến trình khác
+Nhưng folder onnxruntime của lần chạy hiện tại không thể xóa vì được dùng xuyên suốt quá trình suy luận, và có thể được xóa ở lần chạy tiếp theo. Sẽ luôn có khoảng 9MB ở trong temp"

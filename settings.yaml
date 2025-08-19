@@ -1,0 +1,230 @@
+openai:
+  model: gpt-4o-mini
+  temperature: 0.5
+  max_tokens: 12000
+
+prompts:
+  slide_generator:
+    system: |
+      You are a presentation slide script generator. Your task is to convert structured technical reports 
+      into JSON slide scripts that follow exact template structures.
+      
+      CRITICAL REQUIREMENTS:
+      1. Generate slides with EXACT structure from templates (position, size, font settings)
+      2. Only modify the "text" content within runs
+      3. Maintain all formatting properties (alignment, bullets, colors, spacing)
+      4. Follow FIXED STRUCTURE: 進捗報告書 format with specific slide order
+      5. Return ONLY valid JSON array of slide objects
+      
+      FIXED SLIDE STRUCTURE:
+      - Cover: "進捗報告書"
+      - Agenda: "タスクの目的", "完了済み作業", "次の作業内容"
+      - Always start with section_divider "01" + "タスクの目的"
+      - Always include section_divider "02" + "完了済み作業" 
+      - Always end with section_divider "03" + "次の作業内容"
+      
+      SLIDE TYPES AND USAGE:
+      - cover: Opening slide with date and title
+      - agenda: List of main topics/sections
+      - section_divider: Introduce new sections with number (01, 02, etc.)
+      - content: Detailed information with bullet points
+      - subtitle: Sub-section headers for specific tasks/topics
+      
+      OUTPUT FORMAT:
+      Return a JSON array of slide objects, each following the exact template structure.
+    
+    user: |
+      Based on the following technical report representation, generate a complete presentation script 
+      as a JSON array of slides. Follow the exact structure from the templates provided.
+      
+      REPRESENTATION:
+      {representation}
+      
+      TEMPLATES TO USE:
+      {templates}
+      
+      FEW-SHOT EXAMPLES:
+      {examples}
+      
+      Generate slides in this EXACT FIXED order:
+      1. Cover slide: title = "進捗報告書", date 
+      2. Agenda slide: fixed agenda items = "タスクの目的", "完了済み作業", "次の作業内容"
+      3. Section divider: "01" + "タスクの目的"
+      4. Content slide: "タスクの目的" with task overview bullet points
+      5. Section divider: "02" + "完了済み作業"
+      6-n. For each task: subtitle "2.x" + task name, then content slides
+      n-1. Section divider: "03" + "次の作業内容"
+      n. Content slide: "次の作業内容" with upcoming work
+      
+      IMPORTANT:
+      - Keep ALL position, size, and font values EXACTLY as in templates
+      - Only change the "text" fields
+      - NEVER include bullet characters (● ○) in the "text" content - bullets are handled by "bullet" config
+      - Use appropriate bullet configs (● for main, ○ for sub-items) but keep text clean
+      - Number sections sequentially (01, 02, 03, etc.)
+      - Return ONLY the JSON array, no additional text
+      
+      DETAILED SLIDE SPECIFICATION:
+      Slide 1: Cover - title "進捗報告書", date format "YYYYMMDD"
+      Slide 2: Agenda - fixed items: "タスクの目的", "完了済み作業", "次の作業内容" (numbered list)
+      Slide 3: Section divider - "01" + "タスクの目的"
+      Slide 4: Content - "1. タスクの目的" with task listing (● main tasks, ○ sub-tasks)
+      Slide 5: Section divider - "02" + "完了済み作業"
+      Slides 6-n: For each task, create MULTIPLE content slides:
+        - Subtitle "2.x. TaskName"
+        - Content slide: "2. 完了済み作業" with detailed problem description and approach
+        - Content slide: "2. 完了済み作業" with implementation details and results  
+        - Content slide: "2. 完了済み作業" with analysis and customer impact
+      Slide n-1: Section divider - "03" + "次の作業内容"
+      Slide n: Content - "3. 次の作業内容" with upcoming work bullet points
+      
+      CONTENT DETAIL REQUIREMENTS:
+      - Use ● for main points, ○ for sub-points via "bullet" config, NOT in text content
+      - Each task should have 3-4 content slides for thorough client analysis
+      - Extract detailed information from the representation text provided
+      - In Slide 4 (タスクの目的): List main tasks, use bullet configs but clean text
+      - In content slides: Present specific details from represent.txt as bullet points
+      - Professional language suitable for client presentation
+      - Example content format: "Chúng tôi đã...", "Hiện tại, hàm...() sẽ thực hiện..."
+      - TEXT CONTENT RULE: Never start text with bullet symbols, use only plain text
+  
+  content_reformatter:
+    system: |
+      Bạn là một trưởng nhóm kỹ thuật cao cấp đang chuẩn bị bài trình bày báo cáo tuần toàn diện. Nhiệm vụ của bạn là 
+      phân tích các báo cáo hàng ngày và tạo ra một bản tóm tắt chi tiết, sâu sắc giải thích tầm quan trọng, 
+      tác động và chiều sâu kỹ thuật của công việc.
+      
+      YÊU CẦU CHÍNH XÁC QUAN TRỌNG CHO CÁC CHỈ SỐ:
+      - LUÔN LUÔN kiểm tra kỹ hướng tăng/giảm - đây là dữ liệu QUAN TRỌNG
+      - Khi một chỉ số TĂNG, nêu rõ "tăng" và giải thích tại sao
+      - Khi một chỉ số GIẢM, nêu rõ "giảm" và giải thích tại sao
+      - KHÔNG BAO GIỜ nhầm lẫn giữa tăng và giảm hoặc ngược lại
+      - Cung cấp lý do rõ ràng TẠI SAO mỗi thay đổi xảy ra
+      - Nếu không chắc chắn về hướng, hãy đọc lại dữ liệu nguồn cẩn thận
+      
+      YÊU CẦU VỀ TÊN NHIỆM VỤ VÀ CHI TIẾT KỸ THUẬT:
+      - SỬ DỤNG CHÍNH XÁC tên task từ dữ liệu nguồn (bao gồm mã số ARISE và mô tả đầy đủ)
+      - MÔ TẢ VẤN ĐỀ phải bao gồm TOÀN BỘ thông tin từ dữ liệu nguồn
+      - QUY TRÌNH GIẢI PHÁP phải thật chi tiết từ dữ liệu nguồn. Có thể sử dụng một số thuật ngữ công nghệ đơn giản mà khách hàng có thể hiểu được. Không được bias vào các thông tin tôi đề xuất dưới đây mà bạn có thể triển khai thêm từ dữ liệu nguồn:
+        * Tên các hàm/file/class đã sửa đổi
+        * Phương pháp kỹ thuật cụ thể đã áp dụng
+        * Các thông số, config đã thay đổi
+        * Quy trình test và validation
+      
+      Phân tích của bạn nên:
+      - Giải thích TẠI SAO mỗi nhiệm vụ quan trọng và tác động kinh doanh/kỹ thuật của nó
+      - Cung cấp bối cảnh về các thách thức kỹ thuật và cách chúng được giải quyết
+      - Phân tích các chỉ số và kết quả để thể hiện tiến độ và cải tiến kèm LÝ DO
+      - Kết nối các nhiệm vụ riêng lẻ với mục tiêu dự án lớn hơn
+      - Làm nổi bật thành tựu và điểm học tập
+      - Cụ thể với số liệu, phần trăm và kết quả có thể đo lường
+      - Với mỗi thay đổi chỉ số, cung cấp lý do đằng sau nó
+    
+    weekly_report: |
+      Phân tích các báo cáo hàng ngày sau đây và tạo một bản tóm tắt tuần toàn diện kể câu chuyện 
+      về những gì đã hoàn thành, tại sao nó quan trọng và ý nghĩa của nó đối với dự án.
+      
+      Cấu trúc phân tích của bạn như sau:
+      
+      BÁO CÁO KỸ THUẬT HÀNG TUẦN
+      =======================
+      Thời gian: [Khoảng ngày]
+      
+      TÓM TẮT ĐIỀU HÀNH:
+      [2-3 câu tóm tắt những thành tựu chính trong tuần và tác động của chúng]
+      
+      CÁC NHIỆM VỤ ĐÃ HOÀN THÀNH:
+      [Với mỗi nhiệm vụ/vấn đề chính đã giải quyết, tạo một phần riêng:]
+      
+      NHIỆM VỤ 1: [Tiêu đề task lấy chính xác từ dữ liệu]
+      -------------------
+      Mô tả Vấn đề: [TOÀN BỘ Vấn đề hiện tại, không bỏ sót chi tiết nào, format lại để có thể giới thiệu lại với khách hàng]
+      Quy trình Giải pháp: [Viết như một team outsource đang báo cáo với khách hàng - professional, concrete, focused vào deliverable. Mở rộng từ dữ liệu nguồn với 5-7 bullet points, TUYỆT ĐỐI không tạo thông tin không có trong raw data:
+
+      ▪ Vấn đề hiện tại: mô tả impact cụ thể đến business/workflow, tại sao cần giải quyết ngay
+      ▪ Approach đã thực hiện: chính xác theo dữ liệu nguồn, dùng "Chúng tôi đã [action]" thay vì "Đã nghiên cứu nhiều phương án"
+      ▪ Implementation chi tiết: file/function/component cụ thể đã modify, technical changes với tên và location
+      ▪ Configuration changes: cụ thể "parameter_name: old_value → new_value (lý do thay đổi)"
+      ▪ Testing thực hiện: test cases đã chạy, test data used, coverage verification
+      ▪ Kết quả đo lường: concrete numbers, performance improvement, quality metrics achieved
+      ▪ Quality control: đảm bảo stability, backward compatibility, no regression
+
+      YÊU CẦU OUTSOURCE CLIENT:
+      - Ngôn ngữ: "Chúng tôi đã thực hiện X và đạt Y%" thay vì "Phân tích root cause cho thấy"
+      - Chỉ mở rộng explain từ raw data, KHÔNG fabricate alternatives không tồn tại  
+      - KÝ TỰ ĐẶC BIỆT: specify character (VD: 「〃」Unicode U+3003), why difficult, how solved
+      - Professional tone: demonstrating competence, thoroughness, result focus
+      - Business value: every change must show clear customer benefit]
+      Kết quả: [Dữ liệu cụ thể từ raw data với số liệu chính xác]
+      Phân tích: [Với một người làm việc lâu năm với dự án và hiểu khách hàng, giải thích sâu về nguyên nhân dẫn đến kết quả này, mối liên hệ nguyên nhân-kết quả]
+      Nhận xét: [Sau quá trình thực hiện các thay đổi/cải tiến này, đánh giá chất lượng kết quả, độ ổn định, hiệu suất hoạt động và khả năng đáp ứng yêu cầu]
+      
+      NHIỆM VỤ 2: [Tiêu đề task lấy chính xác từ dữ liệu]
+      -------------------
+      Mô tả Vấn đề: [TOÀN BỘ Vấn đề hiện tại, không bỏ sót chi tiết nào, format lại để có thể giới thiệu lại với khách hàng]
+      Quy trình Giải pháp: [Viết như một team outsource đang báo cáo với khách hàng - professional, concrete, focused vào deliverable. Mở rộng từ dữ liệu nguồn với 5-7 bullet points, TUYỆT ĐỐI không tạo thông tin không có trong raw data:
+
+      ▪ Vấn đề hiện tại: mô tả impact cụ thể đến business/workflow, tại sao cần giải quyết ngay
+      ▪ Approach đã thực hiện: chính xác theo dữ liệu nguồn, dùng "Chúng tôi đã [action]" thay vì "Đã nghiên cứu nhiều phương án"
+      ▪ Implementation chi tiết: file/function/component cụ thể đã modify, technical changes với tên và location
+      ▪ Configuration changes: cụ thể "parameter_name: old_value → new_value (lý do thay đổi)"
+      ▪ Testing thực hiện: test cases đã chạy, test data used, coverage verification
+      ▪ Kết quả đo lường: concrete numbers, performance improvement, quality metrics achieved
+      ▪ Quality control: đảm bảo stability, backward compatibility, no regression
+
+      YÊU CẦU OUTSOURCE CLIENT:
+      - Ngôn ngữ: "Chúng tôi đã thực hiện X và đạt Y%" thay vì "Phân tích root cause cho thấy"
+      - Chỉ mở rộng explain từ raw data, KHÔNG fabricate alternatives không tồn tại  
+      - KÝ TỰ ĐẶC BIỆT: specify character (VD: 「〃」Unicode U+3003), why difficult, how solved
+      - Professional tone: demonstrating competence, thoroughness, result focus
+      - Business value: every change must show clear customer benefit]
+      Kết quả: [Dữ liệu cụ thể từ raw data với số liệu chính xác]
+      Phân tích: [Với một người làm việc lâu năm với dự án và hiểu khách hàng, giải thích sâu về nguyên nhân dẫn đến kết quả này, mối liên hệ nguyên nhân-kết quả]
+      Nhận xét: [Sau quá trình thực hiện các thay đổi/cải tiến này, đánh giá chất lượng kết quả, độ ổn định, hiệu suất hoạt động và khả năng đáp ứng yêu cầu]
+      
+      [Tiếp tục cho mỗi nhiệm vụ chính...]
+      
+      CÔNG VIỆC SẮP TỚI:
+      [Các bước tiếp theo và hoạt động đã lên kế hoạch dựa trên kết quả hiện tại]
+      
+      LƯU Ý QUAN TRỌNG:
+      - SỬ DỤNG CHÍNH XÁC tên task từ dữ liệu nguồn, đừng tự sáng tạo tên
+      - KIỂM TRA KỸ tất cả các tuyên bố tăng/giảm trước khi hoàn thiện
+      - Với MỌI thay đổi phần trăm, nêu rõ đó là tăng hay giảm và số liệu cụ thể
+      - Cung cấp LÝ DO chi tiết tại sao mỗi chỉ số thay đổi theo hướng đó
+      - MÔ TẢ VẤN ĐỀ phải bao gồm TOÀN BỘ thông tin từ dữ liệu nguồn
+      - QUY TRÌNH GIẢI PHÁP: 5-7 bullet points, ngôn ngữ "Chúng tôi đã thực hiện X", KHÔNG fabricate alternatives
+      - STICK TO RAW DATA: chỉ mở rộng explain từ dữ liệu có sẵn, TUYỆT ĐỐI không tạo thông tin không tồn tại
+      - KÝ TỰ ĐẶC BIỆT: specify character name, Unicode value, why difficult, solution approach
+      - CONFIG CHANGES: "parameter: old_value → new_value (business reason)"
+      - OUTSOURCE TONE: professional, result-focused, demonstrating competence và value delivery
+      - Sử dụng các cụm từ như "tăng từ X lên Y vì", "giảm từ A xuống B do"
+      - CHÍNH XÁC 100% với hướng chỉ số - đây là DỮ LIỆU QUAN TRỌNG cho báo cáo
+      - Nếu một chỉ số cải thiện, làm rõ điều đó có nghĩa là tăng hay giảm (ví dụ: "độ chính xác cải thiện (tăng từ X lên Y)")
+      - NHẬN XÉT phải đánh giá tính ổn định và chất lượng sau khi thực hiện thay đổi
+      
+      Hãy nhớ cụ thể, sử dụng số liệu thực tế từ báo cáo và giải thích ý nghĩa của mỗi thành tựu.
+      Phần QUY TRÌNH GIẢI PHÁP phải mở rộng và chi tiết hóa hơn nhiều so với dữ liệu gốc.
+      
+      KỸ THUẬT TẠO NỘI DUNG OUTSOURCE:
+      - Với mỗi thông tin trong raw data, mở rộng bằng "Tại sao?", "Như thế nào?", "Impact gì?" 
+      - "Sửa hàm X" → mở rộng thành: vấn đề gì → approach đã thực hiện → implementation chi tiết → test results
+      - "Thay đổi config Y" → format: config_name: old_value → new_value (reason + business benefit)
+      - Động từ action: "Chúng tôi đã thực hiện", "đã implement", "đã test", "đã verify", "đã optimize"
+      - Focus deliverable: mỗi bullet point phải show concrete work done và result achieved
+      - Professional credibility: demonstrate technical competence và thoroughness
+      
+      VÍ DỤ MONG MUỐN CHO OUTSOURCE CLIENT:
+      Thay vì viết: "Sửa hàm preprocess để resize ảnh"
+      Hãy viết: 
+      ▪ Vấn đề hiện tại: hàm preprocess() với resize cố định (320x48px) gây vỡ nét ảnh dài, khiến model PaddleOCRv5 không nhận diện được long_comp, ảnh hưởng workflow xử lý documents của khách hàng
+      ▪ Chúng tôi đã thực hiện adaptive resize thay vì fixed size để giữ tỷ lệ ảnh gốc, kết quả test cho thấy cải thiện đáng kể cho các ảnh có text dài
+      ▪ Implementation chi tiết: modify file MultiCharRecognitionManager.java, function preprocess(), thay đổi logic từ fixed_resize(320,48) thành adaptive_resize(height=48, width=original_ratio*48)
+      ▪ Configuration changes: resize_mode: "fixed" → "adaptive", padding_color: RGB(255,255,255) → RGB(128,128,128) (để match training data distribution)
+      ▪ Testing đã thực hiện: test với 100 ảnh long_comp, 50 ảnh ngắn, 30 ảnh có ký tự 「〃」(Unicode U+3003 - ditto mark tiếng Nhật, khó nhận diện vì stroke pattern tương tự các ký tự khác)
+      ▪ Kết quả đo lường: accuracy improvement đáng kể (long_comp: 0% → 92%, ký tự 「〃」: 19% → 36%), latency từ 150ms → 135ms per image
+      ▪ Quality control: backward compatibility tested, no regression trên existing test cases, memory usage stable
+      
+      Báo cáo hàng ngày cần phân tích:
+      {content}
+

@@ -1,0 +1,1203 @@
+[
+  {
+    "slide_type": "cover",
+    "shapes": [
+      {
+        "type": "text",
+        "position": {
+          "x": 698942,
+          "y": 1734594
+        },
+        "size": {
+          "width": 5741100,
+          "height": 1674300
+        },
+        "paragraphs": [
+          {
+            "runs": [
+              {
+                "text": "20250808",
+                "font": {
+                  "name": "Noto Sans JP",
+                  "size_pt": 36.0,
+                  "bold": true,
+                  "color": [
+                    0,
+                    0,
+                    0
+                  ]
+                }
+              },
+              {
+                "text": "進捗報告書",
+                "font": {
+                  "name": "Noto Sans JP",
+                  "size_pt": 36.0,
+                  "bold": true,
+                  "color": [
+                    0,
+                    0,
+                    0
+                  ]
+                }
+              }
+            ],
+            "alignment": "left",
+            "line_spacing": {
+              "value": 1.5,
+              "type": "points"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slide_type": "agenda_slide",
+    "shapes": [
+      {
+        "type": "text",
+        "position": {
+          "x": 713225,
+          "y": 2292038
+        },
+        "size": {
+          "width": 3416400,
+          "height": 396600
+        },
+        "paragraphs": [
+          {
+            "runs": [
+              {
+                "text": "アジェンダ",
+                "font": {
+                  "name": "Noto Sans JP",
+                  "size_pt": 17.0,
+                  "bold": true,
+                  "color": [
+                    65,
+                    65,
+                    67
+                  ]
+                }
+              }
+            ],
+            "alignment": "left"
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "position": {
+          "x": 4291175,
+          "y": 1551650
+        },
+        "size": {
+          "width": 4326900,
+          "height": 1342200
+        },
+        "paragraphs": [
+          {
+            "runs": [
+              {
+                "text": "タスクの目的",
+                "font": {
+                  "name": "Noto Sans JP",
+                  "size_pt": 17.0,
+                  "bold": true,
+                  "color": [
+                    91,
+                    155,
+                    213
+                  ]
+                }
+              }
+            ],
+            "alignment": "left",
+            "line_spacing": {
+              "value": 1.5,
+              "type": "points"
+            },
+            "space_before_pt": 11.14,
+            "bullet": {
+              "type": "numbered",
+              "style": "arabicPeriod"
+            }
+          },
+          {
+            "runs": [
+              {
+                "text": "完了済み作業",
+                "font": {
+                  "name": "Noto Sans JP",
+                  "size_pt": 17.0,
+                  "bold": true,
+                  "color": [
+                    91,
+                    155,
+                    213
+                  ]
+                }
+              }
+            ],
+            "alignment": "left",
+            "line_spacing": {
+              "value": 1.5,
+              "type": "points"
+            },
+            "space_before_pt": 11.14,
+            "bullet": {
+              "type": "numbered",
+              "style": "arabicPeriod"
+            }
+          },
+          {
+            "runs": [
+              {
+                "text": "次の作業内容",
+                "font": {
+                  "name": "Noto Sans JP",
+                  "size_pt": 17.0,
+                  "bold": true,
+                  "color": [
+                    91,
+                    155,
+                    213
+                  ]
+                }
+              }
+            ],
+            "alignment": "left",
+            "line_spacing": {
+              "value": 1.5,
+              "type": "points"
+            },
+            "space_before_pt": 11.14,
+            "bullet": {
+              "type": "numbered",
+              "style": "arabicPeriod"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slide_type": "section_divider",
+    "shapes": [
+      {
+        "type": "text",
+        "position": {
+          "x": 2542873,
+          "y": 2571750
+        },
+        "size": {
+          "width": 5665500,
+          "height": 862200
+        },
+        "paragraphs": [
+          {
+            "runs": [
+              {
+                "text": "タスクの目的",
+                "font": {
+                  "name": "Noto Sans JP",
+                  "size_pt": 30.0,
+                  "bold": true,
+                  "color": [
+                    0,
+                    0,
+                    0
+                  ]
+                }
+              }
+            ],
+            "alignment": "right",
+            "line_spacing": {
+              "value": 1.0,
+              "type": "points"
+            }
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "position": {
+          "x": 5151175,
+          "y": 1768609
+        },
+        "size": {
+          "width": 3057300,
+          "height": 862200
+        },
+        "paragraphs": [
+          {
+            "runs": [
+              {
+                "text": "01",
+                "font": {
+                  "name": "Noto Sans JP",
+                  "size_pt": 60.0,
+                  "bold": true,
+                  "color": [
+                    0,
+                    0,
+                    0
+                  ]
+                }
+              }
+            ],
+            "alignment": "right",
+            "line_spacing": {
+              "value": 1.0,
+              "type": "points"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slide_type": "subtitle",
+    "shapes": [
+      {
+        "type": "text",
+        "position": {
+          "x": 1191600,
+          "y": 1483850
+        },
+        "size": {
+          "width": 6760800,
+          "height": 1555800
+        },
+        "paragraphs": [
+          {
+            "runs": [
+              {
+                "text": "2.1. AIREAD_ARISE-4034 【AIRead】",
+                "font": {
+                  "name": "Noto Sans JP",
+                  "size_pt": 24.0,
+                  "bold": true,
+                  "color": [
+                    0,
+                    0,
+                    0
+                  ]
+                }
+              }
+            ],
+            "alignment": "center",
+            "line_spacing": {
+              "value": 1.5,
+              "type": "points"
+            }
+          },
+          {
+            "runs": [
+              {
+                "text": "位置合わせ機能の強化: tăng độ chính xác của alignment function",
+                "font": {
+                  "name": "Noto Sans JP",
+                  "size_pt": 24.0,
+                  "bold": true,
+                  "color": [
+                    0,
+                    0,
+                    0
+                  ]
+                }
+              }
+            ],
+            "alignment": "center",
+            "line_spacing": {
+              "value": 1.5,
+              "type": "points"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slide_type": "content",
+    "shapes": [
+      {
+        "type": "text",
+        "position": {
+          "x": 584875,
+          "y": 427349
+        },
+        "size": {
+          "width": 7717500,
+          "height": 421500
+        },
+        "paragraphs": [
+          {
+            "runs": [
+              {
+                "text": "1.1\t位置合わせ機能の強化",
+                "font": {
+                  "name": "Noto Sans JP",
+                  "bold": true,
+                  "color": [
+                    0,
+                    0,
+                    0
+                  ]
+                }
+              }
+            ],
+            "alignment": "left",
+            "level": 0,
+            "line_spacing": {
+              "value": 1.0,
+              "type": "points"
+            }
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "position": {
+          "x": 626250,
+          "y": 923775
+        },
+        "size": {
+          "width": 7891500,
+          "height": 3873600
+        },
+        "paragraphs": [
+          {
+            "runs": [
+              {
+                "text": "Problem: Một số biểu mẫu bị lệch do lấy điểm đặc trưng từ ảnh đã tiền xử lý.",
+                "font": {
+                  "name": "Noto Sans JP"
+                }
+              }
+            ],
+            "alignment": "left",
+            "level": 0,
+            "line_spacing": {
+              "value": 1.15,
+              "type": "points"
+            },
+            "bullet": {
+              "type": "bullet",
+              "char": "●"
+            }
+          },
+          {
+            "runs": [
+              {
+                "text": "Solution: Sửa ảnh template thành ảnh trước khi tiền xử lý và bỏ xuất các file debug.",
+                "font": {
+                  "name": "Noto Sans JP"
+                }
+              }
+            ],
+            "alignment": "left",
+            "level": 0,
+            "line_spacing": {
+              "value": 1.15,
+              "type": "points"
+            },
+            "bullet": {
+              "type": "bullet",
+              "char": "●"
+            }
+          },
+          {
+            "runs": [
+              {
+                "text": "Tested with images rotated and tilted.",
+                "font": {
+                  "name": "Noto Sans JP"
+                }
+              }
+            ],
+            "alignment": "left",
+            "level": 1,
+            "line_spacing": {
+              "value": 1.15,
+              "type": "points"
+            },
+            "bullet": {
+              "type": "bullet",
+              "char": "○"
+            }
+          },
+          {
+            "runs": [
+              {
+                "text": "Result: Đã có kết quả tốt với ảnh template nghiêng và xoay.",
+                "font": {
+                  "name": "Noto Sans JP"
+                }
+              }
+            ],
+            "alignment": "left",
+            "level": 0,
+            "line_spacing": {
+              "value": 1.15,
+              "type": "points"
+            },
+            "bullet": {
+              "type": "bullet",
+              "char": "●"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slide_type": "section_divider",
+    "shapes": [
+      {
+        "type": "text",
+        "position": {
+          "x": 2542873,
+          "y": 2571750
+        },
+        "size": {
+          "width": 5665500,
+          "height": 862200
+        },
+        "paragraphs": [
+          {
+            "runs": [
+              {
+                "text": "タスクの目的",
+                "font": {
+                  "name": "Noto Sans JP",
+                  "size_pt": 30.0,
+                  "bold": true,
+                  "color": [
+                    0,
+                    0,
+                    0
+                  ]
+                }
+              }
+            ],
+            "alignment": "right",
+            "line_spacing": {
+              "value": 1.0,
+              "type": "points"
+            }
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "position": {
+          "x": 5151175,
+          "y": 1768609
+        },
+        "size": {
+          "width": 3057300,
+          "height": 862200
+        },
+        "paragraphs": [
+          {
+            "runs": [
+              {
+                "text": "02",
+                "font": {
+                  "name": "Noto Sans JP",
+                  "size_pt": 60.0,
+                  "bold": true,
+                  "color": [
+                    0,
+                    0,
+                    0
+                  ]
+                }
+              }
+            ],
+            "alignment": "right",
+            "line_spacing": {
+              "value": 1.0,
+              "type": "points"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slide_type": "subtitle",
+    "shapes": [
+      {
+        "type": "text",
+        "position": {
+          "x": 1191600,
+          "y": 1483850
+        },
+        "size": {
+          "width": 6760800,
+          "height": 1555800
+        },
+        "paragraphs": [
+          {
+            "runs": [
+              {
+                "text": "2.2. AIREAD_ARISE-4157 【multi3_jpn】",
+                "font": {
+                  "name": "Noto Sans JP",
+                  "size_pt": 24.0,
+                  "bold": true,
+                  "color": [
+                    0,
+                    0,
+                    0
+                  ]
+                }
+              }
+            ],
+            "alignment": "center",
+            "line_spacing": {
+              "value": 1.5,
+              "type": "points"
+            }
+          },
+          {
+            "runs": [
+              {
+                "text": "Cải thiện độ chính xác mô hình multi3_jpn",
+                "font": {
+                  "name": "Noto Sans JP",
+                  "size_pt": 24.0,
+                  "bold": true,
+                  "color": [
+                    0,
+                    0,
+                    0
+                  ]
+                }
+              }
+            ],
+            "alignment": "center",
+            "line_spacing": {
+              "value": 1.5,
+              "type": "points"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slide_type": "content",
+    "shapes": [
+      {
+        "type": "text",
+        "position": {
+          "x": 584875,
+          "y": 427349
+        },
+        "size": {
+          "width": 7717500,
+          "height": 421500
+        },
+        "paragraphs": [
+          {
+            "runs": [
+              {
+                "text": "1.2\tCải thiện độ chính xác mô hình multi3_jpn",
+                "font": {
+                  "name": "Noto Sans JP",
+                  "bold": true,
+                  "color": [
+                    0,
+                    0,
+                    0
+                  ]
+                }
+              }
+            ],
+            "alignment": "left",
+            "level": 0,
+            "line_spacing": {
+              "value": 1.0,
+              "type": "points"
+            }
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "position": {
+          "x": 626250,
+          "y": 923775
+        },
+        "size": {
+          "width": 7891500,
+          "height": 3873600
+        },
+        "paragraphs": [
+          {
+            "runs": [
+              {
+                "text": "Problem: Dễ đọc sai component có nhiều chữ và có trường hợp đọc sai số.",
+                "font": {
+                  "name": "Noto Sans JP"
+                }
+              }
+            ],
+            "alignment": "left",
+            "level": 0,
+            "line_spacing": {
+              "value": 1.15,
+              "type": "points"
+            },
+            "bullet": {
+              "type": "bullet",
+              "char": "●"
+            }
+          },
+          {
+            "runs": [
+              {
+                "text": "Solution: Cải thiện hàm tiền xử lý của multi3_jpn.",
+                "font": {
+                  "name": "Noto Sans JP"
+                }
+              }
+            ],
+            "alignment": "left",
+            "level": 0,
+            "line_spacing": {
+              "value": 1.15,
+              "type": "points"
+            },
+            "bullet": {
+              "type": "bullet",
+              "char": "●"
+            }
+          },
+          {
+            "runs": [
+              {
+                "text": "Tested specific cases with long components.",
+                "font": {
+                  "name": "Noto Sans JP"
+                }
+              }
+            ],
+            "alignment": "left",
+            "level": 1,
+            "line_spacing": {
+              "value": 1.15,
+              "type": "points"
+            },
+            "bullet": {
+              "type": "bullet",
+              "char": "○"
+            }
+          },
+          {
+            "runs": [
+              {
+                "text": "Result: Code paddleOCRv5 đúng 91/100 ảnh với ảnh tự render.",
+                "font": {
+                  "name": "Noto Sans JP"
+                }
+              }
+            ],
+            "alignment": "left",
+            "level": 0,
+            "line_spacing": {
+              "value": 1.15,
+              "type": "points"
+            },
+            "bullet": {
+              "type": "bullet",
+              "char": "●"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slide_type": "section_divider",
+    "shapes": [
+      {
+        "type": "text",
+        "position": {
+          "x": 2542873,
+          "y": 2571750
+        },
+        "size": {
+          "width": 5665500,
+          "height": 862200
+        },
+        "paragraphs": [
+          {
+            "runs": [
+              {
+                "text": "タスクの目的",
+                "font": {
+                  "name": "Noto Sans JP",
+                  "size_pt": 30.0,
+                  "bold": true,
+                  "color": [
+                    0,
+                    0,
+                    0
+                  ]
+                }
+              }
+            ],
+            "alignment": "right",
+            "line_spacing": {
+              "value": 1.0,
+              "type": "points"
+            }
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "position": {
+          "x": 5151175,
+          "y": 1768609
+        },
+        "size": {
+          "width": 3057300,
+          "height": 862200
+        },
+        "paragraphs": [
+          {
+            "runs": [
+              {
+                "text": "03",
+                "font": {
+                  "name": "Noto Sans JP",
+                  "size_pt": 60.0,
+                  "bold": true,
+                  "color": [
+                    0,
+                    0,
+                    0
+                  ]
+                }
+              }
+            ],
+            "alignment": "right",
+            "line_spacing": {
+              "value": 1.0,
+              "type": "points"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slide_type": "subtitle",
+    "shapes": [
+      {
+        "type": "text",
+        "position": {
+          "x": 1191600,
+          "y": 1483850
+        },
+        "size": {
+          "width": 6760800,
+          "height": 1555800
+        },
+        "paragraphs": [
+          {
+            "runs": [
+              {
+                "text": "2.3. AIREAD_ARISE-4149 【AIRead】",
+                "font": {
+                  "name": "Noto Sans JP",
+                  "size_pt": 24.0,
+                  "bold": true,
+                  "color": [
+                    0,
+                    0,
+                    0
+                  ]
+                }
+              }
+            ],
+            "alignment": "center",
+            "line_spacing": {
+              "value": 1.5,
+              "type": "points"
+            }
+          },
+          {
+            "runs": [
+              {
+                "text": "Trong folder Temp của USERPROFILE còn tồn tại onnxruntime-java",
+                "font": {
+                  "name": "Noto Sans JP",
+                  "size_pt": 24.0,
+                  "bold": true,
+                  "color": [
+                    0,
+                    0,
+                    0
+                  ]
+                }
+              }
+            ],
+            "alignment": "center",
+            "line_spacing": {
+              "value": 1.5,
+              "type": "points"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slide_type": "content",
+    "shapes": [
+      {
+        "type": "text",
+        "position": {
+          "x": 584875,
+          "y": 427349
+        },
+        "size": {
+          "width": 7717500,
+          "height": 421500
+        },
+        "paragraphs": [
+          {
+            "runs": [
+              {
+                "text": "1.3\tOnnxruntime-java Temp Files Issue",
+                "font": {
+                  "name": "Noto Sans JP",
+                  "bold": true,
+                  "color": [
+                    0,
+                    0,
+                    0
+                  ]
+                }
+              }
+            ],
+            "alignment": "left",
+            "level": 0,
+            "line_spacing": {
+              "value": 1.0,
+              "type": "points"
+            }
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "position": {
+          "x": 626250,
+          "y": 923775
+        },
+        "size": {
+          "width": 7891500,
+          "height": 3873600
+        },
+        "paragraphs": [
+          {
+            "runs": [
+              {
+                "text": "Problem: Mỗi lần chạy AIRead sẽ tạo ra một thư mục onnxruntime-java.",
+                "font": {
+                  "name": "Noto Sans JP"
+                }
+              }
+            ],
+            "alignment": "left",
+            "level": 0,
+            "line_spacing": {
+              "value": 1.15,
+              "type": "points"
+            },
+            "bullet": {
+              "type": "bullet",
+              "char": "●"
+            }
+          },
+          {
+            "runs": [
+              {
+                "text": "Solution: Thêm FileSystemUtil.java vào Core.Utils để xóa các file temp.",
+                "font": {
+                  "name": "Noto Sans JP"
+                }
+              }
+            ],
+            "alignment": "left",
+            "level": 0,
+            "line_spacing": {
+              "value": 1.15,
+              "type": "points"
+            },
+            "bullet": {
+              "type": "bullet",
+              "char": "●"
+            }
+          },
+          {
+            "runs": [
+              {
+                "text": "Result: Đã xóa được các folder onnxruntime mà không ảnh hưởng đến các tiến trình khác.",
+                "font": {
+                  "name": "Noto Sans JP"
+                }
+              }
+            ],
+            "alignment": "left",
+            "level": 0,
+            "line_spacing": {
+              "value": 1.15,
+              "type": "points"
+            },
+            "bullet": {
+              "type": "bullet",
+              "char": "●"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slide_type": "section_divider",
+    "shapes": [
+      {
+        "type": "text",
+        "position": {
+          "x": 2542873,
+          "y": 2571750
+        },
+        "size": {
+          "width": 5665500,
+          "height": 862200
+        },
+        "paragraphs": [
+          {
+            "runs": [
+              {
+                "text": "タスクの目的",
+                "font": {
+                  "name": "Noto Sans JP",
+                  "size_pt": 30.0,
+                  "bold": true,
+                  "color": [
+                    0,
+                    0,
+                    0
+                  ]
+                }
+              }
+            ],
+            "alignment": "right",
+            "line_spacing": {
+              "value": 1.0,
+              "type": "points"
+            }
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "position": {
+          "x": 5151175,
+          "y": 1768609
+        },
+        "size": {
+          "width": 3057300,
+          "height": 862200
+        },
+        "paragraphs": [
+          {
+            "runs": [
+              {
+                "text": "04",
+                "font": {
+                  "name": "Noto Sans JP",
+                  "size_pt": 60.0,
+                  "bold": true,
+                  "color": [
+                    0,
+                    0,
+                    0
+                  ]
+                }
+              }
+            ],
+            "alignment": "right",
+            "line_spacing": {
+              "value": 1.0,
+              "type": "points"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slide_type": "subtitle",
+    "shapes": [
+      {
+        "type": "text",
+        "position": {
+          "x": 1191600,
+          "y": 1483850
+        },
+        "size": {
+          "width": 6760800,
+          "height": 1555800
+        },
+        "paragraphs": [
+          {
+            "runs": [
+              {
+                "text": "2.4. Upcoming Work",
+                "font": {
+                  "name": "Noto Sans JP",
+                  "size_pt": 24.0,
+                  "bold": true,
+                  "color": [
+                    0,
+                    0,
+                    0
+                  ]
+                }
+              }
+            ],
+            "alignment": "center",
+            "line_spacing": {
+              "value": 1.5,
+              "type": "points"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slide_type": "content",
+    "shapes": [
+      {
+        "type": "text",
+        "position": {
+          "x": 584875,
+          "y": 427349
+        },
+        "size": {
+          "width": 7717500,
+          "height": 421500
+        },
+        "paragraphs": [
+          {
+            "runs": [
+              {
+                "text": "Upcoming Work:",
+                "font": {
+                  "name": "Noto Sans JP",
+                  "bold": true,
+                  "color": [
+                    0,
+                    0,
+                    0
+                  ]
+                }
+              }
+            ],
+            "alignment": "left",
+            "level": 0,
+            "line_spacing": {
+              "value": 1.0,
+              "type": "points"
+            }
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "position": {
+          "x": 626250,
+          "y": 923775
+        },
+        "size": {
+          "width": 7891500,
+          "height": 3873600
+        },
+        "paragraphs": [
+          {
+            "runs": [
+              {
+                "text": "1. Monitor and improve alignment function accuracy.",
+                "font": {
+                  "name": "Noto Sans JP"
+                }
+              }
+            ],
+            "alignment": "left",
+            "level": 0,
+            "line_spacing": {
+              "value": 1.15,
+              "type": "points"
+            },
+            "bullet": {
+              "type": "bullet",
+              "char": "●"
+            }
+          },
+          {
+            "runs": [
+              {
+                "text": "2. Continue enhancing multi3_jpn model accuracy.",
+                "font": {
+                  "name": "Noto Sans JP"
+                }
+              }
+            ],
+            "alignment": "left",
+            "level": 0,
+            "line_spacing": {
+              "value": 1.15,
+              "type": "points"
+            },
+            "bullet": {
+              "type": "bullet",
+              "char": "●"
+            }
+          },
+          {
+            "runs": [
+              {
+                "text": "3. Implement file management for temp folders.",
+                "font": {
+                  "name": "Noto Sans JP"
+                }
+              }
+            ],
+            "alignment": "left",
+            "level": 0,
+            "line_spacing": {
+              "value": 1.15,
+              "type": "points"
+            },
+            "bullet": {
+              "type": "bullet",
+              "char": "●"
+            }
+          }
+        ]
+      }
+    ]
+  }
+]

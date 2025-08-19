@@ -1,0 +1,310 @@
+{
+  "slide_type": "content",
+  "shapes": [
+    {
+      "type": "text",
+      "position": {
+        "x": 584875,
+        "y": 427349
+      },
+      "size": {
+        "width": 7717500,
+        "height": 421500
+      },
+      "paragraphs": [
+        {
+          "runs": [
+            {
+              "text": "1.1\tタスクの目的",
+              "font": {
+                "name": "Noto Sans JP",
+                "size_pt": 18.0,
+                "bold": true,
+                "color": [
+                  0,
+                  0,
+                  0
+                ]
+              }
+            }
+          ],
+          "alignment": "left",
+          "level": 0,
+          "line_spacing": {
+            "value": 1.0,
+            "type": "points"
+          }
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "position": {
+        "x": 8768388,
+        "y": 4835723
+      },
+      "size": {
+        "width": 283200,
+        "height": 246300
+      },
+      "paragraphs": [
+        {
+          "runs": [
+            {
+              "text": "3",
+              "font": {
+                "name": "Arial",
+                "size_pt": 10.0,
+                "bold": false,
+                "italic": false,
+                "underline": false,
+                "color": [
+                  0,
+                  0,
+                  0
+                ]
+              }
+            }
+          ],
+          "alignment": "left",
+          "level": 0,
+          "line_spacing": {
+            "value": 1.0,
+            "type": "points"
+          }
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "position": {
+        "x": 626250,
+        "y": 923775
+      },
+      "size": {
+        "width": 7891500,
+        "height": 3873600
+      },
+      "paragraphs": [
+        {
+          "runs": [
+            {
+              "text": "AIREAD_ARISE-4149 【AIRead】Trong folder Temp của USERPROFILE còn tồn tại onnxruntime-java",
+              "font": {
+                "name": "Noto Sans JP",
+                "size_pt": 14.0
+              }
+            }
+          ],
+          "alignment": "left",
+          "level": 0,
+          "line_spacing": {
+            "value": 1.15,
+            "type": "points"
+          },
+          "space_before_pt": 11.14,
+          "bullet": {
+            "type": "bullet",
+            "char": "●"
+          }
+        },
+        {
+          "runs": [
+            {
+              "text": "Bổ sung hàm xóa các file temp tự động",
+              "font": {
+                "name": "Noto Sans JP",
+                "size_pt": 14.0
+              }
+            }
+          ],
+          "alignment": "left",
+          "level": 1,
+          "line_spacing": {
+            "value": 1.15,
+            "type": "points"
+          },
+          "space_before_pt": 11.14,
+          "bullet": {
+            "type": "bullet",
+            "char": "○"
+          }
+        },
+        {
+          "runs": [
+            {
+              "text": "AIREAD_ARISE-4157 【multi3_jpn】Cải thiện độ chính xác",
+              "font": {
+                "name": "Noto Sans JP",
+                "size_pt": 14.0
+              }
+            }
+          ],
+          "alignment": "left",
+          "level": 0,
+          "line_spacing": {
+            "value": 1.15,
+            "type": "points"
+          },
+          "space_before_pt": 11.14,
+          "bullet": {
+            "type": "bullet",
+            "char": "●"
+          }
+        },
+        {
+          "runs": [
+            {
+              "text": "Điều tra lỗi và sửa đổi hàm tiền xử lý của multi3_jpn",
+              "font": {
+                "name": "Noto Sans JP",
+                "size_pt": 14.0
+              }
+            }
+          ],
+          "alignment": "left",
+          "level": 1,
+          "line_spacing": {
+            "value": 1.15,
+            "type": "points"
+          },
+          "space_before_pt": 11.14,
+          "bullet": {
+            "type": "bullet",
+            "char": "○"
+          }
+        },
+        {
+          "runs": [
+            {
+              "text": "AIREAD_ARISE-4034【AIRead】位置合わせ機能の強化: tăng độ chính xác của alignment function",
+              "font": {
+                "name": "Noto Sans JP",
+                "size_pt": 14.0
+              }
+            }
+          ],
+          "alignment": "left",
+          "level": 0,
+          "line_spacing": {
+            "value": 1.15,
+            "type": "points"
+          },
+          "space_before_pt": 11.14,
+          "bullet": {
+            "type": "bullet",
+            "char": "●"
+          }
+        },
+        {
+          "runs": [
+            {
+              "text": "Sửa ảnh template thành ảnh trước khi tiền xử lý",
+              "font": {
+                "name": "Noto Sans JP",
+                "size_pt": 14.0
+              }
+            }
+          ],
+          "alignment": "left",
+          "level": 1,
+          "line_spacing": {
+            "value": 1.15,
+            "type": "points"
+          },
+          "space_before_pt": 11.14,
+          "bullet": {
+            "type": "bullet",
+            "char": "○"
+          }
+        },
+        {
+          "runs": [
+            {
+              "text": "Thử nghiệm với ảnh template xoay và nghiêng trước khi tiền xử lý",
+              "font": {
+                "name": "Noto Sans JP",
+                "size_pt": 14.0
+              }
+            }
+          ],
+          "alignment": "left",
+          "level": 1,
+          "line_spacing": {
+            "value": 1.15,
+            "type": "points"
+          },
+          "space_before_pt": 11.14,
+          "bullet": {
+            "type": "bullet",
+            "char": "○"
+          }
+        },
+        {
+          "runs": [
+            {
+              "text": "Chỉnh sửa debug ảnh khi config IS_DEBUG=true được thiết lập.",
+              "font": {
+                "name": "Noto Sans JP",
+                "size_pt": 14.0
+              }
+            }
+          ],
+          "alignment": "left",
+          "level": 1,
+          "line_spacing": {
+            "value": 1.15,
+            "type": "points"
+          },
+          "space_before_pt": 11.14,
+          "bullet": {
+            "type": "bullet",
+            "char": "○"
+          }
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "position": {
+        "x": 2653144,
+        "y": -3003
+      },
+      "size": {
+        "width": 3816900,
+        "height": 421500
+      },
+      "fill": {
+        "type": "solid",
+        "color": [255, 236, 185]
+      },
+      "paragraphs": [
+        {
+          "runs": [
+            {
+              "text": "1. タスクの目的",
+              "font": {
+                "name": "Noto Sans JP",
+                "size_pt": 20.0,
+                "bold": true,
+                "italic": false,
+                "underline": false,
+                "color": [
+                  0,
+                  0,
+                  0
+                ]
+              }
+            }
+          ],
+          "alignment": "center",
+          "level": 0,
+          "line_spacing": {
+            "value": 1.0,
+            "type": "points"
+          }
+        }
+      ]
+    }
+  ]
+}

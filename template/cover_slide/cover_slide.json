@@ -1,0 +1,53 @@
+{
+  "slide_type": "cover",
+  "shapes": [
+    {
+      "type": "text",
+      "position": {
+        "x": 698942,
+        "y": 1734594
+      },
+      "size": {
+        "width": 5741100,
+        "height": 1674300
+      },
+      "paragraphs": [
+        {
+          "runs": [
+            {
+              "text": "20250813",
+              "font": {
+                "name": "Noto Sans JP",
+                "size_pt": 36.0,
+                "bold": true,
+                "color": [
+                  0,
+                  0,
+                  0
+                ]
+              }
+            },
+            {
+              "text": "進捗報告書",
+              "font": {
+                "name": "Noto Sans JP",
+                "size_pt": 36.0,
+                "bold": true,
+                "color": [
+                  0,
+                  0,
+                  0
+                ]
+              }
+            }
+          ],
+          "alignment": "left",
+          "line_spacing": {
+            "value": 1.5,
+            "type": "points"
+          }
+        }
+      ]
+    }
+  ]
+}

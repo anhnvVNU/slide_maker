@@ -1,0 +1,62 @@
+{
+  "slide_type": "subtitle",
+  "shapes": [
+    {
+      "type": "text",
+      "position": {
+        "x": 1191600,
+        "y": 1483850
+      },
+      "size": {
+        "width": 6760800,
+        "height": 1555800
+      },
+      "paragraphs": [
+        {
+          "runs": [
+            {
+              "text": "2.1. AIREAD_ARISE-4149 【AIRead】",
+              "font": {
+                "name": "Noto Sans JP",
+                "size_pt": 24.0,
+                "bold": true,
+                "color": [
+                  0,
+                  0,
+                  0
+                ]
+              }
+            }
+          ],
+          "alignment": "center",
+          "line_spacing": {
+            "value": 1.5,
+            "type": "points"
+          }
+        },
+        {
+          "runs": [
+            {
+              "text": "Trong folder Temp của USERPROFILE còn tồn tại onnxruntime-java",
+              "font": {
+                "name": "Noto Sans JP",
+                "size_pt": 24.0,
+                "bold": true,
+                "color": [
+                  0,
+                  0,
+                  0
+                ]
+              }
+            }
+          ],
+          "alignment": "center",
+          "line_spacing": {
+            "value": 1.5,
+            "type": "points"
+          }
+        }
+      ]
+    }
+  ]
+}
