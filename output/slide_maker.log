@@ -1,0 +1,359 @@
+2025-08-19 13:56:26,899 - INFO - ============================================================
+2025-08-19 13:56:26,899 - INFO - SLIDE MAKER PIPELINE STARTED
+2025-08-19 13:56:26,899 - INFO - ============================================================
+2025-08-19 13:56:26,899 - INFO - Checking prerequisites...
+2025-08-19 13:56:26,899 - INFO - ✓ Found: settings.yaml
+2025-08-19 13:56:26,900 - INFO - ✓ Found: data/raw_data.txt
+2025-08-19 13:56:26,900 - INFO - ✓ Found: template/template.pptx
+2025-08-19 13:56:26,900 - INFO - ✓ Found: template/cover_slide
+2025-08-19 13:56:26,900 - INFO - ✓ Found: template/agenda_slide
+2025-08-19 13:56:26,900 - INFO - ✓ Found: template/content
+2025-08-19 13:56:26,900 - INFO - ✓ Found: template/section_divider
+2025-08-19 13:56:26,900 - INFO - ✓ Found: template/subtitle
+2025-08-19 13:56:26,900 - INFO - ✓ Output directory ready: output
+2025-08-19 13:56:26,900 - INFO - === STEP 1: CONTENT EXTRACTION ===
+2025-08-19 13:56:26,914 - INFO - Processing file: raw_data.txt
+2025-08-19 13:56:55,182 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-08-19 13:56:55,190 - INFO - ✓ Processed: raw_data.txt
+2025-08-19 13:56:55,190 - INFO - ✓ Content extraction completed. Processed 1 files.
+2025-08-19 13:56:55,190 - INFO - ✓ represent.txt saved to output/
+2025-08-19 13:56:55,190 - INFO - === STEP 2: SCRIPT GENERATION ===
+2025-08-19 13:59:12,189 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-08-19 13:59:12,197 - INFO - ✓ Script generation completed. Generated 13 slides.
+2025-08-19 13:59:12,197 - INFO - ✓ slide_script.json saved to output/
+2025-08-19 13:59:12,197 - INFO - === STEP 3: PRESENTATION BUILDING ===
+2025-08-19 13:59:12,264 - INFO - ✓ Presentation building completed.
+2025-08-19 13:59:12,265 - INFO - ✓ final_presentation.pptx saved to output/
+2025-08-19 13:59:12,265 - INFO - ============================================================
+2025-08-19 13:59:12,265 - INFO - PIPELINE COMPLETED SUCCESSFULLY
+2025-08-19 13:59:12,265 - INFO - ============================================================
+2025-08-19 13:59:12,265 - INFO - Total execution time: 165.37 seconds
+2025-08-19 13:59:12,265 - INFO - 
+2025-08-19 13:59:12,265 - INFO - SUMMARY:
+2025-08-19 13:59:12,265 - INFO - • Files processed: 1
+2025-08-19 13:59:12,265 - INFO - • Slides generated: 13
+2025-08-19 13:59:12,265 - INFO - • Output file: output/final_presentation.pptx
+2025-08-19 13:59:12,265 - INFO - • File size: 0.15 MB
+2025-08-19 13:59:12,265 - INFO - 
+2025-08-19 13:59:12,265 - INFO - Output files:
+2025-08-19 13:59:12,265 - INFO - • output/represent.txt - Formatted content
+2025-08-19 13:59:12,265 - INFO - • output/slide_script.json - Generated slides script
+2025-08-19 13:59:12,265 - INFO - • output/final_presentation.pptx - Final PowerPoint presentation
+2025-08-19 13:59:12,266 - INFO - • output/pipeline_results.json - Pipeline execution summary
+2025-08-19 13:59:12,266 - INFO - ============================================================
+2025-08-19 14:08:00,745 - INFO - ============================================================
+2025-08-19 14:08:00,745 - INFO - SLIDE MAKER PIPELINE STARTED
+2025-08-19 14:08:00,745 - INFO - ============================================================
+2025-08-19 14:08:00,745 - INFO - Checking prerequisites...
+2025-08-19 14:08:00,746 - INFO - ✓ Found: settings.yaml
+2025-08-19 14:08:00,746 - INFO - ✓ Found: data/raw_data.txt
+2025-08-19 14:08:00,746 - INFO - ✓ Found: template/template.pptx
+2025-08-19 14:08:00,746 - INFO - ✓ Found: template/cover_slide
+2025-08-19 14:08:00,746 - INFO - ✓ Found: template/agenda_slide
+2025-08-19 14:08:00,746 - INFO - ✓ Found: template/content
+2025-08-19 14:08:00,746 - INFO - ✓ Found: template/section_divider
+2025-08-19 14:08:00,746 - INFO - ✓ Found: template/subtitle
+2025-08-19 14:08:00,746 - INFO - ✓ Output directory ready: output
+2025-08-19 14:08:00,746 - INFO - === STEP 1: CONTENT EXTRACTION ===
+2025-08-19 14:08:00,761 - INFO - Processing file: raw_data.txt
+2025-08-19 14:08:45,053 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-08-19 14:08:45,060 - INFO - ✓ Processed: raw_data.txt
+2025-08-19 14:08:45,060 - INFO - ✓ Content extraction completed. Processed 1 files.
+2025-08-19 14:08:45,060 - INFO - ✓ represent.txt saved to output/
+2025-08-19 14:08:45,060 - INFO - === STEP 2: SCRIPT GENERATION ===
+2025-08-19 14:10:54,524 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-08-19 14:10:54,759 - INFO - ✓ Script generation completed. Generated 13 slides.
+2025-08-19 14:10:54,759 - INFO - ✓ slide_script.json saved to output/
+2025-08-19 14:10:54,759 - INFO - === STEP 3: PRESENTATION BUILDING ===
+2025-08-19 14:10:54,826 - INFO - ✓ Presentation building completed.
+2025-08-19 14:10:54,826 - INFO - ✓ final_presentation.pptx saved to output/
+2025-08-19 14:10:54,826 - INFO - ============================================================
+2025-08-19 14:10:54,827 - INFO - PIPELINE COMPLETED SUCCESSFULLY
+2025-08-19 14:10:54,827 - INFO - ============================================================
+2025-08-19 14:10:54,827 - INFO - Total execution time: 174.08 seconds
+2025-08-19 14:10:54,827 - INFO - 
+2025-08-19 14:10:54,827 - INFO - SUMMARY:
+2025-08-19 14:10:54,827 - INFO - • Files processed: 1
+2025-08-19 14:10:54,827 - INFO - • Slides generated: 13
+2025-08-19 14:10:54,827 - INFO - • Output file: output/final_presentation.pptx
+2025-08-19 14:10:54,827 - INFO - • File size: 0.15 MB
+2025-08-19 14:10:54,827 - INFO - 
+2025-08-19 14:10:54,827 - INFO - Output files:
+2025-08-19 14:10:54,827 - INFO - • output/represent.txt - Formatted content
+2025-08-19 14:10:54,827 - INFO - • output/slide_script.json - Generated slides script
+2025-08-19 14:10:54,827 - INFO - • output/final_presentation.pptx - Final PowerPoint presentation
+2025-08-19 14:10:54,828 - INFO - • output/pipeline_results.json - Pipeline execution summary
+2025-08-19 14:10:54,828 - INFO - ============================================================
+2025-08-19 14:18:41,796 - INFO - ============================================================
+2025-08-19 14:18:41,796 - INFO - SLIDE MAKER PIPELINE STARTED
+2025-08-19 14:18:41,796 - INFO - ============================================================
+2025-08-19 14:18:41,796 - INFO - Checking prerequisites...
+2025-08-19 14:18:41,796 - INFO - ✓ Found: settings.yaml
+2025-08-19 14:18:41,796 - INFO - ✓ Found: data/raw_data.txt
+2025-08-19 14:18:41,796 - INFO - ✓ Found: template/template.pptx
+2025-08-19 14:18:41,796 - INFO - ✓ Found: template/cover_slide
+2025-08-19 14:18:41,796 - INFO - ✓ Found: template/agenda_slide
+2025-08-19 14:18:41,796 - INFO - ✓ Found: template/content
+2025-08-19 14:18:41,796 - INFO - ✓ Found: template/section_divider
+2025-08-19 14:18:41,796 - INFO - ✓ Found: template/subtitle
+2025-08-19 14:18:41,796 - INFO - ✓ Output directory ready: output
+2025-08-19 14:18:41,796 - INFO - === STEP 1: CONTENT EXTRACTION ===
+2025-08-19 14:18:41,811 - INFO - Processing file: raw_data.txt
+2025-08-19 14:19:20,601 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-08-19 14:19:20,606 - INFO - ✓ Processed: raw_data.txt
+2025-08-19 14:19:20,606 - INFO - ✓ Content extraction completed. Processed 1 files.
+2025-08-19 14:19:20,606 - INFO - ✓ represent.txt saved to output/
+2025-08-19 14:19:20,606 - INFO - === STEP 2: SCRIPT GENERATION ===
+2025-08-19 14:21:48,922 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-08-19 14:21:49,145 - INFO - ✓ Script generation completed. Generated 13 slides.
+2025-08-19 14:21:49,145 - INFO - ✓ slide_script.json saved to output/
+2025-08-19 14:21:49,145 - INFO - === STEP 3: PRESENTATION BUILDING ===
+2025-08-19 14:21:49,216 - INFO - ✓ Presentation building completed.
+2025-08-19 14:21:49,216 - INFO - ✓ final_presentation.pptx saved to output/
+2025-08-19 14:21:49,216 - INFO - ============================================================
+2025-08-19 14:21:49,216 - INFO - PIPELINE COMPLETED SUCCESSFULLY
+2025-08-19 14:21:49,216 - INFO - ============================================================
+2025-08-19 14:21:49,216 - INFO - Total execution time: 187.42 seconds
+2025-08-19 14:21:49,216 - INFO - 
+2025-08-19 14:21:49,216 - INFO - SUMMARY:
+2025-08-19 14:21:49,216 - INFO - • Files processed: 1
+2025-08-19 14:21:49,216 - INFO - • Slides generated: 13
+2025-08-19 14:21:49,216 - INFO - • Output file: output/final_presentation.pptx
+2025-08-19 14:21:49,216 - INFO - • File size: 0.15 MB
+2025-08-19 14:21:49,216 - INFO - 
+2025-08-19 14:21:49,216 - INFO - Output files:
+2025-08-19 14:21:49,216 - INFO - • output/represent.txt - Formatted content
+2025-08-19 14:21:49,216 - INFO - • output/slide_script.json - Generated slides script
+2025-08-19 14:21:49,216 - INFO - • output/final_presentation.pptx - Final PowerPoint presentation
+2025-08-19 14:21:49,217 - INFO - • output/pipeline_results.json - Pipeline execution summary
+2025-08-19 14:21:49,217 - INFO - ============================================================
+2025-08-19 14:27:11,889 - INFO - ============================================================
+2025-08-19 14:27:11,889 - INFO - SLIDE MAKER PIPELINE STARTED
+2025-08-19 14:27:11,889 - INFO - ============================================================
+2025-08-19 14:27:11,889 - INFO - Checking prerequisites...
+2025-08-19 14:27:11,889 - INFO - ✓ Found: settings.yaml
+2025-08-19 14:27:11,889 - INFO - ✓ Found: data/raw_data.txt
+2025-08-19 14:27:11,889 - INFO - ✓ Found: template/template.pptx
+2025-08-19 14:27:11,889 - INFO - ✓ Found: template/cover_slide
+2025-08-19 14:27:11,889 - INFO - ✓ Found: template/agenda_slide
+2025-08-19 14:27:11,889 - INFO - ✓ Found: template/content
+2025-08-19 14:27:11,889 - INFO - ✓ Found: template/section_divider
+2025-08-19 14:27:11,889 - INFO - ✓ Found: template/subtitle
+2025-08-19 14:27:11,889 - INFO - ✓ Output directory ready: output
+2025-08-19 14:27:11,889 - INFO - === STEP 1: CONTENT EXTRACTION ===
+2025-08-19 14:27:11,904 - INFO - Processing file: raw_data.txt
+2025-08-19 14:27:52,089 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-08-19 14:27:52,098 - INFO - ✓ Processed: raw_data.txt
+2025-08-19 14:27:52,099 - INFO - ✓ Content extraction completed. Processed 1 files.
+2025-08-19 14:27:52,099 - INFO - ✓ represent.txt saved to output/
+2025-08-19 14:27:52,099 - INFO - === STEP 2: SCRIPT GENERATION ===
+2025-08-19 14:29:32,585 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-08-19 14:29:32,592 - INFO - ✓ Script generation completed. Generated 13 slides.
+2025-08-19 14:29:32,592 - INFO - ✓ slide_script.json saved to output/
+2025-08-19 14:29:32,592 - INFO - === STEP 3: PRESENTATION BUILDING ===
+2025-08-19 14:29:32,660 - INFO - ✓ Presentation building completed.
+2025-08-19 14:29:32,660 - INFO - ✓ final_presentation.pptx saved to output/
+2025-08-19 14:29:32,660 - INFO - ============================================================
+2025-08-19 14:29:32,660 - INFO - PIPELINE COMPLETED SUCCESSFULLY
+2025-08-19 14:29:32,660 - INFO - ============================================================
+2025-08-19 14:29:32,660 - INFO - Total execution time: 140.77 seconds
+2025-08-19 14:29:32,660 - INFO - 
+2025-08-19 14:29:32,660 - INFO - SUMMARY:
+2025-08-19 14:29:32,660 - INFO - • Files processed: 1
+2025-08-19 14:29:32,660 - INFO - • Slides generated: 13
+2025-08-19 14:29:32,660 - INFO - • Output file: output/final_presentation.pptx
+2025-08-19 14:29:32,660 - INFO - • File size: 0.15 MB
+2025-08-19 14:29:32,660 - INFO - 
+2025-08-19 14:29:32,660 - INFO - Output files:
+2025-08-19 14:29:32,660 - INFO - • output/represent.txt - Formatted content
+2025-08-19 14:29:32,660 - INFO - • output/slide_script.json - Generated slides script
+2025-08-19 14:29:32,660 - INFO - • output/final_presentation.pptx - Final PowerPoint presentation
+2025-08-19 14:29:32,661 - INFO - • output/pipeline_results.json - Pipeline execution summary
+2025-08-19 14:29:32,661 - INFO - ============================================================
+2025-08-19 14:35:31,788 - INFO - ============================================================
+2025-08-19 14:35:31,788 - INFO - SLIDE MAKER PIPELINE STARTED
+2025-08-19 14:35:31,788 - INFO - ============================================================
+2025-08-19 14:35:31,788 - INFO - Checking prerequisites...
+2025-08-19 14:35:31,788 - INFO - ✓ Found: settings.yaml
+2025-08-19 14:35:31,788 - INFO - ✓ Found: data/raw_data.txt
+2025-08-19 14:35:31,788 - INFO - ✓ Found: template/template.pptx
+2025-08-19 14:35:31,788 - INFO - ✓ Found: template/cover_slide
+2025-08-19 14:35:31,788 - INFO - ✓ Found: template/agenda_slide
+2025-08-19 14:35:31,788 - INFO - ✓ Found: template/content
+2025-08-19 14:35:31,788 - INFO - ✓ Found: template/section_divider
+2025-08-19 14:35:31,788 - INFO - ✓ Found: template/subtitle
+2025-08-19 14:35:31,788 - INFO - ✓ Output directory ready: output
+2025-08-19 14:35:31,788 - INFO - === STEP 1: CONTENT EXTRACTION ===
+2025-08-19 14:35:31,804 - INFO - Processing file: raw_data.txt
+2025-08-19 14:36:10,157 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-08-19 14:36:10,164 - INFO - ✓ Processed: raw_data.txt
+2025-08-19 14:36:10,164 - INFO - ✓ Content extraction completed. Processed 1 files.
+2025-08-19 14:36:10,164 - INFO - ✓ represent.txt saved to output/
+2025-08-19 14:36:10,165 - INFO - === STEP 2: SCRIPT GENERATION ===
+2025-08-19 14:38:15,543 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-08-19 14:38:15,780 - INFO - ✓ Script generation completed. Generated 14 slides.
+2025-08-19 14:38:15,780 - INFO - ✓ slide_script.json saved to output/
+2025-08-19 14:38:15,780 - INFO - === STEP 3: PRESENTATION BUILDING ===
+2025-08-19 14:38:15,849 - INFO - ✓ Presentation building completed.
+2025-08-19 14:38:15,849 - INFO - ✓ final_presentation.pptx saved to output/
+2025-08-19 14:38:15,849 - INFO - ============================================================
+2025-08-19 14:38:15,849 - INFO - PIPELINE COMPLETED SUCCESSFULLY
+2025-08-19 14:38:15,849 - INFO - ============================================================
+2025-08-19 14:38:15,849 - INFO - Total execution time: 164.06 seconds
+2025-08-19 14:38:15,849 - INFO - 
+2025-08-19 14:38:15,849 - INFO - SUMMARY:
+2025-08-19 14:38:15,849 - INFO - • Files processed: 1
+2025-08-19 14:38:15,849 - INFO - • Slides generated: 14
+2025-08-19 14:38:15,849 - INFO - • Output file: output/final_presentation.pptx
+2025-08-19 14:38:15,849 - INFO - • File size: 0.15 MB
+2025-08-19 14:38:15,849 - INFO - 
+2025-08-19 14:38:15,849 - INFO - Output files:
+2025-08-19 14:38:15,849 - INFO - • output/represent.txt - Formatted content
+2025-08-19 14:38:15,849 - INFO - • output/slide_script.json - Generated slides script
+2025-08-19 14:38:15,849 - INFO - • output/final_presentation.pptx - Final PowerPoint presentation
+2025-08-19 14:38:15,850 - INFO - • output/pipeline_results.json - Pipeline execution summary
+2025-08-19 14:38:15,850 - INFO - ============================================================
+2025-08-19 14:48:29,369 - INFO - ============================================================
+2025-08-19 14:48:29,369 - INFO - SLIDE MAKER PIPELINE STARTED
+2025-08-19 14:48:29,369 - INFO - ============================================================
+2025-08-19 14:48:29,369 - INFO - Checking prerequisites...
+2025-08-19 14:48:29,369 - INFO - ✓ Found: settings.yaml
+2025-08-19 14:48:29,369 - INFO - ✓ Found: data/raw_data.txt
+2025-08-19 14:48:29,369 - INFO - ✓ Found: template/template.pptx
+2025-08-19 14:48:29,369 - INFO - ✓ Found: template/cover_slide
+2025-08-19 14:48:29,369 - INFO - ✓ Found: template/agenda_slide
+2025-08-19 14:48:29,369 - INFO - ✓ Found: template/content
+2025-08-19 14:48:29,369 - INFO - ✓ Found: template/section_divider
+2025-08-19 14:48:29,369 - INFO - ✓ Found: template/subtitle
+2025-08-19 14:48:29,369 - INFO - ✓ Output directory ready: output
+2025-08-19 14:48:29,369 - INFO - === STEP 1: CONTENT EXTRACTION ===
+2025-08-19 14:48:29,384 - INFO - Processing file: raw_data.txt
+2025-08-19 14:49:08,462 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-08-19 14:49:08,470 - INFO - ✓ Processed: raw_data.txt
+2025-08-19 14:49:08,470 - INFO - ✓ Content extraction completed. Processed 1 files.
+2025-08-19 14:49:08,470 - INFO - ✓ represent.txt saved to output/
+2025-08-19 14:49:08,471 - INFO - === STEP 2: SCRIPT GENERATION ===
+2025-08-19 14:51:52,180 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-08-19 14:51:52,187 - INFO - ✓ Script generation completed. Generated 11 slides.
+2025-08-19 14:51:52,188 - INFO - ✓ slide_script.json saved to output/
+2025-08-19 14:51:52,188 - INFO - === STEP 3: PRESENTATION BUILDING ===
+2025-08-19 14:51:52,260 - INFO - ✓ Presentation building completed.
+2025-08-19 14:51:52,260 - INFO - ✓ final_presentation.pptx saved to output/
+2025-08-19 14:51:52,260 - INFO - ============================================================
+2025-08-19 14:51:52,260 - INFO - PIPELINE COMPLETED SUCCESSFULLY
+2025-08-19 14:51:52,260 - INFO - ============================================================
+2025-08-19 14:51:52,260 - INFO - Total execution time: 202.89 seconds
+2025-08-19 14:51:52,260 - INFO - 
+2025-08-19 14:51:52,260 - INFO - SUMMARY:
+2025-08-19 14:51:52,260 - INFO - • Files processed: 1
+2025-08-19 14:51:52,260 - INFO - • Slides generated: 11
+2025-08-19 14:51:52,260 - INFO - • Output file: output/final_presentation.pptx
+2025-08-19 14:51:52,260 - INFO - • File size: 0.15 MB
+2025-08-19 14:51:52,260 - INFO - 
+2025-08-19 14:51:52,260 - INFO - Output files:
+2025-08-19 14:51:52,260 - INFO - • output/represent.txt - Formatted content
+2025-08-19 14:51:52,260 - INFO - • output/slide_script.json - Generated slides script
+2025-08-19 14:51:52,261 - INFO - • output/final_presentation.pptx - Final PowerPoint presentation
+2025-08-19 14:51:52,261 - INFO - • output/pipeline_results.json - Pipeline execution summary
+2025-08-19 14:51:52,261 - INFO - ============================================================
+2025-08-19 14:53:20,482 - INFO - ============================================================
+2025-08-19 14:53:20,482 - INFO - SLIDE MAKER PIPELINE STARTED
+2025-08-19 14:53:20,482 - INFO - ============================================================
+2025-08-19 14:53:20,482 - INFO - Checking prerequisites...
+2025-08-19 14:53:20,482 - INFO - ✓ Found: settings.yaml
+2025-08-19 14:53:20,482 - INFO - ✓ Found: data/raw_data.txt
+2025-08-19 14:53:20,482 - INFO - ✓ Found: template/template.pptx
+2025-08-19 14:53:20,482 - INFO - ✓ Found: template/cover_slide
+2025-08-19 14:53:20,482 - INFO - ✓ Found: template/agenda_slide
+2025-08-19 14:53:20,482 - INFO - ✓ Found: template/content
+2025-08-19 14:53:20,482 - INFO - ✓ Found: template/section_divider
+2025-08-19 14:53:20,482 - INFO - ✓ Found: template/subtitle
+2025-08-19 14:53:20,482 - INFO - ✓ Output directory ready: output
+2025-08-19 14:53:20,482 - INFO - === STEP 1: CONTENT EXTRACTION ===
+2025-08-19 14:53:20,497 - INFO - Processing file: raw_data.txt
+2025-08-19 14:53:59,812 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-08-19 14:53:59,821 - INFO - ✓ Processed: raw_data.txt
+2025-08-19 14:53:59,821 - INFO - ✓ Content extraction completed. Processed 1 files.
+2025-08-19 14:53:59,821 - INFO - ✓ represent.txt saved to output/
+2025-08-19 14:53:59,821 - INFO - === STEP 2: SCRIPT GENERATION ===
+2025-08-19 14:57:12,300 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-08-19 14:57:12,400 - INFO - ✓ Script generation completed. Generated 15 slides.
+2025-08-19 14:57:12,401 - INFO - ✓ slide_script.json saved to output/
+2025-08-19 14:57:12,401 - INFO - === STEP 3: PRESENTATION BUILDING ===
+2025-08-19 14:57:12,488 - INFO - ✓ Presentation building completed.
+2025-08-19 14:57:12,488 - INFO - ✓ final_presentation.pptx saved to output/
+2025-08-19 14:57:12,488 - INFO - ============================================================
+2025-08-19 14:57:12,488 - INFO - PIPELINE COMPLETED SUCCESSFULLY
+2025-08-19 14:57:12,488 - INFO - ============================================================
+2025-08-19 14:57:12,488 - INFO - Total execution time: 232.01 seconds
+2025-08-19 14:57:12,488 - INFO - 
+2025-08-19 14:57:12,488 - INFO - SUMMARY:
+2025-08-19 14:57:12,488 - INFO - • Files processed: 1
+2025-08-19 14:57:12,488 - INFO - • Slides generated: 15
+2025-08-19 14:57:12,488 - INFO - • Output file: output/final_presentation.pptx
+2025-08-19 14:57:12,488 - INFO - • File size: 0.16 MB
+2025-08-19 14:57:12,488 - INFO - 
+2025-08-19 14:57:12,488 - INFO - Output files:
+2025-08-19 14:57:12,488 - INFO - • output/represent.txt - Formatted content
+2025-08-19 14:57:12,488 - INFO - • output/slide_script.json - Generated slides script
+2025-08-19 14:57:12,488 - INFO - • output/final_presentation.pptx - Final PowerPoint presentation
+2025-08-19 14:57:12,489 - INFO - • output/pipeline_results.json - Pipeline execution summary
+2025-08-19 14:57:12,489 - INFO - ============================================================
+2025-08-19 15:24:19,365 - INFO - ============================================================
+2025-08-19 15:24:19,365 - INFO - SLIDE MAKER PIPELINE STARTED
+2025-08-19 15:24:19,365 - INFO - ============================================================
+2025-08-19 15:24:19,365 - INFO - Checking prerequisites...
+2025-08-19 15:24:19,365 - INFO - ✓ Found: settings.yaml
+2025-08-19 15:24:19,365 - INFO - ✓ Found: data/raw_data.txt
+2025-08-19 15:24:19,365 - INFO - ✓ Found: template/template.pptx
+2025-08-19 15:24:19,365 - INFO - ✓ Found: template/cover_slide
+2025-08-19 15:24:19,365 - INFO - ✓ Found: template/agenda_slide
+2025-08-19 15:24:19,365 - INFO - ✓ Found: template/content
+2025-08-19 15:24:19,365 - INFO - ✓ Found: template/section_divider
+2025-08-19 15:24:19,365 - INFO - ✓ Found: template/subtitle
+2025-08-19 15:24:19,365 - INFO - ✓ Output directory ready: output
+2025-08-19 15:24:19,365 - INFO - === STEP 1: CONTENT EXTRACTION ===
+2025-08-19 15:24:19,380 - INFO - Processing file: raw_data.txt
+2025-08-19 15:24:48,332 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-08-19 15:24:48,338 - INFO - ✓ Processed: raw_data.txt
+2025-08-19 15:24:48,339 - INFO - ✓ Content extraction completed. Processed 1 files.
+2025-08-19 15:24:48,339 - INFO - ✓ represent.txt saved to output/
+2025-08-19 15:24:48,339 - INFO - === STEP 2: SCRIPT GENERATION ===
+2025-08-19 15:27:06,756 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-08-19 15:27:06,758 - INFO - ✓ Script generation completed. Generated 11 slides.
+2025-08-19 15:27:06,758 - INFO - ✓ slide_script.json saved to output/
+2025-08-19 15:27:06,758 - INFO - === STEP 3: PRESENTATION BUILDING ===
+2025-08-19 15:27:06,815 - INFO - ✓ Presentation building completed.
+2025-08-19 15:27:06,815 - INFO - ✓ final_presentation.pptx saved to output/
+2025-08-19 15:27:06,815 - INFO - ============================================================
+2025-08-19 15:27:06,815 - INFO - PIPELINE COMPLETED SUCCESSFULLY
+2025-08-19 15:27:06,815 - INFO - ============================================================
+2025-08-19 15:27:06,815 - INFO - Total execution time: 167.45 seconds
+2025-08-19 15:27:06,815 - INFO - 
+2025-08-19 15:27:06,815 - INFO - SUMMARY:
+2025-08-19 15:27:06,815 - INFO - • Files processed: 1
+2025-08-19 15:27:06,815 - INFO - • Slides generated: 11
+2025-08-19 15:27:06,815 - INFO - • Output file: output/final_presentation.pptx
+2025-08-19 15:27:06,815 - INFO - • File size: 0.15 MB
+2025-08-19 15:27:06,815 - INFO - 
+2025-08-19 15:27:06,815 - INFO - Output files:
+2025-08-19 15:27:06,815 - INFO - • output/represent.txt - Formatted content
+2025-08-19 15:27:06,815 - INFO - • output/slide_script.json - Generated slides script
+2025-08-19 15:27:06,815 - INFO - • output/final_presentation.pptx - Final PowerPoint presentation
+2025-08-19 15:27:06,816 - INFO - • output/pipeline_results.json - Pipeline execution summary
+2025-08-19 15:27:06,816 - INFO - ============================================================
+2025-08-19 16:07:43,888 - INFO - ============================================================
+2025-08-19 16:07:43,888 - INFO - SLIDE MAKER PIPELINE STARTED
+2025-08-19 16:07:43,888 - INFO - ============================================================
+2025-08-19 16:07:43,888 - INFO - Checking prerequisites...
+2025-08-19 16:07:43,888 - INFO - ✓ Found: settings.yaml
+2025-08-19 16:07:43,888 - INFO - ✓ Found: data/raw_data.txt
+2025-08-19 16:07:43,888 - INFO - ✓ Found: template/template.pptx
+2025-08-19 16:07:43,888 - INFO - ✓ Found: template/cover_slide
+2025-08-19 16:07:43,888 - INFO - ✓ Found: template/agenda_slide
+2025-08-19 16:07:43,888 - INFO - ✓ Found: template/content
+2025-08-19 16:07:43,889 - INFO - ✓ Found: template/section_divider
+2025-08-19 16:07:43,889 - INFO - ✓ Found: template/subtitle
+2025-08-19 16:07:43,889 - INFO - ✓ Output directory ready: output
+2025-08-19 16:07:43,889 - INFO - === STEP 1: CONTENT EXTRACTION ===
+2025-08-19 16:07:43,903 - INFO - Processing file: raw_data.txt

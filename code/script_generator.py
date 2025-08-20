@@ -105,21 +105,21 @@ class SlideScriptGenerator:
                                 "runs": [{"text": "タスクの目的", "font": {"name": "Noto Sans JP", "size_pt": 17.0, "bold": True, "color": [255, 255, 255]}}],
                                 "alignment": "left",
                                 "line_spacing": {"value": 1.5, "type": "points"},
-                                "space_before_pt": 11.14,
+
                                 "bullet": {"type": "numbered", "style": "arabicPeriod"}
                             },
                             {
                                 "runs": [{"text": "完了済み作業", "font": {"name": "Noto Sans JP", "size_pt": 17.0, "bold": True, "color": [255, 255, 255]}}],
                                 "alignment": "left",
                                 "line_spacing": {"value": 1.5, "type": "points"},
-                                "space_before_pt": 11.14,
+
                                 "bullet": {"type": "numbered", "style": "arabicPeriod"}
                             },
                             {
                                 "runs": [{"text": "次の作業内容", "font": {"name": "Noto Sans JP", "size_pt": 17.0, "bold": True, "color": [255, 255, 255]}}],
                                 "alignment": "left",
                                 "line_spacing": {"value": 1.5, "type": "points"},
-                                "space_before_pt": 11.14,
+
                                 "bullet": {"type": "numbered", "style": "arabicPeriod"}
                             }
                         ]
@@ -191,7 +191,7 @@ class SlideScriptGenerator:
                                 "alignment": "left",
                                 "level": 0,
                                 "line_spacing": {"value": 1.15, "type": "points"},
-                                "space_before_pt": 11.14,
+
                                 "bullet": {"type": "bullet", "char": "●"}
                             },
                             {
@@ -199,7 +199,7 @@ class SlideScriptGenerator:
                                 "alignment": "left",
                                 "level": 1,
                                 "line_spacing": {"value": 1.15, "type": "points"},
-                                "space_before_pt": 11.14,
+
                                 "bullet": {"type": "bullet", "char": "○"}
                             },
                             {
@@ -207,7 +207,7 @@ class SlideScriptGenerator:
                                 "alignment": "left",
                                 "level": 0,
                                 "line_spacing": {"value": 1.15, "type": "points"},
-                                "space_before_pt": 11.14,
+
                                 "bullet": {"type": "bullet", "char": "●"}
                             },
                             {
@@ -215,7 +215,7 @@ class SlideScriptGenerator:
                                 "alignment": "left",
                                 "level": 1,
                                 "line_spacing": {"value": 1.15, "type": "points"},
-                                "space_before_pt": 11.14,
+
                                 "bullet": {"type": "bullet", "char": "○"}
                             },
                             {
@@ -223,7 +223,7 @@ class SlideScriptGenerator:
                                 "alignment": "left",
                                 "level": 0,
                                 "line_spacing": {"value": 1.15, "type": "points"},
-                                "space_before_pt": 11.14,
+
                                 "bullet": {"type": "bullet", "char": "●"}
                             },
                             {
@@ -231,7 +231,7 @@ class SlideScriptGenerator:
                                 "alignment": "left",
                                 "level": 1,
                                 "line_spacing": {"value": 1.15, "type": "points"},
-                                "space_before_pt": 11.14,
+
                                 "bullet": {"type": "bullet", "char": "○"}
                             }
                         ]

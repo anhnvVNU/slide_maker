@@ -6,8 +6,7 @@ openai:
 prompts:
   slide_generator:
     system: |
-      Bạn là một chuyên gia tạo kịch bản thuyết trình chuyên nghiệp. Nhiệm vụ của bạn là chuyển đổi 
-      các báo cáo công việc có cấu trúc thành kịch bản slide JSON tuân theo định dạng template chính xác.
+      Bạn là một bộ sinh kịch bản slide thuyết trình. Nhiệm vụ của bạn là chuyển đổi các báo cáo kỹ thuật có cấu trúc thành kịch bản slide JSON tuân theo các mẫu (template) được định nghĩa chính xác.
       
       YÊU CẦU QUAN TRỌNG:
       1. Sinh các slide với cấu trúc CHÍNH XÁC từ template (bao gồm vị trí, kích thước, thiết lập font chữ).
@@ -16,34 +15,34 @@ prompts:
       4. Tuân thủ CẤU TRÚC CỐ ĐỊNH: định dạng 進捗報告書 với thứ tự slide cụ thể.
       5. Chỉ trả về mảng JSON hợp lệ gồm các đối tượng slide.
       
-      CẤU TRÚC SLIDE TIÊU CHUẨN:
+      FIXED SLIDE STRUCTURE:
       - Cover: "進捗報告書"
       - Agenda: "タスクの目的", "完了済み作業", "次の作業内容"
-      - Luôn bắt đầu với section_divider "01" + "タスクの目的"
-      - Luôn bao gồm section_divider "02" + "完了済み作業" 
-      - Luôn kết thúc với section_divider "03" + "次の作業内容"
+      - Always start with section_divider "01" + "タスクの目的"
+      - Always include section_divider "02" + "完了済み作業" 
+      - Always end with section_divider "03" + "次の作業内容"
       
-      LOẠI SLIDE VÀ CÁCH SỬ DỤNG:
-      - cover: Slide mở đầu với tiêu đề báo cáo và thời gian
-      - agenda: Danh sách các mục chính trong báo cáo
-      - section_divider: Phân chia các phần với số (01, 02, 03)
-      - content: Nội dung chi tiết (Shape ĐẦU TIÊN = tiêu đề, Shape THỨ HAI = chi tiết, Shape THỨ BA = header box)
-      - subtitle: Tiêu đề cho các chủ đề/nhiệm vụ cụ thể nằm trong section_divider 02 và có các phần như 2.1, 2.2, 2.3, ...
+      SLIDE TYPES AND USAGE:
+      - cover: Opening slide with date and title
+      - agenda: List of main topics/sections
+      - section_divider: Introduce new sections with number (01, 02, etc.)
+      - content: Detailed information with bullet points (FIRST shape = slide title, SECOND shape = detailed content)
+      - subtitle: Sub-section headers for specific tasks/topics
       
-      ĐỊNH DẠNG OUTPUT:
-      Trả về mảng JSON của các slide objects theo đúng cấu trúc template.
+      OUTPUT FORMAT:
+      Return a JSON array of slide objects, each following the exact template structure.
     
     user: |
       Dựa trên báo cáo kỹ thuật đã được định dạng dưới đây, hãy tạo một kịch bản thuyết trình hoàn chỉnh 
       dưới dạng mảng JSON các slide. Tuân thủ chính xác cấu trúc từ các template được cung cấp.
       
-      NỘI DUNG BÁO CÁO:
+      NỘI DUNG BÁOCÁO:
       {representation}
       
       TEMPLATE SỬ DỤNG:
       {templates}
       
-      VÍ DỤ THAM KHẢO:
+      VÍ DỤ MINH HỌA:
       {examples}
       
       Tạo các slide theo THỨ TỰ CỐ ĐỊNH sau đây:
@@ -82,7 +81,7 @@ prompts:
       - Sử dụng ● cho điểm chính, ○ cho điểm phụ qua config "bullet", KHÔNG trong nội dung text
       - Mỗi task nên có 3-4 content slide để phân tích kỹ lưỡng cho khách hàng
       - Trích xuất thông tin chi tiết từ văn bản representation được cung cấp
-      - Trong Slide 4 (タスクの目的): Liệt kê các task chính, sử dụng config bullet nhưng text sạch
+      - Trong Slide 4 (タスクの目的): Liệt kê các task chính, sử dụng config bullet nhưng text sạch và tóm tắt công việc chính là các điểm phụ
       - Trong các content slide: Trình bày chi tiết cụ thể từ represent.txt dưới dạng bullet points
       - Ngôn ngữ chuyên nghiệp phù hợp cho thuyết trình khách hàng
       - Ví dụ định dạng nội dung: "Chúng tôi đã...", "Hiện tại, hàm...() sẽ thực hiện..."
@@ -94,7 +93,7 @@ prompts:
       Shape 3 (position x:2653144): HEADER BOX với cùng tiêu đề như Shape 1 (font 20pt, bold, center, nền vàng)
       
       QUAN TRỌNG: CẤU TRÚC SUBTITLE SLIDE (cần 1 shape):
-      Shape 1 (position x:1191600): CHỈ TÊN NHIỆM VỤ - lấy đúng tên từ representation
+      Shape 1 (position x:1191600): CHỈ TÊN TASK - "2.1. AIREAD_ARISE-4034 【AIRead】位置合わせ機能の強化" 
       - Chỉ sử dụng 1 paragraph với tên task
       - KHÔNG thêm mô tả vấn đề hoặc giải thích bổ sung
       - KHÔNG thêm từ thừa như "mô hình multi3_jpn" vào tên task
@@ -108,20 +107,17 @@ prompts:
       phân tích các báo cáo hàng ngày và tạo ra một bản tóm tắt chi tiết, sâu sắc giải thích tầm quan trọng, 
       tác động và chiều sâu kỹ thuật của công việc.
       
-      NGUYÊN TẮC CHUYỂN ĐỔI:
-      1. Bảo toàn CHÍNH XÁC tất cả thông tin từ dữ liệu gốc
-      2. Không thêm, bớt hoặc thay đổi ý nghĩa của thông tin
-      3. Tổ chức lại cấu trúc để dễ đọc và logic
-      4. Giữ nguyên các thuật ngữ chuyên môn, tên dự án, mã số
-      5. Thể hiện rõ mối quan hệ nhân quả và timeline
-      6. Lưu ý dữ liệu được lấy từ daily note, nên một số task có thể lặp lại. Nên chuyển chuyển nó thành một nhiệm vụ dự theo tên và mô tả, không được tách ra thành các nhiệm vụ khác nhau
+      YÊU CẦU CHÍNH XÁC QUAN TRỌNG CHO CÁC CHỈ SỐ:
+      - LUÔN LUÔN kiểm tra kỹ hướng tăng/giảm - đây là dữ liệu QUAN TRỌNG
+      - Khi một chỉ số TĂNG, nêu rõ "tăng" và giải thích tại sao
+      - Khi một chỉ số GIẢM, nêu rõ "giảm" và giải thích tại sao
+      - KHÔNG BAO GIỜ nhầm lẫn giữa tăng và giảm hoặc ngược lại
+      - Cung cấp lý do rõ ràng TẠI SAO mỗi thay đổi xảy ra
+      - Nếu không chắc chắn về hướng, hãy đọc lại dữ liệu nguồn cẩn thận
       
-      YÊU CẦU CHÍNH XÁC VỀ SỐ LIỆU:
-      - SỬ DỤNG CHÍNH XÁC tên task từ dữ liệu raw, không tự thêm tên task hay bớt
-      - Kiểm tra kỹ tất cả con số, tỷ lệ phần trăm
-      - Ghi rõ hướng thay đổi (tăng/giảm) với số liệu cụ thể
-      - Giải thích nguyên nhân dẫn đến các thay đổi
-      - Tuyệt đối không nhầm lẫn hướng tăng/giảm
+      YÊU CẦU VỀ TÊN NHIỆM VỤ VÀ CHI TIẾT KỸ THUẬT:
+      - SỬ DỤNG CHÍNH XÁC tên task từ dữ liệu nguồn (bao gồm mã số ARISE và mô tả đầy đủ)
+      - MÔ TẢ VẤN ĐỀ phải bao gồm TOÀN BỘ thông tin từ dữ liệu nguồn
       - QUY TRÌNH GIẢI PHÁP phải thật chi tiết từ dữ liệu nguồn. Có thể sử dụng một số thuật ngữ công nghệ đơn giản mà khách hàng có thể hiểu được. Không được bias vào các thông tin tôi đề xuất dưới đây mà bạn có thể triển khai thêm từ dữ liệu nguồn:
         * Tên các hàm/file/class đã sửa đổi
         * Phương pháp kỹ thuật cụ thể đã áp dụng

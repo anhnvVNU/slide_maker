@@ -1,367 +1,259 @@
 #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
 """
-Main script for Slide Maker
-Complete pipeline: Raw text → Slide Script → PowerPoint presentation
+Main orchestrator for the slide maker pipeline
+Runs content extraction, script generation, and template building in sequence
 """
 
+import os
 import sys
 import json
-import io
+import time
 from pathlib import Path
+from typing import Dict, Any
+import logging
 
-# Add code directory to path for imports
-sys.path.append(str(Path(__file__).parent / "code"))
+# Add the code directory to the path to import modules
+current_dir = Path(__file__).parent
+code_dir = current_dir / "code"
+sys.path.insert(0, str(code_dir))
 
-from script_generator import SlideScriptGenerator as ScriptGenerator
-from pptx import Presentation
-from pptx.util import Pt, Emu
-from pptx.dml.color import RGBColor
-from pptx.enum.text import PP_ALIGN
+# Import the modules
+from content_extractor import ContentExtractor
+from script_generator import SlideScriptGenerator
+from master_template_builder import main as build_presentation
 
+def setup_logging() -> logging.Logger:
+    """Setup logging configuration"""
+    logging.basicConfig(
+        level=logging.INFO,
+        format='%(asctime)s - %(levelname)s - %(message)s',
+        handlers=[
+            logging.FileHandler('output/slide_maker.log'),
+            logging.StreamHandler()
+        ]
+    )
+    return logging.getLogger(__name__)
 
-def add_text_to_slide(slide, shape_data):
-    """Add a text shape to the slide based on shape data from JSON"""
-    position = shape_data.get('position', {})
-    size = shape_data.get('size', {})
+def check_prerequisites() -> bool:
+    """Check if all required files and directories exist"""
+    logger = logging.getLogger(__name__)
     
-    # Convert EMU values
-    left = Emu(position.get('x', 0))
-    top = Emu(position.get('y', 0))
-    width = Emu(size.get('width', 1000000))
-    height = Emu(size.get('height', 500000))
+    required_files = [
+        "settings.yaml",
+        "data/raw_data.txt",
+        "template/template.pptx"
+    ]
     
-    # Add textbox
-    textbox = slide.shapes.add_textbox(left, top, width, height)
-    text_frame = textbox.text_frame
-    text_frame.clear()
+    required_dirs = [
+        "template/cover_slide",
+        "template/agenda_slide", 
+        "template/content",
+        "template/section_divider",
+        "template/subtitle"
+    ]
     
-    # Configure text frame
-    text_frame.word_wrap = True
-    text_frame.margin_left = Emu(45720)
-    text_frame.margin_right = Emu(45720)
-    text_frame.margin_top = Emu(22860)
-    text_frame.margin_bottom = Emu(22860)
+    all_exists = True
     
-    # Add paragraphs
-    paragraphs_data = shape_data.get('paragraphs', [])
-    
-    for i, para_data in enumerate(paragraphs_data):
-        # Add paragraph
-        if i == 0:
-            paragraph = text_frame.paragraphs[0]
+    # Check files
+    for file_path in required_files:
+        if not Path(file_path).exists():
+            logger.error(f"Required file missing: {file_path}")
+            all_exists = False
         else:
-            paragraph = text_frame.add_paragraph()
-        
-        # Set alignment
-        alignment_map = {
-            'left': PP_ALIGN.LEFT,
-            'center': PP_ALIGN.CENTER,
-            'right': PP_ALIGN.RIGHT,
-            'justify': PP_ALIGN.JUSTIFY
-        }
-        alignment = para_data.get('alignment', 'left')
-        if alignment in alignment_map:
-            paragraph.alignment = alignment_map[alignment]
-        
-        # Set line spacing and paragraph spacing
-        line_spacing = para_data.get('line_spacing', {})
-        if line_spacing:
-            spacing_value = line_spacing.get('value', 1.0)
-            spacing_type = line_spacing.get('type', 'multiple')
-            
-            if spacing_type == 'points':
-                paragraph.space_after = Pt(spacing_value * 12)
-                if spacing_value > 1.0:
-                    paragraph.line_spacing = spacing_value
-            else:
-                paragraph.line_spacing = spacing_value
-        
-        # Set space before if specified
-        space_before = para_data.get('space_before_pt', para_data.get('space_before', 0))
-        if space_before:
-            paragraph.space_before = Pt(space_before)
-        
-        # Set space after if specified  
-        space_after = para_data.get('space_after_pt', para_data.get('space_after', 0))
-        if space_after:
-            paragraph.space_after = Pt(space_after)
-        elif i < len(paragraphs_data) - 1:
-            # Add default spacing after each paragraph (except last) if not explicitly set
-            paragraph.space_after = Pt(12)
-        
-        # Set paragraph level for bullets
-        level = para_data.get('level', 0)
-        paragraph.level = level
-        
-        # Handle bullets
-        bullet_data = para_data.get('bullet', {})
-        if bullet_data:
-            bullet_type = bullet_data.get('type', 'none')
-            if bullet_type == 'bullet':
-                bullet_char = bullet_data.get('char', '•')
-                if bullet_char and len(bullet_char) > 0:
-                    # Use level from JSON data, don't override based on character
-                    paragraph.level = level
-                    
-                    # Enable bullet formatting by accessing XML
-                    try:
-                        from lxml import etree
-                        # Access the paragraph XML element
-                        p_elem = paragraph._p
-                        
-                        # Find or create pPr (paragraph properties)
-                        pPr = p_elem.find('.//a:pPr', {'a': 'http://schemas.openxmlformats.org/drawingml/2006/main'})
-                        if pPr is None:
-                            pPr = etree.SubElement(p_elem, '{http://schemas.openxmlformats.org/drawingml/2006/main}pPr')
-                        
-                        # Set indentation based on level (matching template)
-                        if level == 0:
-                            pPr.set('indent', '-317500')  # Negative indent pulls bullet left
-                            pPr.set('marL', '457200')     # Left margin for text content
-                        elif level == 1:
-                            pPr.set('indent', '-317500')  # Same negative indent for both levels
-                            pPr.set('marL', '914400')     # Larger left margin for level 1
-                        
-                        # Add bullet character formatting
-                        buChar = etree.SubElement(pPr, '{http://schemas.openxmlformats.org/drawingml/2006/main}buChar')
-                        buChar.set('char', bullet_char)
-                        
-                    except Exception as e:
-                        # If XML manipulation fails, fall back to just setting level
-                        print(f"Warning: Could not set bullet format: {e}")
-                        pass
-            elif bullet_type == 'numbered':
-                # Handle numbered lists
-                # Set the paragraph as a numbered list
-                paragraph.level = level  # Use the level from para_data
-                
-                # Enable numbering by accessing the XML element
-                try:
-                    from lxml import etree
-                    # Access the paragraph XML element
-                    p_elem = paragraph._p
-                    
-                    # Find or create pPr (paragraph properties)
-                    pPr = p_elem.find('.//a:pPr', {'a': 'http://schemas.openxmlformats.org/drawingml/2006/main'})
-                    if pPr is None:
-                        pPr = etree.SubElement(p_elem, '{http://schemas.openxmlformats.org/drawingml/2006/main}pPr')
-                    
-                    # Add numbering format
-                    buAutoNum = etree.SubElement(pPr, '{http://schemas.openxmlformats.org/drawingml/2006/main}buAutoNum')
-                    buAutoNum.set('type', 'arabicPeriod')  # Creates 1. 2. 3. format
-                    buAutoNum.set('startAt', '1')
-                    
-                except Exception as e:
-                    # If XML manipulation fails, fall back to just setting level
-                    print(f"Warning: Could not set numbering format: {e}")
-                    pass
-        
-        # Add text runs
-        runs_data = para_data.get('runs', [])
-        for j, run_data in enumerate(runs_data):
-            # If there are multiple runs and we want them on separate lines,
-            # add a line break between them
-            if j > 0:
-                # Add a line break before this run (except for the first run)
-                run = paragraph.add_run()
-                run.text = '\n'
-            
-            run = paragraph.add_run()
-            run.text = run_data.get('text', '')
-            
-            # Format font
-            font_data = run_data.get('font', {})
-            font = run.font
-            
-            # Set font name
-            font_name = font_data.get('name', 'Arial')
-            if font_name:
-                font.name = font_name
-            
-            # Set font size
-            font_size = font_data.get('size_pt')
-            if font_size:
-                font.size = Pt(font_size)
-            else:
-                font.size = Pt(12)
-            
-            # Set bold
-            if 'bold' in font_data:
-                font.bold = font_data['bold']
-            
-            # Set italic
-            if 'italic' in font_data:
-                font.italic = font_data['italic']
-            
-            # Set color
-            color = font_data.get('color')
-            if color and isinstance(color, list) and len(color) >= 3:
-                font.color.rgb = RGBColor(color[0], color[1], color[2])
-
-
-def main():
-    """
-    Main function to run the complete slide generation pipeline
-    """
-    print("="*70)
-    print(" SLIDE MAKER - Presentation Generation Pipeline")
-    print("="*70)
+            logger.info(f"✓ Found: {file_path}")
     
-    # Define paths
-    base_dir = Path(__file__).parent
-    input_file = base_dir / "data" / "raw_data.txt"
-    output_dir = base_dir / "output"
-    script_file = output_dir / "slide_script.json"
-    template_path = base_dir / "template" / "template.pptx"
+    # Check directories
+    for dir_path in required_dirs:
+        if not Path(dir_path).exists():
+            logger.error(f"Required directory missing: {dir_path}")
+            all_exists = False
+        else:
+            logger.info(f"✓ Found: {dir_path}")
     
-    # Create output directory
-    output_dir.mkdir(parents=True, exist_ok=True)
+    # Create output directory if it doesn't exist
+    output_dir = Path("output")
+    output_dir.mkdir(exist_ok=True)
+    logger.info(f"✓ Output directory ready: {output_dir}")
+    
+    return all_exists
+
+def run_content_extraction() -> Dict[str, Any]:
+    """Run content extraction step"""
+    logger = logging.getLogger(__name__)
+    logger.info("=== STEP 1: CONTENT EXTRACTION ===")
     
     try:
-        # STEP 1: Generate slide script from raw data
-        print("\n📝 STEP 1: Generating Slide Script")
-        print("-" * 50)
+        extractor = ContentExtractor()
         
-        generator = ScriptGenerator()
+        # Process files from data folder
+        data_folder = Path("data")
+        results = []
         
-        # Read input file
-        print(f"Reading input from: {input_file}")
-        with open(input_file, 'r', encoding='utf-8') as f:
-            raw_text = f.read()
+        if data_folder.exists():
+            for file in data_folder.iterdir():
+                if file.is_file() and file.suffix in ['.txt', '.csv', '.xlsx']:
+                    logger.info(f"Processing file: {file.name}")
+                    result = extractor.process_file(str(file), save_represent=True)
+                    results.append(result)
+                    logger.info(f"✓ Processed: {file.name}")
+        else:
+            logger.error("Data folder not found!")
+            return {"success": False, "error": "Data folder not found"}
         
-        # Save raw text to represent.txt for the generator
-        represent_file = output_dir / "represent.txt"
-        with open(represent_file, 'w', encoding='utf-8') as f:
-            f.write(raw_text)
-        print(f"✓ Saved raw text to: {represent_file.name}")
+        if not results:
+            logger.error("No data files found to process!")
+            return {"success": False, "error": "No data files found"}
         
-        # Generate slides using the generator's methods
-        print("Generating slide structure...")
-        slides = generator.generate_presentation_script()
-        print(f"✓ Generated {len(slides)} slides")
+        logger.info(f"✓ Content extraction completed. Processed {len(results)} files.")
+        logger.info("✓ represent.txt saved to output/")
         
-        # Save script
-        script_path = generator.save_script(slides)
-        print(f"✓ Saved slide script to: {script_file.name}")
-        
-        # STEP 2: Build presentation from script and template
-        print("\n🎨 STEP 2: Building PowerPoint Presentation")
-        print("-" * 50)
-        
-        # Load template
-        print(f"Loading master template: {template_path.name}")
-        prs = Presentation(str(template_path))
-        
-        # Map layouts from template slides
-        layout_map = {}
-        if len(prs.slides) >= 4:
-            layout_map['cover'] = prs.slides[0].slide_layout
-            layout_map['agenda_slide'] = prs.slides[1].slide_layout
-            layout_map['subtitle'] = prs.slides[2].slide_layout
-            layout_map['section_divider'] = prs.slides[2].slide_layout
-            layout_map['content'] = prs.slides[3].slide_layout
-            print("✓ Identified layouts from template")
-        
-        original_slide_count = len(prs.slides)
-        
-        # Load generated script
-        with open(script_file, 'r', encoding='utf-8') as f:
-            slides_data = json.load(f)
-        
-        # Create slides with content
-        print(f"Creating {len(slides_data)} slides...")
-        for i, slide_data in enumerate(slides_data, 1):
-            slide_type = slide_data.get('slide_type', 'content')
-            
-            # Get appropriate layout
-            layout = layout_map.get(slide_type, layout_map.get('content'))
-            
-            # Add new slide
-            new_slide = prs.slides.add_slide(layout)
-            
-            # Map template slide index
-            template_slide_idx = None
-            if slide_type == 'cover':
-                template_slide_idx = 0
-            elif slide_type == 'agenda_slide':
-                template_slide_idx = 1
-            elif slide_type in ['subtitle', 'section_divider']:
-                template_slide_idx = 2
-            elif slide_type == 'content':
-                template_slide_idx = 3
-            
-            # Copy images from template
-            if template_slide_idx is not None and template_slide_idx < original_slide_count:
-                template_slide = prs.slides[template_slide_idx]
-                
-                for shape in template_slide.shapes:
-                    # Copy images
-                    if shape.shape_type == 13:  # Picture
-                        try:
-                            image_bytes = shape.image.blob
-                            new_slide.shapes.add_picture(
-                                io.BytesIO(image_bytes), 
-                                shape.left, shape.top, 
-                                shape.width, shape.height
-                            )
-                        except:
-                            pass
-            
-            # Remove empty placeholders
-            shapes_to_remove = []
-            for shape in new_slide.shapes:
-                if hasattr(shape, 'text_frame') and shape.has_text_frame:
-                    try:
-                        if shape.placeholder_format and (not shape.text or not shape.text.strip()):
-                            shapes_to_remove.append(shape)
-                    except:
-                        if not shape.text or not shape.text.strip():
-                            shapes_to_remove.append(shape)
-            
-            for shape in shapes_to_remove:
-                sp = shape._element
-                sp.getparent().remove(sp)
-            
-            # Add content from JSON
-            shapes_data = slide_data.get('shapes', [])
-            for shape_data in shapes_data:
-                if shape_data.get('type') == 'text':
-                    add_text_to_slide(new_slide, shape_data)
-            
-            print(f"  ✓ Slide {i:2d}: {slide_type}")
-        
-        # Remove original template slides
-        print(f"Removing {original_slide_count} template slides...")
-        for i in range(original_slide_count):
-            xml_slides = prs.slides._sldIdLst
-            slides = list(xml_slides)
-            if slides:
-                xml_slides.remove(slides[0])
-        
-        # Save final presentation
-        output_file = output_dir / "final_presentation.pptx"
-        prs.save(str(output_file))
-        print(f"✓ Saved presentation: {output_file.name}")
-        
-        # Success summary
-        print("\n" + "="*70)
-        print(" ✅ SUCCESS! Presentation Generated")
-        print("="*70)
-        print(f" 📄 Input:        {input_file.name}")
-        print(f" 📋 Script:       {script_file.name}")
-        print(f" 🎯 Presentation: {output_file.name}")
-        print(f" 📊 Total slides: {len(slides_data)}")
-        print("="*70)
+        return {
+            "success": True,
+            "files_processed": len(results),
+            "results": results
+        }
         
     except Exception as e:
-        print(f"\n❌ Error: {e}")
-        print("\nTroubleshooting:")
-        print("1. Check input file exists: data/raw_data.txt")
-        print("2. Ensure template exists: template/template.pptx")
-        print("3. Verify all dependencies are installed")
-        import traceback
-        traceback.print_exc()
+        logger.error(f"Content extraction failed: {str(e)}")
+        return {"success": False, "error": str(e)}
 
+def run_script_generation() -> Dict[str, Any]:
+    """Run script generation step"""
+    logger = logging.getLogger(__name__)
+    logger.info("=== STEP 2: SCRIPT GENERATION ===")
+    
+    try:
+        # Check if represent.txt exists
+        represent_file = Path("output/represent.txt")
+        if not represent_file.exists():
+            logger.error("represent.txt not found. Run content extraction first.")
+            return {"success": False, "error": "represent.txt not found"}
+        
+        generator = SlideScriptGenerator()
+        slides = generator.run()
+        
+        logger.info(f"✓ Script generation completed. Generated {len(slides)} slides.")
+        logger.info("✓ slide_script.json saved to output/")
+        
+        return {
+            "success": True,
+            "slides_generated": len(slides),
+            "slides": slides
+        }
+        
+    except Exception as e:
+        logger.error(f"Script generation failed: {str(e)}")
+        return {"success": False, "error": str(e)}
+
+def run_presentation_build() -> Dict[str, Any]:
+    """Run presentation building step"""
+    logger = logging.getLogger(__name__)
+    logger.info("=== STEP 3: PRESENTATION BUILDING ===")
+    
+    try:
+        # Check if slide_script.json exists
+        script_file = Path("output/slide_script.json")
+        if not script_file.exists():
+            logger.error("slide_script.json not found. Run script generation first.")
+            return {"success": False, "error": "slide_script.json not found"}
+        
+        # Run the presentation builder
+        build_presentation()
+        
+        # Check if the output file was created
+        output_file = Path("output/final_presentation.pptx")
+        if output_file.exists():
+            logger.info("✓ Presentation building completed.")
+            logger.info("✓ final_presentation.pptx saved to output/")
+            return {
+                "success": True,
+                "output_file": str(output_file),
+                "file_size": output_file.stat().st_size
+            }
+        else:
+            logger.error("Presentation file was not created.")
+            return {"success": False, "error": "Output file not created"}
+        
+    except Exception as e:
+        logger.error(f"Presentation building failed: {str(e)}")
+        return {"success": False, "error": str(e)}
+
+def main():
+    """Main function to run the complete pipeline"""
+    start_time = time.time()
+    logger = setup_logging()
+    
+    logger.info("="*60)
+    logger.info("SLIDE MAKER PIPELINE STARTED")
+    logger.info("="*60)
+    
+    # Check prerequisites
+    logger.info("Checking prerequisites...")
+    if not check_prerequisites():
+        logger.error("Prerequisites check failed. Please ensure all required files exist.")
+        sys.exit(1)
+    
+    # Store results for summary
+    pipeline_results = {}
+    
+    # Step 1: Content Extraction
+    extraction_result = run_content_extraction()
+    pipeline_results["extraction"] = extraction_result
+    
+    if not extraction_result["success"]:
+        logger.error("Pipeline failed at content extraction step.")
+        sys.exit(1)
+    
+    # Step 2: Script Generation
+    script_result = run_script_generation()
+    pipeline_results["script"] = script_result
+    
+    if not script_result["success"]:
+        logger.error("Pipeline failed at script generation step.")
+        sys.exit(1)
+    
+    # Step 3: Presentation Building
+    build_result = run_presentation_build()
+    pipeline_results["build"] = build_result
+    
+    if not build_result["success"]:
+        logger.error("Pipeline failed at presentation building step.")
+        sys.exit(1)
+    
+    # Success summary
+    end_time = time.time()
+    total_time = end_time - start_time
+    
+    logger.info("="*60)
+    logger.info("PIPELINE COMPLETED SUCCESSFULLY")
+    logger.info("="*60)
+    logger.info(f"Total execution time: {total_time:.2f} seconds")
+    logger.info("")
+    logger.info("SUMMARY:")
+    logger.info(f"• Files processed: {extraction_result.get('files_processed', 0)}")
+    logger.info(f"• Slides generated: {script_result.get('slides_generated', 0)}")
+    logger.info(f"• Output file: {build_result.get('output_file', 'N/A')}")
+    
+    if build_result.get('file_size'):
+        file_size_mb = build_result['file_size'] / (1024 * 1024)
+        logger.info(f"• File size: {file_size_mb:.2f} MB")
+    
+    logger.info("")
+    logger.info("Output files:")
+    logger.info("• output/represent.txt - Formatted content")
+    logger.info("• output/slide_script.json - Generated slides script")
+    logger.info("• output/final_presentation.pptx - Final PowerPoint presentation")
+    
+    # Save pipeline results
+    with open("output/pipeline_results.json", "w", encoding="utf-8") as f:
+        pipeline_results["execution_time"] = total_time
+        pipeline_results["timestamp"] = time.strftime("%Y-%m-%d %H:%M:%S")
+        json.dump(pipeline_results, f, ensure_ascii=False, indent=2)
+    
+    logger.info("• output/pipeline_results.json - Pipeline execution summary")
+    logger.info("="*60)
 
 if __name__ == "__main__":
     main()

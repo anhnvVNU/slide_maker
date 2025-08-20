@@ -64,18 +64,14 @@ def add_text_to_slide(slide, shape_data):
         if alignment in alignment_map:
             paragraph.alignment = alignment_map[alignment]
         
-        # Set line spacing and paragraph spacing
+        # Set line spacing - KHÔNG tạo space_after để match template gốc
         line_spacing = para_data.get('line_spacing', {})
         if line_spacing:
             spacing_value = line_spacing.get('value', 1.0)
             spacing_type = line_spacing.get('type', 'multiple')
              
-            if spacing_type == 'points':
-                paragraph.space_after = Pt(spacing_value * 12)
-                if spacing_value > 1.0:
-                    paragraph.line_spacing = spacing_value
-            else:
-                paragraph.line_spacing = spacing_value
+            # Template gốc chỉ có line_spacing, KHÔNG có space_after
+            paragraph.line_spacing = spacing_value
         
         # Set space before if specified
         space_before = para_data.get('space_before_pt', para_data.get('space_before', 0))
@@ -86,9 +82,10 @@ def add_text_to_slide(slide, shape_data):
         space_after = para_data.get('space_after_pt', para_data.get('space_after', 0))
         if space_after:
             paragraph.space_after = Pt(space_after)
-        elif i < len(paragraphs_data) - 1:
-            # Add default spacing after each paragraph (except last) if not explicitly set
-            paragraph.space_after = Pt(12)
+        # elif i < len(paragraphs_data) - 1:
+        #     # Add default spacing after each paragraph (except last) if not explicitly set
+        #     # Template gốc KHÔNG CÓ spacing - tắt để match với gốc
+        #     paragraph.space_after = Pt(6)
         
         # Set paragraph level for bullets
         level = para_data.get('level', 0)
@@ -101,7 +98,7 @@ def add_text_to_slide(slide, shape_data):
             if bullet_type == 'bullet':
                 bullet_char = bullet_data.get('char', '•')
                 if bullet_char and len(bullet_char) > 0:
-                    # Use level from JSON data, don't override based on character
+                    # Use level from JSON data
                     paragraph.level = level
                     
                     # Enable bullet formatting by accessing XML
@@ -146,6 +143,11 @@ def add_text_to_slide(slide, shape_data):
                     pPr = p_elem.find('.//a:pPr', {'a': 'http://schemas.openxmlformats.org/drawingml/2006/main'})
                     if pPr is None:
                         pPr = etree.SubElement(p_elem, '{http://schemas.openxmlformats.org/drawingml/2006/main}pPr')
+                    
+                    # Set indentation for numbered lists (matching template)
+                    # Template gốc: indent=-336550 EMU (-26.5pt), marL=457200 EMU (36.0pt)
+                    pPr.set('indent', '-336550')  # Negative indent pulls number left
+                    pPr.set('marL', '457200')     # Left margin for text content (0.5 inch)
                     
                     # Add numbering format
                     buAutoNum = etree.SubElement(pPr, '{http://schemas.openxmlformats.org/drawingml/2006/main}buAutoNum')
@@ -198,6 +200,12 @@ def add_text_to_slide(slide, shape_data):
             color = font_data.get('color')
             if color and isinstance(color, list) and len(color) >= 3:
                 font.color.rgb = RGBColor(color[0], color[1], color[2])
+        
+        # Special handling for numbered lists - force white color for Google Slides compatibility
+        # This runs after all text runs are created and formatted
+        if bullet_data.get('type') == 'numbered':
+            for run in paragraph.runs:
+                run.font.color.rgb = RGBColor(255, 255, 255)  # Force white for numbered lists
 
 def main():
     # Define paths

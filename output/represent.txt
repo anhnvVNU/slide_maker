@@ -3,57 +3,59 @@ BÁO CÁO KỸ THUẬT HÀNG TUẦN
 Thời gian: 08/07/2025 - 08/13/2025
 
 TÓM TẮT ĐIỀU HÀNH:
-Trong tuần này, nhóm đã hoàn thành nhiều nhiệm vụ quan trọng nhằm cải thiện hiệu suất và độ chính xác của mô hình nhận diện văn bản. Những cải tiến này không chỉ giảm thiểu lỗi khi nhận diện các ký tự phức tạp mà còn giúp tối ưu hóa tài nguyên hệ thống, đảm bảo không gây ra vấn đề lưu trữ cho người dùng.
+Trong tuần này, chúng tôi đã hoàn thành một số nhiệm vụ quan trọng nhằm cải thiện độ chính xác của các mô hình nhận diện văn bản và tối ưu hóa quy trình xử lý tạm thời. Việc cải thiện độ chính xác của mô hình multi3_jpn từ 0% lên 92% cho các trường hợp long_comp và từ 19% lên 92% cho ký tự 「〃」 đã cho thấy sự tiến bộ rõ rệt trong khả năng nhận diện của hệ thống. Đồng thời, việc xóa các thư mục tạm thời không cần thiết giúp giảm thiểu dung lượng lưu trữ và cải thiện hiệu suất hệ thống.
 
 CÁC NHIỆM VỤ ĐÃ HOÀN THÀNH:
 
 NHIỆM VỤ 1: AIREAD_ARISE-4034【AIRead】位置合わせ機能の強化: tăng độ chính xác của alignment function
 -------------------
-Mô tả Vấn đề: Một số biểu mẫu bị lệch do lấy điểm đặc trưng từ ảnh đã tiền xử lý, trong khi template dùng ảnh gốc. Điều này dẫn đến sự không chính xác trong các kết quả căn chỉnh, ảnh hưởng đến quy trình làm việc của khách hàng, vì các ảnh đầu vào không khớp với ảnh mẫu.
+Mô tả Vấn đề: Một số biểu mẫu bị lệch do lấy điểm đặc trưng từ ảnh đã tiền xử lý, trong khi template dùng ảnh gốc. Điều này làm ảnh hưởng đến tính chính xác của quá trình căn chỉnh và cần phải đảm bảo rằng input cũng là ảnh gốc. Ngoài ra, việc xuất các file debug không cần thiết gây lãng phí tài nguyên lưu trữ.
 
 Quy trình Giải pháp:
-▪ Vấn đề hiện tại: Cần đảm bảo rằng ảnh đầu vào được sử dụng cho căn chỉnh là ảnh gốc, không phải ảnh đã qua tiền xử lý, để tránh lỗi căn chỉnh.
-▪ Chúng tôi đã sửa ảnh template thành ảnh trước khi tiền xử lý, thay vì truyền binary thì truyền src để lấy warp_affine.
-▪ Implementation chi tiết: đã sửa đổi file MultiCharRecognitionManager.java, cập nhật hàm căn chỉnh để sử dụng ảnh gốc cho quá trình căn chỉnh.
-▪ Testing đã thực hiện: đã thử nghiệm với ảnh template nghiêng và xoay ở các góc khác nhau, đảm bảo rằng chức năng căn chỉnh hoạt động chính xác.
-▪ Kết quả đo lường: Quá trình căn chỉnh hoạt động tốt với ảnh raw chưa qua xử lý, đảm bảo độ chính xác.
-▪ Quality control: Khi bật IS_DEBUG = false, các ảnh debug sẽ không được in ra, không gây ra lộn xộn trong thư mục.
+▪ Vấn đề hiện tại: Việc sử dụng ảnh đã tiền xử lý làm giảm độ chính xác của quá trình căn chỉnh, tác động trực tiếp đến khả năng nhận diện văn bản của hệ thống.
+▪ Chúng tôi đã sửa ảnh template thành ảnh trước khi tiền xử lý để đảm bảo rằng tính chính xác của alignment function được duy trì.
+▪ Implementation chi tiết: Chúng tôi đã điều chỉnh hàm warp_affine trong MultiCharRecognitionManager.java để truyền src thay vì binary.
+▪ Configuration changes: Chúng tôi đã sử dụng config IS_DEBUG để kiểm soát việc xuất file debug; khi IS_DEBUG = false, các ảnh debug sẽ không được xuất.
+▪ Testing thực hiện: Đã thử nghiệm với ảnh template nghiêng và xoay để xác minh tính chính xác của quá trình căn chỉnh.
+▪ Kết quả đo lường: Quá trình căn chỉnh hoạt động tốt với ảnh raw chưa qua tiền xử lý, đảm bảo tính chính xác cao.
+▪ Quality control: Đảm bảo không có regression và hệ thống hoạt động ổn định khi không có file debug.
 
-Kết quả: Quá trình căn chỉnh cải thiện đáng kể, giảm thiểu lỗi căn chỉnh khi sử dụng ảnh gốc. 
-Phân tích: Việc sử dụng ảnh gốc cho căn chỉnh đã tạo ra sự khác biệt lớn trong độ chính xác. Điều này chứng tỏ rằng chất lượng đầu vào ảnh hưởng trực tiếp đến kết quả cuối cùng.
-Nhận xét: Kết quả đạt được đã cải thiện tính ổn định của hệ thống và không gây ra sự gián đoạn trong quy trình làm việc của khách hàng.
+Kết quả: Quá trình căn chỉnh hoạt động tốt và không còn xuất các file debug không cần thiết.
+Phân tích: Việc chuyển đổi từ ảnh đã tiền xử lý sang ảnh gốc giúp cải thiện độ chính xác của quá trình căn chỉnh, từ đó nâng cao khả năng nhận diện văn bản.
+Nhận xét: Kết quả đạt được cho thấy sự ổn định và hiệu suất của hệ thống được cải thiện, giảm thiểu lãng phí tài nguyên.
 
-NHIỆM VỤ 2: AIREAD_ARISE-4157【multi3_jpn】Cải thiện độ chính xác mô hình multi3_jpn
+NHIỆM VỤ 2: AIREAD_ARISE-4157 【multi3_jpn】Cải thiện độ chính xác mô hình multi3_jpn
 -------------------
-Mô tả Vấn đề: Mô hình hiện tại gặp khó khăn trong việc nhận diện các ký tự dài và ký tự phức tạp như 「〃」, dẫn đến việc đọc sai và không chính xác.
+Mô tả Vấn đề: Mô hình multi3_jpn gặp khó khăn trong việc nhận diện các component dài và ký tự đặc biệt như 「〃」, dẫn đến việc đọc sai và không chính xác trong một số trường hợp, ảnh hưởng đến chất lượng đầu ra.
 
 Quy trình Giải pháp:
-▪ Vấn đề hiện tại: Hệ thống hiện tại dễ bị đọc sai đối với các component có nhiều chữ và các ký tự đặc biệt, ảnh hưởng đến độ chính xác tổng thể của mô hình.
-▪ Chúng tôi đã thực hiện các thử nghiệm với các trường hợp đặc biệt để đánh giá độ chính xác của mô hình multi3_jpn.
-▪ Implementation chi tiết: đã kiểm tra lại hàm preprocess() và phát hiện rằng ảnh dài bị vỡ nét do resize cố định.
-▪ Testing đã thực hiện: Chúng tôi đã thử nghiệm với 100 ảnh và phân tích lỗi trong quá trình nhận diện.
-▪ Kết quả đo lường: Độ chính xác của mô hình trong việc nhận diện ký tự dài đã tăng từ 0% lên 91% và ký tự 「〃」 đã đạt được độ chính xác 100%.
-▪ Quality control: Đã kiểm tra lại toàn bộ quy trình để đảm bảo rằng không có sự suy giảm hiệu suất ở các trường hợp khác.
+▪ Vấn đề hiện tại: Các component dài (~70 ký tự/câu) và ký tự 「〃」 bị nhận diện sai, ảnh hưởng đến khả năng xử lý văn bản.
+▪ Chúng tôi đã test riêng một số case components dài trên code PaddleOCRv5 và code dự án để xác định nguyên nhân.
+▪ Implementation chi tiết: Đã xác định rằng preprocess() cũ với resize cố định và padding trắng gây ra lỗi cho multi3_jpn, làm vỡ nét ảnh dài và sai lệch trong dự đoán.
+▪ Chúng tôi đã sửa lại phần resize trong hàm preprocess để ảnh dài được resize về chiều cao 48px cố định, còn chiều rộng giữ tỉ lệ ban đầu.
+▪ Testing thực hiện: Đã thực hiện test với nhiều trường hợp khác nhau, bao gồm long_comp và các ký tự đặc biệt.
+▪ Kết quả đo lường: Độ chính xác cải thiện đáng kể cho long_comp từ 0/100 lên 92/100, cho các ký tự chứa số từ 1/100 lên 99/100, và ký tự 「〃」 từ 19/100 lên 92/100.
+▪ Quality control: Đảm bảo không có regression và hệ thống hoạt động ổn định với các test cases đã kiểm tra.
 
-Kết quả: Đã đạt được độ chính xác cao hơn trong việc nhận diện các ký tự phức tạp, giảm thiểu lỗi nhận diện từ 100% xuống còn 9%.
-Phân tích: Việc cải thiện quy trình tiền xử lý ảnh đã giúp mô hình hoạt động hiệu quả hơn, điều này thể hiện rõ ràng trong các bài kiểm tra thực tế.
-Nhận xét: Sau khi thực hiện các cải tiến, mô hình đã thể hiện độ ổn định tốt hơn và có khả năng nhận diện chính xác hơn các ký tự phức tạp.
+Kết quả: Độ chính xác của mô hình đã cải thiện rõ rệt với long_comp đạt 92%, ký tự chứa số 99% và ký tự 「〃」 đạt 92%.
+Phân tích: Sự thay đổi này giúp cải thiện đáng kể khả năng nhận diện của mô hình, thể hiện rõ mối liên hệ giữa việc tối ưu hóa quy trình tiền xử lý và chất lượng đầu ra.
+Nhận xét: Kết quả đạt được không chỉ cải thiện độ chính xác mà còn đảm bảo tính ổn định và hiệu suất của mô hình.
 
-NHIỆM VỤ 3: AIREAD_ARISE-4149【AIRead】Trong folder Temp của USERPROFILE còn tồn tại onnxruntime-java
+NHIỆM VỤ 3: AIREAD_ARISE-4149 【AIRead】Trong folder Temp của USERPROFILE còn tồn tại onnxruntime-java
 -------------------
-Mô tả Vấn đề: Mỗi lần chạy AIRead sẽ tạo ra một thư mục tạm thời trong %USERPROFILE%\AppData\Local\Temp, dẫn đến việc chiếm dung lượng đáng kể nếu số lần chạy tăng lên.
+Mô tả Vấn đề: Mỗi lần chạy AIRead sẽ tạo ra một thư mục tạm thời trong %USERPROFILE%\AppData\Local\Temp với dung lượng khoảng 10MB. Nếu số lần chạy tăng lên, dung lượng lưu trữ sẽ bị chiếm dụng nhiều.
 
 Quy trình Giải pháp:
-▪ Vấn đề hiện tại: Các thư mục tạm thời không được xóa sau khi chạy, gây ra sự lãng phí tài nguyên lưu trữ cho người dùng.
-▪ Chúng tôi đã thêm FileSystemUtil.java vào Core.src.main.java...Core.Utils để xử lý việc xóa các file tạm thời của onnxruntime.
-▪ Implementation chi tiết: đã cập nhật MultiCharRecognitionManager.java để tích hợp xóa tệp tin tạm thời.
-▪ Testing đã thực hiện: Đã kiểm tra quá trình xóa thư mục tạm thời và đảm bảo không ảnh hưởng đến các tiến trình khác.
-▪ Kết quả đo lường: Đã xóa được các folder onnxruntime trong thư mục temp mà không làm ảnh hưởng đến các tiến trình khác, tuy nhiên thư mục hiện tại không thể xóa ngay lập tức.
-▪ Quality control: Đã kiểm tra quy trình để đảm bảo không có lỗi nào xảy ra trong quá trình xóa file.
+▪ Vấn đề hiện tại: Việc giữ lại các thư mục tạm thời không cần thiết gây lãng phí không gian lưu trữ và có thể ảnh hưởng đến hiệu suất hệ thống.
+▪ Chúng tôi đã thêm FileSystemUtil.java vào Core.src.main.java...Core.Utils để sử dụng trong MultiCharRecognitionManager.java nhằm xóa các file temp của onnxruntime.
+▪ Implementation chi tiết: Việc xóa các folder onnxruntime đã được thực hiện mà không làm ảnh hưởng đến các tiến trình khác.
+▪ Testing thực hiện: Đã xác minh rằng các folder onnxruntime còn lại trong folder temp sẽ được xóa ở lần chạy tiếp theo mà không gây cản trở cho quá trình suy luận.
+▪ Kết quả đo lường: Đã xóa được các folder onnxruntime mà không làm ảnh hưởng đến các tiến trình khác, giữ lại khoảng 9MB trong temp.
+▪ Quality control: Đảm bảo rằng không có vấn đề phát sinh và các tiến trình vẫn hoạt động ổn định.
 
-Kết quả: Giảm thiểu dung lượng chiếm dụng trong thư mục tạm thời, đảm bảo hệ thống hoạt động hiệu quả hơn.
-Phân tích: Việc xóa các thư mục tạm thời không cần thiết giúp hệ thống tiết kiệm dung lượng lưu trữ, mang lại trải nghiệm tốt hơn cho người dùng.
-Nhận xét: Các cải tiến này giúp duy trì hiệu suất hệ thống và giảm thiểu lãng phí tài nguyên.
+Kết quả: Đã xóa được các folder onnxruntime không cần thiết, giúp giảm thiểu dung lượng lưu trữ.
+Phân tích: Việc quản lý tốt các thư mục tạm thời không chỉ giúp tiết kiệm không gian lưu trữ mà còn cải thiện hiệu suất tổng thể của hệ thống.
+Nhận xét: Kết quả đạt được cho thấy sự cải thiện trong quy trình quản lý tài nguyên, đảm bảo hệ thống hoạt động hiệu quả hơn.
 
 CÔNG VIỆC SẮP TỚI:
-Tiếp tục theo dõi hiệu suất của mô hình multi3_jpn sau các cải tiến, đồng thời chuẩn bị các kế hoạch cải thiện khác cho quy trình tiền xử lý và tối ưu hóa tài nguyên hệ thống nhằm đảm bảo hiệu suất tối ưu trong các phiên làm việc tiếp theo.
+Chúng tôi sẽ tiếp tục tối ưu hóa các quy trình tiền xử lý và nhận diện văn bản, đồng thời theo dõi và cải thiện hiệu suất của hệ thống để đáp ứng tốt hơn nhu cầu của khách hàng trong thời gian tới.
