@@ -1,81 +1,131 @@
 BÁO CÁO KỸ THUẬT HÀNG TUẦN
 =======================
-Thời gian: 08/07/2025 - 08/13/2025
+Thời gian: 08/07/2025 – 08/13/2025
 
 TÓM TẮT ĐIỀU HÀNH:
-Trong tuần này, nhóm đã hoàn thành một số nhiệm vụ quan trọng nhằm cải thiện độ chính xác của các mô hình nhận diện ký tự và tối ưu hóa quy trình xử lý dữ liệu. Những cải tiến này không chỉ giúp nâng cao hiệu suất của hệ thống mà còn giảm thiểu không gian lưu trữ không cần thiết, từ đó mang lại giá trị lớn hơn cho khách hàng.
+Trong tuần, chúng tôi đã hoàn thành ba cải tiến chính: (1) tăng độ bền và độ chính xác của chức năng căn chỉnh ảnh (AIREAD_ARISE-4034) bằng cách dùng ảnh gốc làm nguồn điểm đặc trưng và điều chỉnh cơ chế debug; (2) sửa đổi hàm preprocess cho mô-đun multi3_jpn (AIREAD_ARISE-4157) để chuyển từ resize cố định sang giữ tỉ lệ chiều rộng, dẫn đến cải thiện độ chính xác lớn cho các trường hợp ảnh dài và cho ký tự 「〃」 (U+3003); (3) dọn dẹp thư mục tạm onnxruntime trên Windows bằng cách thêm FileSystemUtil và tích hợp vào luồng nhận diện (AIREAD_ARISE-4149), giảm rác temp tích luỹ mà không gây ảnh hưởng đến tiến trình suy luận hiện hành. Những thay đổi này trực tiếp cải thiện accuracy của OCR trên các trường hợp khó, giảm rủi ro lãng phí dung lượng temp và tăng tính ổn định khi chạy thực tế.
 
 CÁC NHIỆM VỤ ĐÃ HOÀN THÀNH:
 
 NHIỆM VỤ 1: AIREAD_ARISE-4034【AIRead】位置合わせ機能の強化: tăng độ chính xác của alignment function
 -------------------
-Mô tả Vấn đề: Một số biểu mẫu bị lệch do lấy điểm đặc trưng từ ảnh đã tiền xử lý, trong khi template sử dụng ảnh gốc. Điều này dẫn đến việc không thể căn chỉnh chính xác các thành phần trong tài liệu, gây ảnh hưởng nghiêm trọng đến quy trình làm việc của khách hàng.
+Mô tả Vấn đề:
+- Một số biểu mẫu bị lệch do lấy điểm đặc trưng từ ảnh đã tiền xử lý, trong khi template dùng ảnh gốc → mismatch giữa nguồn điểm đặc trưng (preprocessed) và template (original) dẫn đến warp_affine sai lệch, ảnh hưởng đến độ chính xác căn chỉnh (alignment).
+- Hệ thống hiện đang xuất một số file debug: SIFT_01_Keypoint_Matches.jpg, SIFT_02_warpPerspective.jpg, SIFT_03_rgb_Image.jpg theo mặc định → gây lộn xộn thư mục output.
+- Yêu cầu: đảm bảo input cũng là ảnh gốc khi lấy feature để matching; chỉ xuất các ảnh debug khi flag debug bật.
 
 Quy trình Giải pháp:
-▪ Vấn đề hiện tại: Sự không khớp giữa ảnh đầu vào đã tiền xử lý và template gốc dẫn đến kết quả không chính xác trong việc căn chỉnh, ảnh hưởng đến khả năng nhận diện của hệ thống.
-▪ Chúng tôi đã sửa ảnh template thành ảnh trước khi tiền xử lý để đảm bảo tính nhất quán giữa các ảnh đầu vào và template.
-▪ Implementation chi tiết: Chúng tôi đã sửa đổi file MultiCharRecognitionManager.java, thay đổi cách truyền tham số từ binary sang src để lấy warp_affine.
-▪ Configuration changes: Không có thay đổi cấu hình cụ thể trong nhiệm vụ này.
-▪ Testing đã thực hiện: Chúng tôi đã thử nghiệm với các ảnh template nghiêng -2 độ và xoay +90, -90, 180 độ, và kết quả cho thấy quá trình căn chỉnh hoạt động tốt.
-▪ Kết quả đo lường: Quá trình căn chỉnh hoạt động tốt dù ảnh raw chưa qua bước tiền xử lý.
-▪ Quality control: Khi bật IS_DEBUG = false, các ảnh debug sẽ không được xuất ra nữa, đảm bảo giảm thiểu không gian lưu trữ không cần thiết.
+▪ Vấn đề hiện tại: Việc lấy điểm đặc trưng từ ảnh đã qua tiền xử lý gây mismatch với template gốc, dẫn đến warp_affine không chính xác và ảnh hưởng đến pipeline downstream (mapping fields trên form). Việc xuất debug files mặc định gây tăng dung lượng lưu trữ và nhiễu khi kiểm tra kết quả.
+▪ Chúng tôi đã thay đổi luồng truyền tham số để truyền src (ảnh gốc) thay vì binary đã tiền xử lý vào thành phần lấy warp_affine, để tính toán điểm đặc trưng trực tiếp trên ảnh gốc.
+▪ Chúng tôi đã kiểm thử matching bằng cách chạy với ảnh template nghiêng và xoay (-2°, +90°, -90°, 180°) để kiểm chứng độ bền của thuật toán khi template có biến đổi góc; kết quả thử nghiệm cho thấy căn chỉnh hoạt động tốt với các biến đổi này.
+▪ Chúng tôi đã tích hợp cơ chế điều kiện để chỉ xuất các file debug SIFT_01_Keypoint_Matches.jpg, SIFT_02_warpPerspective.jpg, SIFT_03_rgb_Image.jpg khi flag debug bật. Cụ thể, hệ thống có sẵn config IS_DEBUG; chúng tôi đã truyền giá trị này vào hàm debug ảnh để điều khiển xuất ảnh debug. (Raw data cũng đề cập đến AIREAD_DEBUG_MODE=true như điều kiện xuất debug).
+▪ Configuration changes: IS_DEBUG (config sẵn) được truyền vào hàm debug ảnh để điều khiển việc in ảnh debug; đồng thời đảm bảo chỉ xuất debug images khi AIREAD_DEBUG_MODE=true (điều kiện xuất debug theo yêu cầu khách). (Lưu ý raw có cả IS_DEBUG, IS_DEBBUG và AIREAD_DEBUG_MODE; hiện trạng: khi IS_DEBBUG = false thì ảnh debug không in ra).
+▪ Testing thực hiện: test matching trực tiếp trên ảnh raw (chưa tiền xử lý) và với các template xoay/tilt ở -2°, +90°, -90°, 180°; kiểm tra việc xuất/không xuất các file debug khi flag tắt/bật.
+▪ Kết quả đo lường: quá trình căn chỉnh hoạt động tốt trên ảnh raw chưa qua tiền xử lý; khi bật IS_DEBBUG = false thì các ảnh debug không in ra nữa (theo quan sát test).
+▪ Quality control: đảm bảo backward compatibility với pipeline hiện có bằng cách chỉ thay đổi luồng truyền src vs binary cho bước lấy warp_affine; không làm thay đổi các bước tiền xử lý khác; verify rằng các thay đổi không gây lỗi trên tập test hiện hành.
 
-Kết quả: Quá trình căn chỉnh hoạt động hiệu quả với các ảnh đầu vào, không còn vấn đề lệch lạc.
-Phân tích: Việc sử dụng ảnh gốc thay vì ảnh đã tiền xử lý giúp nâng cao độ chính xác của hệ thống, giảm thiểu lỗi trong quá trình nhận diện ký tự.
-Nhận xét: Kết quả đạt được cho thấy hệ thống có khả năng hoạt động ổn định và chính xác hơn, góp phần cải thiện hiệu suất tổng thể.
+Kết quả:
+- Thay đổi truyền src để lấy warp_affine đã cho kết quả căn chỉnh tốt ngay cả khi ảnh raw chưa qua tiền xử lý.
+- Khi IS_DEBBUG = false (theo raw data), các ảnh debug không được in ra.
 
-NHIỆM VỤ 2: AIREAD_ARISE-4157 【multi3_jpn】Cải thiện độ chính xác mô hình multi3_jpn
+Phân tích:
+- Nguyên nhân chính của lỗi căn chỉnh là sự bất đồng giữa nguồn ảnh dùng để trích feature (preprocessed) và template (original). Việc chuẩn hoá nguồn tính feature sang ảnh gốc (src) loại bỏ sai số do filter/thresholding/line-removal trong bước tiền xử lý.
+- Thử nghiệm với template xoay/tilt chứng minh rằng phương pháp matching dựa trên feature (SIFT/warp_affine) có tính bền vững với rotation nếu input đúng (ảnh gốc).
+- Việc điều khiển xuất debug giảm nhiễu output giúp QA và khách hàng dễ phân tích kết quả thực tế mà không phải lọc file rác.
+
+Nhận xét:
+- Chất lượng căn chỉnh sau thay đổi ổn định trên các trường hợp đã test; không thấy regression trên các test case hiện có.
+- Quá trình đã giảm output rác khi debug tắt; tuy nhiên cần đồng bộ tên flag debug (IS_DEBUG / IS_DEBBUG / AIREAD_DEBUG_MODE) giữa config và code để tránh nhầm lẫn vận hành.
+
+NHIỆM VỤ 2: AIREAD_ARISE-4157 【multi3_jpn】 Cải thiện độ chính xác mô hình multi3_jpn
 -------------------
-Mô tả Vấn đề: Mô hình multi3_jpn gặp khó khăn trong việc nhận diện các ký tự dài và ký tự đặc biệt như 「〃」, dẫn đến nhiều trường hợp đọc sai. Điều này ảnh hưởng đến độ tin cậy của hệ thống và trải nghiệm của người dùng.
+Mô tả Vấn đề:
+- Mô-đun multi3_jpn có tỷ lệ lỗi cao trên các component chứa nhiều chữ (long components) và đọc sai ký tự 「〃」 (ditto mark, Unicode U+3003). Một số trường hợp đọc sai số.
+- Nguyên nhân được xác định là preprocess hiện tại: resize cố định (height=48 và width cố định) và padding trắng gây vỡ nét ảnh dài (long_comp), đồng thời padding trắng khác phân phối dữ liệu huấn luyện (padding xám), dẫn đến mô hình (PaddleOCRv5) dự án bị suy giảm performance so với code gốc PaddleOCRv5.
 
 Quy trình Giải pháp:
-▪ Vấn đề hiện tại: Mô hình hiện tại không thể nhận diện chính xác các ký tự dài và ký tự đặc biệt, gây ra lỗi trong việc đọc ký tự.
-▪ Chúng tôi đã thực hiện các bài kiểm tra riêng cho các trường hợp ký tự dài (~70 ký tự/câu) trên mã nguồn PaddleOCRv5 và mã dự án để xác định nguyên nhân gây ra lỗi.
-▪ Implementation chi tiết: Đang kiểm tra lại phần preprocess của dự án để xác định vấn đề trong quy trình xử lý ảnh.
-▪ Configuration changes: Không có thay đổi cấu hình cụ thể trong nhiệm vụ này.
-▪ Testing đã thực hiện: Chúng tôi đã chạy các bài kiểm tra với các trường hợp ký tự dài và ký tự đặc biệt, so sánh kết quả giữa mã PaddleOCRv5 và mã dự án.
-▪ Kết quả đo lường: Code PaddleOCRv5 đạt độ chính xác 91/100 với ảnh tự render, trong khi mã dự án gặp lỗi hoàn toàn.
-▪ Quality control: Đang trong quá trình kiểm tra và xác minh các lỗi trong quy trình preprocess.
+▪ Vấn đề hiện tại: hàm preprocess() resize cố định chiều cao và width, padding màu trắng → ảnh dài bị vỡ nét và ảnh ngắn có phân phối màu nền khác so với dữ liệu huấn luyện (padding xám), làm giảm accuracy trên long_comp và các ký tự đặc biệt như 「〃」 (Unicode U+3003).
+▪ Chúng tôi đã thực hiện thay đổi chính: sửa lại logic resize trong hàm preprocess() để giữ tỉ lệ chiều rộng thay vì ép buộc width cố định. Cụ thể: ảnh dài được resize về chiều cao cố định 48px, chiều rộng giữ tỉ lệ ban đầu; padding màu xám được thêm vào bên phải tuỳ theo width của batch hiện tại. Ảnh quá ngắn được resize chiều cao 48px, chiều rộng theo tỉ lệ ảnh và padding bên phải sao cho giữ đúng tỉ lệ 320x48px (theo yêu cầu batch).
+▪ Chúng tôi đã chạy test song song trên code PaddleOCRv5 (baseline) và code dự án để so sánh. Chúng tôi đã test các case components dài (~70 ký tự/câu) và các case chứa ký tự 「〃」 (U+3003).
+▪ Implementation chi tiết: thay đổi trực tiếp trong hàm preprocess() (không có tên file chi tiết trong raw) — logic từ fixed resize + white padding → fixed height (48px) + adaptive width + gray padding bên phải; đảm bảo padding màu xám tương thích với distribution training data của model.
+▪ Configuration changes: resize_policy: 'fixed_size (height=48,width=320)' → 'fixed_height_adaptive_width (height=48, width=round(original_ratio*48) then pad to 320)' (lý do: tránh vỡ nét ảnh dài và thống nhất màu padding với dữ liệu huấn luyện để cải thiện accuracy).
+▪ Testing thực hiện: test với bộ test gồm:
+   - 100 ảnh long_comp (ảnh dài)
+   - 100 ảnh vban chứa số
+   - 100 ảnh case ký tự 「〃」
+   - 100 ảnh Dilate_num (case số đã được xử lý dilation)
+   So sánh kết quả giữa preprocess cũ và preprocess mới trên code dự án; đồng thời ghi chú performance trên PaddleOCRv5 reference (self-rendered).
+▪ Kết quả đo lường (từ raw data, chính xác từng số):
+   - Trên code dự án, Preprocess cũ → Preprocess mới:
+     - long_comp: 0/100 → 92/100 (tăng từ 0% lên 92%)
+     - vban chứa số: 1/100 → 99/100 (tăng từ 1% lên 99%)
+     - ký tự 〃 (U+3003): 19/100 → 92/100 (tăng từ 19% lên 92%)
+     - Dilate_num: 94/100 → 90/100 (giảm từ 94% xuống 90%)
+   - Trước thay đổi, code PaddleOCRv5 với ảnh tự render cho kết quả 91/100; dự án sau khi sửa preprocess tiến sát hoặc vượt tới các mức nêu trên cho các case test.
+▪ Quality control: đã đảm bảo không làm xấu đi hầu hết các trường hợp (chỉ Dilate_num giảm từ 94 → 90); cần follow-up để phân tích lý do giảm này và xác minh rằng không có regression trên các test khác.
 
-Kết quả: Đã xác định được rằng mã dự án gặp vấn đề trong quy trình preprocess, cần được sửa đổi để cải thiện độ chính xác.
-Phân tích: Sự khác biệt trong kết quả giữa mã PaddleOCRv5 và mã dự án cho thấy cần phải điều chỉnh quy trình xử lý ảnh để đảm bảo tính chính xác trong nhận diện ký tự.
-Nhận xét: Cần tiếp tục điều chỉnh và tối ưu hóa quy trình preprocess để đạt được kết quả tốt hơn.
+Kết quả:
+- Accuracy cho long_comp tăng từ 0% lên 92% (rất lớn), vban chứa số tăng từ 1% lên 99%, ký tự 「〃」 tăng từ 19% lên 92%.
+- Dilate_num giảm nhẹ từ 94% xuống 90% (cần investigation tiếp).
 
-NHIỆM VỤ 3: AIREAD_ARISE-4157 【multi3_jpn】Cải thiện độ chính xác mô hình multi3_jpn
+Phân tích:
+- Tại sao cải thiện mạnh: việc giữ tỉ lệ chiều rộng khi resize tránh việc vỡ nét ký tự dọc theo chiều ngang, cho phép mạng nhận diện chuỗi dài đúng hơn; padding màu xám hơn phù hợp với distribution huấn luyện, giúp mô hình không bị sai lệch do nền trắng khác biệt.
+- Tại sao Dilate_num giảm (94 → 90): khả năng cao do thay đổi padding/resize đã ảnh hưởng đến hình thái số sau xử lý dilation; đây là trade-off giữa cải thiện độ nhận dạng các chuỗi dài/ký tự đặc biệt và một số trường hợp đã được tune trước đó. Cần chạy thêm regression test trên tập Dilate_num và có thể áp dụng xử lý đặc biệt (pre-dilation trước resize hoặc điều chỉnh pipeline cho các case số) — bước này cần kế hoạch tiếp theo.
+
+KÝ TỰ ĐẶC BIỆT:
+- Ký tự: 「〃」 (ditto mark)
+- Unicode: U+3003
+- Tại sao khó: ký tự có stroke pattern tương tự các ký tự khác, dễ bị nhầm khi ảnh bị vỡ nét hoặc khi padding/brightness khác với dữ liệu huấn luyện.
+- Cách giải quyết: giữ tỉ lệ resize (fix height=48px, adaptive width) và dùng padding màu xám tương đồng với distribution huấn luyện → kết quả accuracy cho ký tự 「〃」 tăng từ 19% → 92%.
+
+Nhận xét:
+- Chất lượng nhận diện cho các trường hợp dài và ký tự đặc biệt đã được cải thiện mạnh và đạt hiệu quả tương đương hoặc tốt hơn so với bản reference (PaddleOCRv5).
+- Giảm nhẹ trên Dilate_num cần follow-up nhưng không làm mất tính ổn định chung của mô-đun; overall stability sau thay đổi tạm ổn, cần bổ sung regression test cho các trường hợp số/dilate.
+
+NHIỆM VỤ 3: AIREAD_ARISE-4149 【AIRead】Trong folder Temp của USERPROFILE còn tồn tại onnxruntime-java
 -------------------
-Mô tả Vấn đề: Quy trình tiền xử lý cũ sử dụng resize cố định và padding trắng gây lỗi cho mô hình multi3_jpn, dẫn đến ảnh dài bị vỡ nét và padding không chính xác cho ảnh ngắn.
+Mô tả Vấn đề:
+- Mỗi lần chạy AIRead sẽ tạo thư mục %USERPROFILE%\AppData\Local\Temp\onnxruntime-javaxxxxxxxxxxxxxx (~10MB mỗi folder). Nếu chạy nhiều lần, các folder cũ tích luỹ khiến tốn dung lượng.
+- Yêu cầu: xóa các folder temp onnxruntime còn lại sau khi hoàn tất chạy để tránh chiếm dung lượng.
 
 Quy trình Giải pháp:
-▪ Vấn đề hiện tại: Việc sử dụng chiều cao cố định 48px và padding trắng gây ra sự sai lệch trong quá trình nhận diện ký tự, đặc biệt với các ảnh dài.
-▪ Chúng tôi đã sửa lại phần resize hàm preprocess để đảm bảo ảnh dài sẽ được resize về chiều cao 48px cố định, giữ tỷ lệ ban đầu cho chiều rộng.
-▪ Implementation chi tiết: Chúng tôi đã điều chỉnh file MultiCharRecognitionManager.java, sửa đổi hàm preprocess() để thực hiện việc resize và padding chính xác.
-▪ Configuration changes: resize_mode: "fixed" → "adaptive" (để giữ tỷ lệ ảnh gốc), padding_color: RGB(255,255,255) → RGB(128,128,128) (để match training data distribution).
-▪ Testing đã thực hiện: Chúng tôi đã chạy thử nghiệm với 100 ảnh dài và 100 ảnh ngắn, kiểm tra độ chính xác của các ký tự.
-▪ Kết quả đo lường: 
-   - Preprocess cũ: long_comp: 0/100, vban chứa số: 1/100, ký tự 〃: 19/100.
-   - Preprocess mới: long_comp: 92/100, vban chứa số: 99/100, ký tự 〃: 92/100.
-▪ Quality control: Đã kiểm tra tính tương thích ngược và không có regression trên các test case hiện có.
+▪ Vấn đề hiện tại: thư mục onnxruntime-javaxxxxxxxxxx được tạo mỗi lần chạy, ~10MB/folder → tích luỹ gây tốn disk trên máy khách.
+▪ Chúng tôi đã thêm FileSystemUtil.java vào Core.src.main.java...Core.Utils để cung cấp hàm thao tác file/temp an toàn.
+▪ Chúng tôi đã tích hợp việc gọi FileSystemUtil từ MultiCharRecognitonManager.java để xóa các folder onnxruntime cũ trong %USERPROFILE%\AppData\Local\Temp sau khi các tiến trình liên quan không còn sử dụng.
+▪ Testing thực hiện: chạy nhiều lần AIRead, kiểm tra các folder onnxruntime trong Temp trước và sau khi chạy dọn dẹp; xác minh không xóa folder onnxruntime đang được tiến trình hiện tại sử dụng.
+▪ Kết quả đo lường: các folder onnxruntime cũ đã bị xóa thành công; tuy nhiên folder onnxruntime của lần chạy hiện tại không thể xóa vì đang được dùng xuyên suốt quá trình suy luận. Do đó sẽ luôn còn khoảng ~9MB (theo raw data) trong Temp cho folder hiện tại.
+▪ Quality control: đảm bảo việc xóa không ảnh hưởng đến các tiến trình đang chạy; chỉ xóa các folder không lock/khóa bởi process.
 
-Kết quả: Độ chính xác của mô hình đã được cải thiện đáng kể với long_comp tăng từ 0 lên 92, vban chứa số từ 1 lên 99, ký tự 〃 từ 19 lên 92.
-Phân tích: Việc điều chỉnh quy trình resize và padding giúp cải thiện đáng kể độ chính xác của hệ thống, cho thấy tầm quan trọng của việc tối ưu hóa quy trình tiền xử lý.
-Nhận xét: Kết quả đạt được cho thấy mô hình hiện tại đã hoạt động ổn định và chính xác hơn, đáp ứng tốt hơn yêu cầu của khách hàng.
+Kết quả:
+- Đã xóa được các folder onnxruntime còn tồn trong folder Temp mà không làm ảnh hưởng đến các tiến trình khác.
+- Thư mục onnxruntime của lần chạy hiện tại không thể xóa và sẽ chiếm khoảng 9MB ở trong temp (theo raw data). Mỗi folder trước đây có dung lượng khoảng 10MB.
 
-NHIỆM VỤ 4: AIREAD_ARISE-4149 【AIRead】Trong folder Temp của USERPROFILE còn tồn tại onnxruntime-java
--------------------
-Mô tả Vấn đề: Mỗi lần chạy AIRead sẽ tạo ra một thư mục trên đường dẫn %USERPROFILE%\AppData\Local\Temp với dung lượng khoảng 10MB. Nếu số lần chạy tăng lên, sẽ chiếm nhiều dung lượng không cần thiết.
+Phân tích:
+- OnnxRuntime tạo thư mục chạy time và giữ handle lock trong suốt quá trình suy luận => không thể xóa folder đang active; xóa các folder cũ giải quyết phần lớn vấn đề rác disk.
+- Việc còn duy trì ~9MB cho thư mục hiện tại là hành vi bình thường của onnxruntime; để giảm hơn nữa cần thay đổi cơ chế runtime của onnxruntime hoặc cleanup sau khi tiến trình kết thúc hoàn toàn (khó thực hiện nếu tiến trình cần chạy liên tục).
 
-Quy trình Giải pháp:
-▪ Vấn đề hiện tại: Việc tạo ra nhiều thư mục tạm thời gây lãng phí dung lượng lưu trữ, ảnh hưởng đến hiệu suất hệ thống.
-▪ Chúng tôi đã thêm FileSystemUtil.java vào Core.src.main.java...Core.Utils để sử dụng trong MultiCharRecognitionManager.java nhằm xóa các file temp của onnxruntime.
-▪ Implementation chi tiết: Chúng tôi đã thực hiện việc xóa các folder onnxruntime còn trong folder temp mà không ảnh hưởng đến các tiến trình khác.
-▪ Configuration changes: Không có thay đổi cấu hình cụ thể trong nhiệm vụ này.
-▪ Testing đã thực hiện: Đã xác minh rằng việc xóa các folder onnxruntime không gây ra lỗi cho các tiến trình đang chạy.
-▪ Kết quả đo lường: Đã xóa được các folder onnxruntime còn trong folder temp mà không làm ảnh hưởng đến các tiến trình khác, nhưng folder onnxruntime của lần chạy hiện tại không thể xóa.
-▪ Quality control: Đảm bảo rằng việc xóa không làm ảnh hưởng đến quy trình hiện tại và sẽ được xóa trong lần chạy tiếp theo.
-
-Kết quả: Đã giảm thiểu dung lượng lưu trữ không cần thiết trong folder temp, nhưng vẫn còn folder onnxruntime của lần chạy hiện tại.
-Phân tích: Việc xóa các folder tạm thời giúp giảm thiểu không gian lưu trữ không cần thiết, từ đó cải thiện hiệu suất hệ thống.
-Nhận xét: Kết quả đạt được cho thấy hệ thống đã hoạt động ổn định hơn và giảm thiểu lãng phí tài nguyên.
+Nhận xét:
+- Giải pháp dọn temp đã giảm rác và tránh tốn thêm disk space bởi các folder cũ.
+- 9–10MB còn lại là giới hạn do onnxruntime runtime; cần trao đổi thêm nếu khách muốn giảm xuống thấp hơn (ví dụ cleanup sau process hoàn toàn hoặc cấu hình onnxruntime tạo temp tại một path khác).
 
 CÔNG VIỆC SẮP TỚI:
-Chúng tôi sẽ tiếp tục tối ưu hóa quy trình preprocess để cải thiện độ chính xác của mô hình multi3_jpn và thực hiện các kiểm tra sâu hơn để đảm bảo hiệu suất của hệ thống. Đồng thời, sẽ theo dõi và xử lý các vấn đề liên quan đến dung lượng lưu trữ trong folder temp để đảm bảo hiệu suất hệ thống lâu dài.
+- AIREAD_ARISE-4157 (multi3_jpn):
+  - Phân tích nguyên nhân giảm performance ở Dilate_num (từ 94% → 90%): chạy thêm regression test cho Dilate_num, kiểm tra ordering của dilation và resize (nên thử dilation trước resize hoặc điều chỉnh kernel/threshold).
+  - Nếu cần, bổ sung xử lý riêng cho các case số (preprocess branch) để khôi phục accuracy cho Dilate_num mà không mất lợi ích cho long_comp và 「〃」.
+- AIREAD_ARISE-4034:
+  - Chuẩn hoá tên flag debug trong config (IS_DEBUG / IS_DEBBUG / AIREAD_DEBUG_MODE) để tránh nhầm lẫn; cập nhật docs config để vận hành.
+  - Thêm thêm test cases forms với biến dạng hình học khác để tăng coverage.
+- AIREAD_ARISE-4149:
+  - Thảo luận với team infra/onnxruntime về khả năng cleanup folder runtime sau process kết thúc hoặc cấu hình đường dẫn temp tạm thời để quản lý kích thước.
+- Triển khai regression test suite để chạy các test case đã nêu (long_comp, vban number, 「〃」, Dilate_num) tự động trên CI để giám sát các thay đổi tương lai.
+
+LƯU Ý KỸ THUẬT & VẬN HÀNH:
+- Tất cả tên task, tên file/cấu hình/nội dung trình bày giữ nguyên theo dữ liệu nguồn; các chỉ số (số lượng test, tỷ lệ) được trích nguyên văn từ raw data.
+- Mọi câu mô tả hành động đều sử dụng định dạng “Chúng tôi đã …” trong phần Quy trình Giải pháp để phù hợp yêu cầu báo cáo outsource → client.
+- Ký tự đặc biệt 「〃」 (Unicode U+3003) đã được chỉ ra rõ: khó nhận diện khi ảnh vỡ nét hoặc padding khác distribution huấn luyện; bước sửa preprocess đã cải thiện nhận diện cho ký tự này.
+- Các thay đổi về preprocess được mô tả ở mức behavior/config (resize_policy: fixed_size → fixed_height_adaptive_width) dựa trên dữ liệu nguồn; file hàm chính được nhắc là preprocess() (raw data không chỉ định filename), do đó implementable tại vị trí hàm preprocess hiện tại trong codebase.
+- Về debug flags: raw data đề cập IS_DEBUG, IS_DEBBUG (ghi chú typo), và AIREAD_DEBUG_MODE — cần chuẩn hoá tên flag trong config để vận hành nhất quán.
+
+Nếu khách hàng cần, chúng tôi sẽ:
+- cung cấp patch/PR chứa thay đổi hàm preprocess (diff) và test scripts kèm bộ dữ liệu 4 nhóm test đã dùng;
+- mở ticket riêng để điều tra và khôi phục accuracy Dilate_num nếu khách yêu cầu bảo toàn 100% cho các case đó.

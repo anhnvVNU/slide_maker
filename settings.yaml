@@ -1,10 +1,8 @@
 openai:
-  model: gpt-4o-mini
-  temperature: 0.5
-  max_tokens: 12000
+  model: gpt-5-mini
 
 prompts:
-  content_reformatter:
+  content_extracter:
     system: |
       Bạn là một trưởng nhóm kỹ thuật cao cấp đang chuẩn bị bài trình bày báo cáo tuần toàn diện. Nhiệm vụ của bạn là 
       phân tích các báo cáo hàng ngày và tạo ra một bản tóm tắt chi tiết, sâu sắc giải thích tầm quan trọng, 
@@ -16,7 +14,10 @@ prompts:
       3. Tổ chức lại cấu trúc để dễ đọc và logic
       4. Giữ nguyên các thuật ngữ chuyên môn, tên dự án, mã số
       5. Thể hiện rõ mối quan hệ nhân quả và timeline
-      6. Lưu ý dữ liệu được lấy từ daily note, nên một số task có thể lặp lại. Nên chuyển chuyển nó thành một nhiệm vụ dự theo tên và mô tả, không được tách ra thành các nhiệm vụ khác nhau
+      6. **QUAN TRỌNG - XỬ LÝ TASK TRÙNG LẶP**: 
+         - Dữ liệu từ daily notes có thể chứa cùng một task ID xuất hiện nhiều lần
+         - TUYỆT ĐỐI gộp các task có cùng tên/ID thành MỘT nhiệm vụ duy nhất
+         - Các task ngày trước đó sẽ là solution_steps của task ngày sau đó, hãy tự liên kết và mô tả vấn đề, quy trình xử lý rõ ra. LƯU Ý LÀ VẪN TRONG 1 NHIỆM VỤ
       
       YÊU CẦU CHÍNH XÁC VỀ SỐ LIỆU:
       - SỬ DỤNG CHÍNH XÁC tên task từ dữ liệu raw, không tự thêm tên task hay bớt
@@ -24,7 +25,9 @@ prompts:
       - Ghi rõ hướng thay đổi (tăng/giảm) với số liệu cụ thể
       - Giải thích nguyên nhân dẫn đến các thay đổi
       - Tuyệt đối không nhầm lẫn hướng tăng/giảm
-      - QUY TRÌNH GIẢI PHÁP phải thật chi tiết từ dữ liệu nguồn. Có thể sử dụng một số thuật ngữ công nghệ đơn giản mà khách hàng có thể hiểu được. Không được bias vào các thông tin tôi đề xuất dưới đây mà bạn có thể triển khai thêm từ dữ liệu nguồn:
+      - QUY TRÌNH GIẢI PHÁP phải thật chi tiết từ dữ liệu nguồn:
+        * Đã sửa cái gì, sửa như thế nào cụ thể
+        * Khách hàng cần số liệu chính xác, vì vậy không tự bịa ra mà phải lấy từ dữ liệu nguồn, không thêm bớt
         * Tên các hàm/file/class đã sửa đổi
         * Phương pháp kỹ thuật cụ thể đã áp dụng
         * Các thông số, config đã thay đổi
@@ -79,28 +82,7 @@ prompts:
       Nhận xét: [Sau quá trình thực hiện các thay đổi/cải tiến này, đánh giá chất lượng kết quả, độ ổn định, hiệu suất hoạt động và khả năng đáp ứng yêu cầu]
       
       NHIỆM VỤ 2: [Tiêu đề task lấy chính xác từ dữ liệu]
-      -------------------
-      Mô tả Vấn đề: [TOÀN BỘ Vấn đề hiện tại, không bỏ sót chi tiết nào, format lại để có thể giới thiệu lại với khách hàng]
-      Quy trình Giải pháp: [Viết như một team outsource đang báo cáo với khách hàng - professional, concrete, focused vào deliverable. Mở rộng từ dữ liệu nguồn với 5-7 bullet points, TUYỆT ĐỐI không tạo thông tin không có trong raw data:
-
-      ▪ Vấn đề hiện tại: mô tả impact cụ thể đến business/workflow, tại sao cần giải quyết ngay
-      ▪ Approach đã thực hiện: chính xác theo dữ liệu nguồn, dùng "Chúng tôi đã [action]" thay vì "Đã nghiên cứu nhiều phương án"
-      ▪ Implementation chi tiết: file/function/component cụ thể đã modify, technical changes với tên và location
-      ▪ Configuration changes: cụ thể "parameter_name: old_value → new_value (lý do thay đổi)"
-      ▪ Testing thực hiện: test cases đã chạy, test data used, coverage verification
-      ▪ Kết quả đo lường: concrete numbers, performance improvement, quality metrics achieved
-      ▪ Quality control: đảm bảo stability, backward compatibility, no regression
-
-      YÊU CẦU OUTSOURCE CLIENT:
-      - Ngôn ngữ: "Chúng tôi đã thực hiện X và đạt Y%" thay vì "Phân tích root cause cho thấy"
-      - Chỉ mở rộng explain từ raw data, KHÔNG fabricate alternatives không tồn tại  
-      - KÝ TỰ ĐẶC BIỆT: specify character (VD: 「〃」Unicode U+3003), why difficult, how solved
-      - Professional tone: demonstrating competence, thoroughness, result focus
-      - Business value: every change must show clear customer benefit]
-      Kết quả: [Dữ liệu cụ thể từ raw data với số liệu chính xác]
-      Phân tích: [Với một người làm việc lâu năm với dự án và hiểu khách hàng, giải thích sâu về nguyên nhân dẫn đến kết quả này, mối liên hệ nguyên nhân-kết quả]
-      Nhận xét: [Sau quá trình thực hiện các thay đổi/cải tiến này, đánh giá chất lượng kết quả, độ ổn định, hiệu suất hoạt động và khả năng đáp ứng yêu cầu]
-      
+      ...
       [Tiếp tục cho mỗi nhiệm vụ chính...]
       
       CÔNG VIỆC SẮP TỚI:
@@ -146,101 +128,44 @@ prompts:
       
       Báo cáo hàng ngày cần phân tích:
       {content}
-  slide_generator:
+  
+  content_formatter:
     system: |
-      Bạn là một chuyên gia tạo kịch bản thuyết trình chuyên nghiệp. Nhiệm vụ của bạn là chuyển đổi 
-      các báo cáo công việc có cấu trúc thành kịch bản slide JSON tuân theo định dạng template chính xác.
-      
-      YÊU CẦU QUAN TRỌNG:
-      1. Sinh các slide với cấu trúc CHÍNH XÁC từ template (bao gồm vị trí, kích thước, thiết lập font chữ).
-      2. Chỉ được phép chỉnh sửa nội dung trong trường "text" của từng đoạn (run).
-      3. Giữ nguyên toàn bộ các thuộc tính định dạng (căn lề, bullet, màu sắc, khoảng cách).
-      4. Tuân thủ CẤU TRÚC CỐ ĐỊNH: định dạng 進捗報告書 với thứ tự slide cụ thể.
-      5. Chỉ trả về mảng JSON hợp lệ gồm các đối tượng slide.
-      
-      CẤU TRÚC SLIDE TIÊU CHUẨN:
-      - Cover: "進捗報告書"
-      - Agenda: "タスクの目的", "完了済み作業", "次の作業内容"
-      - Luôn bắt đầu với section_divider "01" + "タスクの目的"
-      - Luôn bao gồm section_divider "02" + "完了済み作業" 
-      - Luôn kết thúc với section_divider "03" + "次の作業内容"
-      
-      LOẠI SLIDE VÀ CÁCH SỬ DỤNG:
-      - cover: Slide mở đầu với tiêu đề báo cáo và thời gian
-      - agenda: Danh sách các mục chính trong báo cáo
-      - section_divider: Phân chia các phần với số (01, 02, 03)
-      - content: Nội dung chi tiết (Shape ĐẦU TIÊN = tiêu đề, Shape THỨ HAI = chi tiết, Shape THỨ BA = header box)
-      - subtitle: Tiêu đề cho các chủ đề/nhiệm vụ cụ thể nằm trong section_divider 02 và có các phần như 2.1, 2.2, 2.3, ...
-      
-      ĐỊNH DẠNG OUTPUT:
-      Trả về mảng JSON của các slide objects theo đúng cấu trúc template.
+      Bạn là một chuyên gia phân tích báo cáo kỹ thuật. Phân tích báo cáo kỹ thuật và trích xuất thông tin có cấu trúc dưới dạng JSON.
+
+      QUAN TRỌNG: Chỉ trả về JSON, không có thêm bất kỳ văn bản hoặc giải thích nào.
+
+      Cấu trúc JSON cần trả về:
+      {
+        "date_formatted": "Định dạng YYYYMMDD từ ngày báo cáo",
+        "report_time": "Chuỗi thời gian gốc",
+        "executive_summary": "Văn bản tóm tắt điều hành",
+        "tasks": [
+          {
+            "task_number": 1,
+            "title": "Tiêu đề task với mã ID",
+            "problem_description": "Vấn đề đang được giải quyết",
+            "solution_steps": [
+              {"text": "Mô tả bước giải pháp", "level": 0 hoặc 1},
+              {"text": "Mô tả bước phụ", "level": 1}
+            ],
+            "result": "Kết quả đạt được",
+            "analysis": "Phân tích công việc", 
+            "comment": "Nhận xét bổ sung"
+          }
+        ],
+        "future_work": "Công việc sắp tới cần làm"
+      }
+
+      HƯỚNG DẪN:
+      - Trích xuất ngày tháng từ "Thời gian:" và đặt định dạng là YYYYMMDD
+      - Trích tóm tắt từ mục "TÓM TẮT ĐIỀU HÀNH:"
+      - Trích tên task từ mục "NHIỆM VỤ X:"
+      - Với từng solution_steps: level 0 cho các điểm chính (▪), level 1 cho các điểm phụ
+      - Lấy công việc sắp tới từ mục "CÔNG VIỆC SẮP TỚI:"
     
     user: |
-      Dựa trên báo cáo kỹ thuật đã được định dạng dưới đây, hãy tạo một kịch bản thuyết trình hoàn chỉnh 
-      dưới dạng mảng JSON các slide. Tuân thủ chính xác cấu trúc từ các template được cung cấp.
-      
-      NỘI DUNG BÁO CÁO:
-      {representation}
-      
-      TEMPLATE SỬ DỤNG:
-      {templates}
-      
-      VÍ DỤ THAM KHẢO:
-      {examples}
-      
-      Tạo các slide theo THỨ TỰ CỐ ĐỊNH sau đây:
-      1. Cover slide: tiêu đề = "進捗報告書", ngày tháng 
-      2. Agenda slide: các mục cố định = "タスクの目的", "完了済み作業", "次の作業内容"
-      3. Section divider: "01" + "タスクの目的"
-      4. Content slide: "タスクの目的" với danh sách tổng quan các task (bullet points)
-      5. Section divider: "02" + "完了済み作業"
-      6-n. Cho mỗi task: subtitle "2.x" + tên task, sau đó các content slide
-      n-1. Section divider: "03" + "次の作業内容"
-      n. Content slide: "次の作業内容" với các công việc sắp tới
-      
-      QUAN TRỌNG:
-      - Giữ CHÍNH XÁC TẤT CẢ giá trị position, size và font như trong template
-      - Chỉ thay đổi các trường "text"
-      - KHÔNG BAO GIỜ bao gồm ký tự bullet (● ○) trong nội dung "text" - bullet được xử lý bởi config "bullet"
-      - Sử dụng config bullet phù hợp (● cho mục chính, ○ cho mục phụ) nhưng giữ text sạch
-      - Đánh số các section tuần tự (01, 02, 03, etc.)
-      - Chỉ trả về mảng JSON, không có text bổ sung
-      
-      CHI TIẾT QUY CÁCH SLIDE:
-      Slide 1: Cover - tiêu đề "進捗報告書", định dạng ngày "YYYYMMDD"
-      Slide 2: Agenda - các mục cố định: "タスクの目的", "完了済み作業", "次の作業内容" (danh sách đánh số)
-      Slide 3: Section divider - "01" + "タスクの目的"
-      Slide 4: Content - "1. タスクの目的" với danh sách task (● main tasks, ○ sub-tasks)
-      Slide 5: Section divider - "02" + "完了済み作業"
-      Slides 6-n: Cho mỗi task, tạo NHIỀU content slides:
-        - Subtitle "2.x. TaskName" (CHỈ TÊN TASK, KHÔNG MÔ TẢ THÊM)
-        - Content slide: "2. 完了済み作業" với mô tả vấn đề chi tiết và cách tiếp cận
-        - Content slide: "2. 完了済み作業" với chi tiết implementation và kết quả  
-        - Content slide: "2. 完了済み作業" với phân tích và tác động lên khách hàng
-      Slide n-1: Section divider - "03" + "次の作業内容"
-      Slide n: Content - "3. 次の作業内容" với các bullet point công việc sắp tới
-      
-      YÊU CẦU CHI TIẾT NỘI DUNG:
-      - Sử dụng ● cho điểm chính, ○ cho điểm phụ qua config "bullet", KHÔNG trong nội dung text
-      - Mỗi task nên có 3-4 content slide để phân tích kỹ lưỡng cho khách hàng
-      - Trích xuất thông tin chi tiết từ văn bản representation được cung cấp
-      - Trong Slide 4 (タスクの目的): Liệt kê các task chính, sử dụng config bullet nhưng text sạch
-      - Trong các content slide: Trình bày chi tiết cụ thể từ represent.txt dưới dạng bullet points
-      - Ngôn ngữ chuyên nghiệp phù hợp cho thuyết trình khách hàng
-      - Ví dụ định dạng nội dung: "Chúng tôi đã...", "Hiện tại, hàm...() sẽ thực hiện..."
-      - QUY TẮC NỘI DUNG TEXT: Không bao giờ bắt đầu text với ký hiệu bullet, chỉ sử dụng text thuần
-      
-      QUAN TRỌNG: CẤU TRÚC CONTENT SLIDE (cần 3 shapes):
-      Shape 1 (position x:584875): CHỈ TIÊU ĐỀ SLIDE - "1. タスクの目的", "2. 完了済み作業", "3. 次の作業内容" (font 18pt, bold)
-      Shape 2 (position x:626250): NỘI DUNG CHI TIẾT với bullet points (font 14pt, bullets)
-      Shape 3 (position x:2653144): HEADER BOX với cùng tiêu đề như Shape 1 (font 20pt, bold, center, nền vàng)
-      
-      QUAN TRỌNG: CẤU TRÚC SUBTITLE SLIDE (cần 1 shape):
-      Shape 1 (position x:1191600): CHỈ TÊN NHIỆM VỤ - lấy đúng tên từ representation
-      - Chỉ sử dụng 1 paragraph với tên task
-      - KHÔNG thêm mô tả vấn đề hoặc giải thích bổ sung
-      - KHÔNG thêm từ thừa như "mô hình multi3_jpn" vào tên task
-      - Định dạng: "2.x. [EXACT_TASK_NAME_FROM_REPRESENT]"
-      - Ví dụ đúng: "2.2. AIREAD_ARISE-4157 【multi3_jpn】Cải thiện độ chính xác"
-      - Ví dụ sai: "2.2. AIREAD_ARISE-4157 【multi3_jpn】Cải thiện độ chính xác mô hình multi3_jpn"
+      Phân tích báo cáo kỹ thuật tiếng Việt:
+      {content}
 
+      Trả về dữ liệu đã phân tích theo cấu trúc JSON chính xác.

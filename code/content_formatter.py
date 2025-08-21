@@ -34,45 +34,9 @@ class ContentFormatter:
         
         print("🤖 Using AI to parse represent.txt...")
         
-        # Create AI prompt for parsing
-        system_prompt = """You are a technical document parser. Parse the Vietnamese technical report and extract structured information in JSON format.
-
-IMPORTANT: Return ONLY valid JSON, no additional text or explanations.
-
-Required JSON structure:
-{
-  "date_formatted": "YYYYMMDD format from report date",
-  "report_time": "original time period string",
-  "executive_summary": "extracted summary text",
-  "tasks": [
-    {
-      "task_number": 1,
-      "title": "extracted task title with ID code",
-      "problem_description": "what problem was being solved",
-      "solution_steps": [
-        {"text": "step description", "level": 0 or 1},
-        {"text": "sub-step description", "level": 1}
-      ],
-      "result": "what was achieved",
-      "analysis": "analysis of the work", 
-      "comment": "additional comments"
-    }
-  ],
-  "future_work": "next work to be done"
-}
-
-Instructions:
-- Extract date from "Thời gian:" and format as YYYYMMDD
-- Get summary from "TÓM TẮT ĐIỀU HÀNH:" section
-- Parse each "NHIỆM VỤ X:" as separate task
-- For solution_steps: level 0 for main points (▪), level 1 for sub-points
-- Get future work from "CÔNG VIỆC SẮP TỚI:" section"""
-
-        user_prompt = f"""Parse this Vietnamese technical report:
-
-{content}
-
-Return the parsed data in the exact JSON structure specified."""
+        # Get prompts from settings - CLEAN CODE
+        system_prompt = self.settings['prompts']['content_formatter']['system']
+        user_prompt = self.settings['prompts']['content_formatter']['user'].format(content=content)
 
         # Call OpenAI API
         response = self.client.chat.completions.create(
@@ -81,8 +45,6 @@ Return the parsed data in the exact JSON structure specified."""
                 {"role": "system", "content": system_prompt},
                 {"role": "user", "content": user_prompt}
             ],
-            temperature=0.1,  # Low temperature for consistent parsing
-            max_tokens=4000,
             response_format={"type": "json_object"}
         )
         
@@ -111,11 +73,8 @@ Return the parsed data in the exact JSON structure specified."""
     def create_structured_format(self, parsed_data: Dict[str, Any]) -> str:
         """Tạo structured format (.txt) với THỨ TỰ CỐ ĐỊNH theo settings"""
         
-        # Calculate slide numbers theo ĐÚNG THỨ TỰ - count unique tasks only
-        unique_task_titles = set()
-        for task in parsed_data['tasks']:
-            unique_task_titles.add(task['title'])
-        total_tasks = len(unique_task_titles)
+        # Calculate slide numbers theo ĐÚNG THỨ TỰ
+        total_tasks = len(parsed_data['tasks'])
         
         structured_content = f"""=== SLIDE STRUCTURE FORMAT (THỨ TỰ CỐ ĐỊNH) ===
 Report Date: {parsed_data['date_formatted']}
@@ -145,17 +104,8 @@ SLIDE 4: Purpose Overview
 - Title: "1. タスクの目的"
 - Content: Task list overview
 """
-
-        # Add task list với bullet points (loại bỏ trùng lặp) + sub-points
-        seen_tasks = set()
-        unique_tasks = []
+        # Add task list với bullet points + sub-points
         for task in parsed_data['tasks']:
-            if task['title'] not in seen_tasks:
-                unique_tasks.append(task)
-                seen_tasks.add(task['title'])
-        
-        # Build task list with sub-points
-        for task in unique_tasks:
             structured_content += f"  ● {task['title']}\n"
             # Add 1-2 brief sub-points for each main task
             if task.get('problem_description'):

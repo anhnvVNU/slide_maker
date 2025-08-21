@@ -16,7 +16,7 @@
           {
             "runs": [
               {
-                "text": "20250708",
+                "text": "20250807",
                 "font": {
                   "name": "Noto Sans JP",
                   "size_pt": 36.0,
@@ -369,7 +369,7 @@
           {
             "runs": [
               {
-                "text": "Một số biểu mẫu bị lệch do lấy điểm đặc trưng từ ảnh đã tiền xử lý, trong khi template sử dụng ảnh g...",
+                "text": "Một số biểu mẫu bị lệch do lấy điểm đặc trưng từ ảnh đã tiền xử lý, trong khi template dùng ảnh gốc ...",
                 "font": {
                   "name": "Noto Sans JP",
                   "size_pt": 14.0
@@ -390,7 +390,7 @@
           {
             "runs": [
               {
-                "text": "Kết quả: Quá trình căn chỉnh hoạt động hiệu quả với các ảnh đầu vào, không còn vấn đề lệch lạc.",
+                "text": "Kết quả: Thay đổi truyền src để lấy warp_affine cho kết quả căn chỉnh tốt ngay cả khi ảnh raw chưa qua tiền x...",
                 "font": {
                   "name": "Noto Sans JP",
                   "size_pt": 14.0
@@ -411,7 +411,7 @@
           {
             "runs": [
               {
-                "text": "AIREAD_ARISE-4157 【multi3_jpn】Cải thiện độ chính xác mô hình multi3_jpn",
+                "text": "AIREAD_ARISE-4157 【multi3_jpn】 Cải thiện độ chính xác mô hình multi3_jpn",
                 "font": {
                   "name": "Noto Sans JP",
                   "size_pt": 14.0
@@ -432,7 +432,7 @@
           {
             "runs": [
               {
-                "text": "Mô hình multi3_jpn gặp khó khăn trong việc nhận diện các ký tự dài và ký tự đặc biệt như 「〃」, dẫn đế...",
+                "text": "Mô-đun multi3_jpn có tỷ lệ lỗi cao trên các component chứa nhiều chữ (long components) và đọc sai ký...",
                 "font": {
                   "name": "Noto Sans JP",
                   "size_pt": 14.0
@@ -453,7 +453,7 @@
           {
             "runs": [
               {
-                "text": "Kết quả: Đã xác định được rằng mã dự án gặp vấn đề trong quy trình preprocess, cần được sửa đổi để cải thiện ...",
+                "text": "Kết quả: Accuracy cải thiện mạnh: long_comp tăng 0%→92%, vban chứa số 1%→99%, ký tự 「〃」 19%→92%; Dilate_num g...",
                 "font": {
                   "name": "Noto Sans JP",
                   "size_pt": 14.0
@@ -474,7 +474,7 @@
           {
             "runs": [
               {
-                "text": "AIREAD_ARISE-4149 【AIRead】Trong folder Temp của USERPROFILE còn tồn tại onnxruntime-java",
+                "text": "AIREAD_ARISE-4149 【AIRead】 Trong folder Temp của USERPROFILE còn tồn tại onnxruntime-java",
                 "font": {
                   "name": "Noto Sans JP",
                   "size_pt": 14.0
@@ -495,7 +495,7 @@
           {
             "runs": [
               {
-                "text": "Mỗi lần chạy AIRead sẽ tạo ra một thư mục trên đường dẫn %USERPROFILE%\\AppData\\Local\\Temp với dung l...",
+                "text": "Mỗi lần chạy AIRead tạo thư mục %USERPROFILE%\\AppData\\Local\\Temp\\onnxruntime-javaxxxxxxxxxxxxxx (~10...",
                 "font": {
                   "name": "Noto Sans JP",
                   "size_pt": 14.0
@@ -516,7 +516,7 @@
           {
             "runs": [
               {
-                "text": "Kết quả: Đã giảm thiểu dung lượng lưu trữ không cần thiết trong folder temp, nhưng vẫn còn folder onnxruntime...",
+                "text": "Kết quả: Đã xóa được các folder onnxruntime cũ trong Temp mà không ảnh hưởng tới tiến trình khác; thư mục onn...",
                 "font": {
                   "name": "Noto Sans JP",
                   "size_pt": 14.0
@@ -812,7 +812,7 @@
           {
             "runs": [
               {
-                "text": "Một số biểu mẫu bị lệch do lấy điểm đặc trưng từ ảnh đã tiền xử lý, trong khi template sử dụng ảnh gốc. Điều này dẫn đến việc không thể căn chỉnh chính xác các thành phần trong tài liệu, gây ảnh hưởng nghiêm trọng đến quy trình làm việc của khách hàng.",
+                "text": "Một số biểu mẫu bị lệch do lấy điểm đặc trưng từ ảnh đã tiền xử lý, trong khi template dùng ảnh gốc dẫn đến mismatch giữa nguồn điểm đặc trưng (preprocessed) và template (original) gây warp_affine sai lệch; hệ thống xuất một số file debug (SIFT_01_Keypoint_Matches.jpg, SIFT_02_warpPerspective.jpg, SIFT_03_rgb_Image.jpg) theo mặc định gây lộn xộn thư mục output. Yêu cầu: đảm bảo input là ảnh gốc khi lấy feature để matching; chỉ xuất ảnh debug khi flag debug bật.",
                 "font": {
                   "name": "Noto Sans JP",
                   "size_pt": 14.0
@@ -971,7 +971,7 @@
           {
             "runs": [
               {
-                "text": "Vấn đề hiện tại: Sự không khớp giữa ảnh đầu vào đã tiền xử lý và template gốc dẫn đến kết quả không chính xác trong việc căn chỉnh, ảnh hưởng đến khả năng nhận diện của hệ thống.",
+                "text": "Chúng tôi đã tích hợp cơ chế điều kiện để chỉ xuất các file debug SIFT_01_Keypoint_Matches.jpg, SIFT_02_warpPerspective.jpg, SIFT_03_rgb_Image.jpg khi flag debug bật.",
                 "font": {
                   "name": "Noto Sans JP",
                   "size_pt": 14.0
@@ -992,49 +992,7 @@
           {
             "runs": [
               {
-                "text": "Chúng tôi đã sửa ảnh template thành ảnh trước khi tiền xử lý để đảm bảo tính nhất quán giữa các ảnh đầu vào và template.",
-                "font": {
-                  "name": "Noto Sans JP",
-                  "size_pt": 14.0
-                }
-              }
-            ],
-            "alignment": "left",
-            "level": 1,
-            "line_spacing": {
-              "value": 1.15,
-              "type": "points"
-            },
-            "bullet": {
-              "type": "bullet",
-              "char": "○"
-            }
-          },
-          {
-            "runs": [
-              {
-                "text": "Implementation chi tiết: Chúng tôi đã sửa đổi file MultiCharRecognitionManager.java, thay đổi cách truyền tham số từ binary sang src để lấy warp_affine.",
-                "font": {
-                  "name": "Noto Sans JP",
-                  "size_pt": 14.0
-                }
-              }
-            ],
-            "alignment": "left",
-            "level": 1,
-            "line_spacing": {
-              "value": 1.15,
-              "type": "points"
-            },
-            "bullet": {
-              "type": "bullet",
-              "char": "○"
-            }
-          },
-          {
-            "runs": [
-              {
-                "text": "Configuration changes: Không có thay đổi cấu hình cụ thể trong nhiệm vụ này.",
+                "text": "Cụ thể, hệ thống có sẵn config IS_DEBUG; chúng tôi đã truyền giá trị này vào hàm debug ảnh để điều khiển xuất ảnh debug (Raw data cũng đề cập AIREAD_DEBUG_MODE=true như điều kiện xuất debug).",
                 "font": {
                   "name": "Noto Sans JP",
                   "size_pt": 14.0
@@ -1193,7 +1151,7 @@
           {
             "runs": [
               {
-                "text": "Vấn đề hiện tại: Sự không khớp giữa ảnh đầu vào đã tiền xử lý và template gốc dẫn đến kết quả không chính xác trong việc căn chỉnh, ảnh hưởng đến khả năng nhận diện của hệ thống.",
+                "text": "Configuration changes: IS_DEBUG (config sẵn) được truyền vào hàm debug ảnh để điều khiển việc in ảnh debug; đồng thời đảm bảo chỉ xuất debug images khi AIREAD_DEBUG_MODE=true.",
                 "font": {
                   "name": "Noto Sans JP",
                   "size_pt": 14.0
@@ -1214,49 +1172,7 @@
           {
             "runs": [
               {
-                "text": "Testing đã thực hiện: Chúng tôi đã thử nghiệm với các ảnh template nghiêng -2 độ và xoay +90, -90, 180 độ, và kết quả cho thấy quá trình căn chỉnh hoạt động tốt.",
-                "font": {
-                  "name": "Noto Sans JP",
-                  "size_pt": 14.0
-                }
-              }
-            ],
-            "alignment": "left",
-            "level": 1,
-            "line_spacing": {
-              "value": 1.15,
-              "type": "points"
-            },
-            "bullet": {
-              "type": "bullet",
-              "char": "○"
-            }
-          },
-          {
-            "runs": [
-              {
-                "text": "Kết quả đo lường: Quá trình căn chỉnh hoạt động tốt dù ảnh raw chưa qua bước tiền xử lý.",
-                "font": {
-                  "name": "Noto Sans JP",
-                  "size_pt": 14.0
-                }
-              }
-            ],
-            "alignment": "left",
-            "level": 1,
-            "line_spacing": {
-              "value": 1.15,
-              "type": "points"
-            },
-            "bullet": {
-              "type": "bullet",
-              "char": "○"
-            }
-          },
-          {
-            "runs": [
-              {
-                "text": "Quality control: Khi bật IS_DEBUG = false, các ảnh debug sẽ không được xuất ra nữa, đảm bảo giảm thiểu không gian lưu trữ không cần thiết.",
+                "text": "Lưu ý: raw data có IS_DEBUG, IS_DEBBUG (typo) và AIREAD_DEBUG_MODE; hiện trạng: khi IS_DEBBUG = false thì ảnh debug không in ra — cần chuẩn hóa flags.",
                 "font": {
                   "name": "Noto Sans JP",
                   "size_pt": 14.0
@@ -1415,7 +1331,166 @@
           {
             "runs": [
               {
-                "text": "Quá trình căn chỉnh hoạt động hiệu quả với các ảnh đầu vào, không còn vấn đề lệch lạc.",
+                "text": "Quality control: đảm bảo backward compatibility với pipeline hiện có bằng cách chỉ thay đổi luồng truyền src vs binary cho bước lấy warp_affine; verify rằng các thay đổi không gây lỗi trên tập test hiện hành.",
+                "font": {
+                  "name": "Noto Sans JP",
+                  "size_pt": 14.0
+                }
+              }
+            ],
+            "alignment": "left",
+            "level": 0,
+            "line_spacing": {
+              "value": 1.15,
+              "type": "points"
+            },
+            "bullet": {
+              "type": "bullet",
+              "char": "●"
+            }
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "position": {
+          "x": 2653144,
+          "y": -3003
+        },
+        "size": {
+          "width": 3816900,
+          "height": 421500
+        },
+        "fill": {
+          "type": "solid",
+          "color": [
+            255,
+            236,
+            185
+          ]
+        },
+        "paragraphs": [
+          {
+            "runs": [
+              {
+                "text": "2. 完了済み作業",
+                "font": {
+                  "name": "Noto Sans JP",
+                  "size_pt": 20.0,
+                  "bold": true,
+                  "italic": false,
+                  "underline": false,
+                  "color": [
+                    0,
+                    0,
+                    0
+                  ]
+                }
+              }
+            ],
+            "alignment": "center",
+            "level": 0,
+            "line_spacing": {
+              "value": 1.0,
+              "type": "points"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slide_type": "content",
+    "shapes": [
+      {
+        "type": "text",
+        "position": {
+          "x": 584875,
+          "y": 427349
+        },
+        "size": {
+          "width": 7717500,
+          "height": 421500
+        },
+        "paragraphs": [
+          {
+            "runs": [
+              {
+                "text": "2. 完了済み作業",
+                "font": {
+                  "name": "Noto Sans JP",
+                  "size_pt": 18.0,
+                  "bold": true,
+                  "color": [
+                    0,
+                    0,
+                    0
+                  ]
+                }
+              }
+            ],
+            "alignment": "left",
+            "level": 0,
+            "line_spacing": {
+              "value": 1.0,
+              "type": "points"
+            }
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "position": {
+          "x": 8768388,
+          "y": 4835723
+        },
+        "size": {
+          "width": 283200,
+          "height": 246300
+        },
+        "paragraphs": [
+          {
+            "runs": [
+              {
+                "text": "3",
+                "font": {
+                  "name": "Arial",
+                  "size_pt": 10.0,
+                  "bold": false,
+                  "italic": false,
+                  "underline": false,
+                  "color": [
+                    0,
+                    0,
+                    0
+                  ]
+                }
+              }
+            ],
+            "alignment": "left",
+            "level": 0,
+            "line_spacing": {
+              "value": 1.0,
+              "type": "points"
+            }
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "position": {
+          "x": 626250,
+          "y": 923775
+        },
+        "size": {
+          "width": 7891500,
+          "height": 3873600
+        },
+        "paragraphs": [
+          {
+            "runs": [
+              {
+                "text": "Thay đổi truyền src để lấy warp_affine cho kết quả căn chỉnh tốt ngay cả khi ảnh raw chưa qua tiền xử lý; khi IS_DEBBUG = false các ảnh debug không được in ra.",
                 "font": {
                   "name": "Noto Sans JP",
                   "size_pt": 14.0
@@ -1436,7 +1511,7 @@
           {
             "runs": [
               {
-                "text": "Việc sử dụng ảnh gốc thay vì ảnh đã tiền xử lý giúp nâng cao độ chính xác của hệ thống, giảm thiểu lỗi trong quá trình nhận diện ký tự.",
+                "text": "Nguyên nhân chính là bất đồng giữa nguồn ảnh dùng để trích feature (preprocessed) và template (original). Chuẩn hóa nguồn tính feature sang ảnh gốc (src) loại bỏ sai số do filter/thresholding/line-removal trong tiền xử lý. Thử nghiệm với template xoay/tilt chứng minh phương pháp matching (SIFT/warp_affine) bền vững với rotation nếu input là ảnh gốc. Việc điều khiển xuất debug giảm nhiễu output giúp QA và khách hàng dễ phân tích kết quả.",
                 "font": {
                   "name": "Noto Sans JP",
                   "size_pt": 14.0
@@ -1457,7 +1532,7 @@
           {
             "runs": [
               {
-                "text": "Kết quả đạt được cho thấy hệ thống có khả năng hoạt động ổn định và chính xác hơn, góp phần cải thiện hiệu suất tổng thể.",
+                "text": "Chất lượng căn chỉnh ổn định trên các test hiện có; cần đồng bộ tên flag debug (IS_DEBUG / IS_DEBBUG / AIREAD_DEBUG_MODE) giữa config và code để tránh nhầm lẫn vận hành.",
                 "font": {
                   "name": "Noto Sans JP",
                   "size_pt": 14.0
@@ -1678,7 +1753,7 @@
           {
             "runs": [
               {
-                "text": "Mô hình multi3_jpn gặp khó khăn trong việc nhận diện các ký tự dài và ký tự đặc biệt như 「〃」, dẫn đến nhiều trường hợp đọc sai. Điều này ảnh hưởng đến độ tin cậy của hệ thống và trải nghiệm của người dùng.",
+                "text": "Mô-đun multi3_jpn có tỷ lệ lỗi cao trên các component chứa nhiều chữ (long components) và đọc sai ký tự 「〃」 (U+3003). Nguyên nhân: preprocess hiện tại resize cố định (height=48 và width cố định) và padding trắng gây vỡ nét ảnh dài; padding trắng khác phân phối dữ liệu huấn luyện (padding xám) dẫn đến mô hình bị suy giảm performance.",
                 "font": {
                   "name": "Noto Sans JP",
                   "size_pt": 14.0
@@ -1837,7 +1912,7 @@
           {
             "runs": [
               {
-                "text": "Vấn đề hiện tại: Mô hình hiện tại không thể nhận diện chính xác các ký tự dài và ký tự đặc biệt, gây ra lỗi trong việc đọc ký tự.",
+                "text": "Chúng tôi đã sửa lại logic resize trong hàm preprocess() để giữ tỉ lệ chiều rộng thay vì ép buộc width cố định: resize chiều cao cố định 48px, chiều rộng giữ tỉ lệ ban đầu; padding màu xám được thêm vào bên phải tuỳ theo width của batch hiện tại.",
                 "font": {
                   "name": "Noto Sans JP",
                   "size_pt": 14.0
@@ -1858,49 +1933,7 @@
           {
             "runs": [
               {
-                "text": "Chúng tôi đã thực hiện các bài kiểm tra riêng cho các trường hợp ký tự dài (~70 ký tự/câu) trên mã nguồn PaddleOCRv5 và mã dự án để xác định nguyên nhân gây ra lỗi.",
-                "font": {
-                  "name": "Noto Sans JP",
-                  "size_pt": 14.0
-                }
-              }
-            ],
-            "alignment": "left",
-            "level": 1,
-            "line_spacing": {
-              "value": 1.15,
-              "type": "points"
-            },
-            "bullet": {
-              "type": "bullet",
-              "char": "○"
-            }
-          },
-          {
-            "runs": [
-              {
-                "text": "Implementation chi tiết: Đang kiểm tra lại phần preprocess của dự án để xác định vấn đề trong quy trình xử lý ảnh.",
-                "font": {
-                  "name": "Noto Sans JP",
-                  "size_pt": 14.0
-                }
-              }
-            ],
-            "alignment": "left",
-            "level": 1,
-            "line_spacing": {
-              "value": 1.15,
-              "type": "points"
-            },
-            "bullet": {
-              "type": "bullet",
-              "char": "○"
-            }
-          },
-          {
-            "runs": [
-              {
-                "text": "Configuration changes: Không có thay đổi cấu hình cụ thể trong nhiệm vụ này.",
+                "text": "Ảnh quá ngắn được resize chiều cao 48px, chiều rộng theo tỉ lệ ảnh và padding bên phải sao cho giữ đúng tỉ lệ 320x48px (theo yêu cầu batch).",
                 "font": {
                   "name": "Noto Sans JP",
                   "size_pt": 14.0
@@ -2059,7 +2092,7 @@
           {
             "runs": [
               {
-                "text": "Vấn đề hiện tại: Mô hình hiện tại không thể nhận diện chính xác các ký tự dài và ký tự đặc biệt, gây ra lỗi trong việc đọc ký tự.",
+                "text": "Quality control: đảm bảo không làm xấu đi hầu hết các trường hợp (chỉ Dilate_num giảm); cần follow-up để phân tích lý do giảm và xác minh không có regression trên các test khác.",
                 "font": {
                   "name": "Noto Sans JP",
                   "size_pt": 14.0
@@ -2075,69 +2108,6 @@
             "bullet": {
               "type": "bullet",
               "char": "●"
-            }
-          },
-          {
-            "runs": [
-              {
-                "text": "Testing đã thực hiện: Chúng tôi đã chạy các bài kiểm tra với các trường hợp ký tự dài và ký tự đặc biệt, so sánh kết quả giữa mã PaddleOCRv5 và mã dự án.",
-                "font": {
-                  "name": "Noto Sans JP",
-                  "size_pt": 14.0
-                }
-              }
-            ],
-            "alignment": "left",
-            "level": 1,
-            "line_spacing": {
-              "value": 1.15,
-              "type": "points"
-            },
-            "bullet": {
-              "type": "bullet",
-              "char": "○"
-            }
-          },
-          {
-            "runs": [
-              {
-                "text": "Kết quả đo lường: Code PaddleOCRv5 đạt độ chính xác 91/100 với ảnh tự render, trong khi mã dự án gặp lỗi hoàn toàn.",
-                "font": {
-                  "name": "Noto Sans JP",
-                  "size_pt": 14.0
-                }
-              }
-            ],
-            "alignment": "left",
-            "level": 1,
-            "line_spacing": {
-              "value": 1.15,
-              "type": "points"
-            },
-            "bullet": {
-              "type": "bullet",
-              "char": "○"
-            }
-          },
-          {
-            "runs": [
-              {
-                "text": "Quality control: Đang trong quá trình kiểm tra và xác minh các lỗi trong quy trình preprocess.",
-                "font": {
-                  "name": "Noto Sans JP",
-                  "size_pt": 14.0
-                }
-              }
-            ],
-            "alignment": "left",
-            "level": 1,
-            "line_spacing": {
-              "value": 1.15,
-              "type": "points"
-            },
-            "bullet": {
-              "type": "bullet",
-              "char": "○"
             }
           }
         ]
@@ -2281,7 +2251,7 @@
           {
             "runs": [
               {
-                "text": "Đã xác định được rằng mã dự án gặp vấn đề trong quy trình preprocess, cần được sửa đổi để cải thiện độ chính xác.",
+                "text": "Accuracy cải thiện mạnh: long_comp tăng 0%→92%, vban chứa số 1%→99%, ký tự 「〃」 19%→92%; Dilate_num giảm nhẹ 94%→90% cần investigation thêm.",
                 "font": {
                   "name": "Noto Sans JP",
                   "size_pt": 14.0
@@ -2302,7 +2272,7 @@
           {
             "runs": [
               {
-                "text": "Sự khác biệt trong kết quả giữa mã PaddleOCRv5 và mã dự án cho thấy cần phải điều chỉnh quy trình xử lý ảnh để đảm bảo tính chính xác trong nhận diện ký tự.",
+                "text": "Giải thích cải thiện: giữ tỉ lệ chiều rộng tránh vỡ nét ký tự dọc theo chiều ngang; padding màu xám tương thích với distribution huấn luyện giúp mô hình ổn định trên chuỗi dài và ký tự đặc biệt. Giải thích giảm ở Dilate_num: có thể do thay đổi padding/resize ảnh hưởng đến hình thái sau dilation — là trade-off; cần chạy regression test và có thể áp dụng xử lý đặc biệt (dilation trước resize hoặc branch preprocess cho case số).",
                 "font": {
                   "name": "Noto Sans JP",
                   "size_pt": 14.0
@@ -2323,7 +2293,7 @@
           {
             "runs": [
               {
-                "text": "Cần tiếp tục điều chỉnh và tối ưu hóa quy trình preprocess để đạt được kết quả tốt hơn.",
+                "text": "Chất lượng nhận diện cho trường hợp dài và ký tự đặc biệt đã cải thiện mạnh và đạt tương đương hoặc tốt hơn reference; cần follow-up để khôi phục accuracy Dilate_num nếu yêu cầu bảo toàn.",
                 "font": {
                   "name": "Noto Sans JP",
                   "size_pt": 14.0
@@ -2408,873 +2378,7 @@
           {
             "runs": [
               {
-                "text": "2.3. AIREAD_ARISE-4157 【multi3_jpn】",
-                "font": {
-                  "name": "Noto Sans JP",
-                  "size_pt": 24.0,
-                  "bold": true,
-                  "color": [
-                    0,
-                    0,
-                    0
-                  ]
-                }
-              }
-            ],
-            "alignment": "center",
-            "line_spacing": {
-              "value": 1.5,
-              "type": "points"
-            }
-          },
-          {
-            "runs": [
-              {
-                "text": "Cải thiện độ chính xác mô hình multi3_jpn",
-                "font": {
-                  "name": "Noto Sans JP",
-                  "size_pt": 24.0,
-                  "bold": true,
-                  "color": [
-                    0,
-                    0,
-                    0
-                  ]
-                }
-              }
-            ],
-            "alignment": "center",
-            "line_spacing": {
-              "value": 1.5,
-              "type": "points"
-            }
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "slide_type": "content",
-    "shapes": [
-      {
-        "type": "text",
-        "position": {
-          "x": 584875,
-          "y": 427349
-        },
-        "size": {
-          "width": 7717500,
-          "height": 421500
-        },
-        "paragraphs": [
-          {
-            "runs": [
-              {
-                "text": "2. 完了済み作業",
-                "font": {
-                  "name": "Noto Sans JP",
-                  "size_pt": 18.0,
-                  "bold": true,
-                  "color": [
-                    0,
-                    0,
-                    0
-                  ]
-                }
-              }
-            ],
-            "alignment": "left",
-            "level": 0,
-            "line_spacing": {
-              "value": 1.0,
-              "type": "points"
-            }
-          }
-        ]
-      },
-      {
-        "type": "text",
-        "position": {
-          "x": 8768388,
-          "y": 4835723
-        },
-        "size": {
-          "width": 283200,
-          "height": 246300
-        },
-        "paragraphs": [
-          {
-            "runs": [
-              {
-                "text": "3",
-                "font": {
-                  "name": "Arial",
-                  "size_pt": 10.0,
-                  "bold": false,
-                  "italic": false,
-                  "underline": false,
-                  "color": [
-                    0,
-                    0,
-                    0
-                  ]
-                }
-              }
-            ],
-            "alignment": "left",
-            "level": 0,
-            "line_spacing": {
-              "value": 1.0,
-              "type": "points"
-            }
-          }
-        ]
-      },
-      {
-        "type": "text",
-        "position": {
-          "x": 626250,
-          "y": 923775
-        },
-        "size": {
-          "width": 7891500,
-          "height": 3873600
-        },
-        "paragraphs": [
-          {
-            "runs": [
-              {
-                "text": "Quy trình tiền xử lý cũ sử dụng resize cố định và padding trắng gây lỗi cho mô hình multi3_jpn, dẫn đến ảnh dài bị vỡ nét và padding không chính xác cho ảnh ngắn.",
-                "font": {
-                  "name": "Noto Sans JP",
-                  "size_pt": 14.0
-                }
-              }
-            ],
-            "alignment": "left",
-            "level": 0,
-            "line_spacing": {
-              "value": 1.15,
-              "type": "points"
-            },
-            "bullet": {
-              "type": "bullet",
-              "char": "●"
-            }
-          }
-        ]
-      },
-      {
-        "type": "text",
-        "position": {
-          "x": 2653144,
-          "y": -3003
-        },
-        "size": {
-          "width": 3816900,
-          "height": 421500
-        },
-        "fill": {
-          "type": "solid",
-          "color": [
-            255,
-            236,
-            185
-          ]
-        },
-        "paragraphs": [
-          {
-            "runs": [
-              {
-                "text": "2. 完了済み作業",
-                "font": {
-                  "name": "Noto Sans JP",
-                  "size_pt": 20.0,
-                  "bold": true,
-                  "italic": false,
-                  "underline": false,
-                  "color": [
-                    0,
-                    0,
-                    0
-                  ]
-                }
-              }
-            ],
-            "alignment": "center",
-            "level": 0,
-            "line_spacing": {
-              "value": 1.0,
-              "type": "points"
-            }
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "slide_type": "content",
-    "shapes": [
-      {
-        "type": "text",
-        "position": {
-          "x": 584875,
-          "y": 427349
-        },
-        "size": {
-          "width": 7717500,
-          "height": 421500
-        },
-        "paragraphs": [
-          {
-            "runs": [
-              {
-                "text": "2. 完了済み作業",
-                "font": {
-                  "name": "Noto Sans JP",
-                  "size_pt": 18.0,
-                  "bold": true,
-                  "color": [
-                    0,
-                    0,
-                    0
-                  ]
-                }
-              }
-            ],
-            "alignment": "left",
-            "level": 0,
-            "line_spacing": {
-              "value": 1.0,
-              "type": "points"
-            }
-          }
-        ]
-      },
-      {
-        "type": "text",
-        "position": {
-          "x": 8768388,
-          "y": 4835723
-        },
-        "size": {
-          "width": 283200,
-          "height": 246300
-        },
-        "paragraphs": [
-          {
-            "runs": [
-              {
-                "text": "3",
-                "font": {
-                  "name": "Arial",
-                  "size_pt": 10.0,
-                  "bold": false,
-                  "italic": false,
-                  "underline": false,
-                  "color": [
-                    0,
-                    0,
-                    0
-                  ]
-                }
-              }
-            ],
-            "alignment": "left",
-            "level": 0,
-            "line_spacing": {
-              "value": 1.0,
-              "type": "points"
-            }
-          }
-        ]
-      },
-      {
-        "type": "text",
-        "position": {
-          "x": 626250,
-          "y": 923775
-        },
-        "size": {
-          "width": 7891500,
-          "height": 3873600
-        },
-        "paragraphs": [
-          {
-            "runs": [
-              {
-                "text": "Vấn đề hiện tại: Việc sử dụng chiều cao cố định 48px và padding trắng gây ra sự sai lệch trong quá trình nhận diện ký tự, đặc biệt với các ảnh dài.",
-                "font": {
-                  "name": "Noto Sans JP",
-                  "size_pt": 14.0
-                }
-              }
-            ],
-            "alignment": "left",
-            "level": 0,
-            "line_spacing": {
-              "value": 1.15,
-              "type": "points"
-            },
-            "bullet": {
-              "type": "bullet",
-              "char": "●"
-            }
-          },
-          {
-            "runs": [
-              {
-                "text": "Chúng tôi đã sửa lại phần resize hàm preprocess để đảm bảo ảnh dài sẽ được resize về chiều cao 48px cố định, giữ tỷ lệ ban đầu cho chiều rộng.",
-                "font": {
-                  "name": "Noto Sans JP",
-                  "size_pt": 14.0
-                }
-              }
-            ],
-            "alignment": "left",
-            "level": 1,
-            "line_spacing": {
-              "value": 1.15,
-              "type": "points"
-            },
-            "bullet": {
-              "type": "bullet",
-              "char": "○"
-            }
-          },
-          {
-            "runs": [
-              {
-                "text": "Implementation chi tiết: Chúng tôi đã điều chỉnh file MultiCharRecognitionManager.java, sửa đổi hàm preprocess() để thực hiện việc resize và padding chính xác.",
-                "font": {
-                  "name": "Noto Sans JP",
-                  "size_pt": 14.0
-                }
-              }
-            ],
-            "alignment": "left",
-            "level": 1,
-            "line_spacing": {
-              "value": 1.15,
-              "type": "points"
-            },
-            "bullet": {
-              "type": "bullet",
-              "char": "○"
-            }
-          },
-          {
-            "runs": [
-              {
-                "text": "Configuration changes: resize_mode: \"fixed\" → \"adaptive\" (để giữ tỷ lệ ảnh gốc), padding_color: RGB(255,255,255) → RGB(128,128,128) (để match training data distribution).",
-                "font": {
-                  "name": "Noto Sans JP",
-                  "size_pt": 14.0
-                }
-              }
-            ],
-            "alignment": "left",
-            "level": 1,
-            "line_spacing": {
-              "value": 1.15,
-              "type": "points"
-            },
-            "bullet": {
-              "type": "bullet",
-              "char": "○"
-            }
-          }
-        ]
-      },
-      {
-        "type": "text",
-        "position": {
-          "x": 2653144,
-          "y": -3003
-        },
-        "size": {
-          "width": 3816900,
-          "height": 421500
-        },
-        "fill": {
-          "type": "solid",
-          "color": [
-            255,
-            236,
-            185
-          ]
-        },
-        "paragraphs": [
-          {
-            "runs": [
-              {
-                "text": "2. 完了済み作業",
-                "font": {
-                  "name": "Noto Sans JP",
-                  "size_pt": 20.0,
-                  "bold": true,
-                  "italic": false,
-                  "underline": false,
-                  "color": [
-                    0,
-                    0,
-                    0
-                  ]
-                }
-              }
-            ],
-            "alignment": "center",
-            "level": 0,
-            "line_spacing": {
-              "value": 1.0,
-              "type": "points"
-            }
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "slide_type": "content",
-    "shapes": [
-      {
-        "type": "text",
-        "position": {
-          "x": 584875,
-          "y": 427349
-        },
-        "size": {
-          "width": 7717500,
-          "height": 421500
-        },
-        "paragraphs": [
-          {
-            "runs": [
-              {
-                "text": "2. 完了済み作業",
-                "font": {
-                  "name": "Noto Sans JP",
-                  "size_pt": 18.0,
-                  "bold": true,
-                  "color": [
-                    0,
-                    0,
-                    0
-                  ]
-                }
-              }
-            ],
-            "alignment": "left",
-            "level": 0,
-            "line_spacing": {
-              "value": 1.0,
-              "type": "points"
-            }
-          }
-        ]
-      },
-      {
-        "type": "text",
-        "position": {
-          "x": 8768388,
-          "y": 4835723
-        },
-        "size": {
-          "width": 283200,
-          "height": 246300
-        },
-        "paragraphs": [
-          {
-            "runs": [
-              {
-                "text": "3",
-                "font": {
-                  "name": "Arial",
-                  "size_pt": 10.0,
-                  "bold": false,
-                  "italic": false,
-                  "underline": false,
-                  "color": [
-                    0,
-                    0,
-                    0
-                  ]
-                }
-              }
-            ],
-            "alignment": "left",
-            "level": 0,
-            "line_spacing": {
-              "value": 1.0,
-              "type": "points"
-            }
-          }
-        ]
-      },
-      {
-        "type": "text",
-        "position": {
-          "x": 626250,
-          "y": 923775
-        },
-        "size": {
-          "width": 7891500,
-          "height": 3873600
-        },
-        "paragraphs": [
-          {
-            "runs": [
-              {
-                "text": "Vấn đề hiện tại: Việc sử dụng chiều cao cố định 48px và padding trắng gây ra sự sai lệch trong quá trình nhận diện ký tự, đặc biệt với các ảnh dài.",
-                "font": {
-                  "name": "Noto Sans JP",
-                  "size_pt": 14.0
-                }
-              }
-            ],
-            "alignment": "left",
-            "level": 0,
-            "line_spacing": {
-              "value": 1.15,
-              "type": "points"
-            },
-            "bullet": {
-              "type": "bullet",
-              "char": "●"
-            }
-          },
-          {
-            "runs": [
-              {
-                "text": "Testing đã thực hiện: Chúng tôi đã chạy thử nghiệm với 100 ảnh dài và 100 ảnh ngắn, kiểm tra độ chính xác của các ký tự.",
-                "font": {
-                  "name": "Noto Sans JP",
-                  "size_pt": 14.0
-                }
-              }
-            ],
-            "alignment": "left",
-            "level": 1,
-            "line_spacing": {
-              "value": 1.15,
-              "type": "points"
-            },
-            "bullet": {
-              "type": "bullet",
-              "char": "○"
-            }
-          },
-          {
-            "runs": [
-              {
-                "text": "Kết quả đo lường: Preprocess cũ: long_comp: 0/100, vban chứa số: 1/100, ký tự 〃: 19/100. Preprocess mới: long_comp: 92/100, vban chứa số: 99/100, ký tự 〃: 92/100.",
-                "font": {
-                  "name": "Noto Sans JP",
-                  "size_pt": 14.0
-                }
-              }
-            ],
-            "alignment": "left",
-            "level": 1,
-            "line_spacing": {
-              "value": 1.15,
-              "type": "points"
-            },
-            "bullet": {
-              "type": "bullet",
-              "char": "○"
-            }
-          },
-          {
-            "runs": [
-              {
-                "text": "Quality control: Đã kiểm tra tính tương thích ngược và không có regression trên các test case hiện có.",
-                "font": {
-                  "name": "Noto Sans JP",
-                  "size_pt": 14.0
-                }
-              }
-            ],
-            "alignment": "left",
-            "level": 1,
-            "line_spacing": {
-              "value": 1.15,
-              "type": "points"
-            },
-            "bullet": {
-              "type": "bullet",
-              "char": "○"
-            }
-          }
-        ]
-      },
-      {
-        "type": "text",
-        "position": {
-          "x": 2653144,
-          "y": -3003
-        },
-        "size": {
-          "width": 3816900,
-          "height": 421500
-        },
-        "fill": {
-          "type": "solid",
-          "color": [
-            255,
-            236,
-            185
-          ]
-        },
-        "paragraphs": [
-          {
-            "runs": [
-              {
-                "text": "2. 完了済み作業",
-                "font": {
-                  "name": "Noto Sans JP",
-                  "size_pt": 20.0,
-                  "bold": true,
-                  "italic": false,
-                  "underline": false,
-                  "color": [
-                    0,
-                    0,
-                    0
-                  ]
-                }
-              }
-            ],
-            "alignment": "center",
-            "level": 0,
-            "line_spacing": {
-              "value": 1.0,
-              "type": "points"
-            }
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "slide_type": "content",
-    "shapes": [
-      {
-        "type": "text",
-        "position": {
-          "x": 584875,
-          "y": 427349
-        },
-        "size": {
-          "width": 7717500,
-          "height": 421500
-        },
-        "paragraphs": [
-          {
-            "runs": [
-              {
-                "text": "2. 完了済み作業",
-                "font": {
-                  "name": "Noto Sans JP",
-                  "size_pt": 18.0,
-                  "bold": true,
-                  "color": [
-                    0,
-                    0,
-                    0
-                  ]
-                }
-              }
-            ],
-            "alignment": "left",
-            "level": 0,
-            "line_spacing": {
-              "value": 1.0,
-              "type": "points"
-            }
-          }
-        ]
-      },
-      {
-        "type": "text",
-        "position": {
-          "x": 8768388,
-          "y": 4835723
-        },
-        "size": {
-          "width": 283200,
-          "height": 246300
-        },
-        "paragraphs": [
-          {
-            "runs": [
-              {
-                "text": "3",
-                "font": {
-                  "name": "Arial",
-                  "size_pt": 10.0,
-                  "bold": false,
-                  "italic": false,
-                  "underline": false,
-                  "color": [
-                    0,
-                    0,
-                    0
-                  ]
-                }
-              }
-            ],
-            "alignment": "left",
-            "level": 0,
-            "line_spacing": {
-              "value": 1.0,
-              "type": "points"
-            }
-          }
-        ]
-      },
-      {
-        "type": "text",
-        "position": {
-          "x": 626250,
-          "y": 923775
-        },
-        "size": {
-          "width": 7891500,
-          "height": 3873600
-        },
-        "paragraphs": [
-          {
-            "runs": [
-              {
-                "text": "Độ chính xác của mô hình đã được cải thiện đáng kể với long_comp tăng từ 0 lên 92, vban chứa số từ 1 lên 99, ký tự 〃 từ 19 lên 92.",
-                "font": {
-                  "name": "Noto Sans JP",
-                  "size_pt": 14.0
-                }
-              }
-            ],
-            "alignment": "left",
-            "level": 0,
-            "line_spacing": {
-              "value": 1.15,
-              "type": "points"
-            },
-            "bullet": {
-              "type": "bullet",
-              "char": "●"
-            }
-          },
-          {
-            "runs": [
-              {
-                "text": "Việc điều chỉnh quy trình resize và padding giúp cải thiện đáng kể độ chính xác của hệ thống, cho thấy tầm quan trọng của việc tối ưu hóa quy trình tiền xử lý.",
-                "font": {
-                  "name": "Noto Sans JP",
-                  "size_pt": 14.0
-                }
-              }
-            ],
-            "alignment": "left",
-            "level": 0,
-            "line_spacing": {
-              "value": 1.15,
-              "type": "points"
-            },
-            "bullet": {
-              "type": "bullet",
-              "char": "●"
-            }
-          },
-          {
-            "runs": [
-              {
-                "text": "Kết quả đạt được cho thấy mô hình hiện tại đã hoạt động ổn định và chính xác hơn, đáp ứng tốt hơn yêu cầu của khách hàng.",
-                "font": {
-                  "name": "Noto Sans JP",
-                  "size_pt": 14.0
-                }
-              }
-            ],
-            "alignment": "left",
-            "level": 0,
-            "line_spacing": {
-              "value": 1.15,
-              "type": "points"
-            },
-            "bullet": {
-              "type": "bullet",
-              "char": "●"
-            }
-          }
-        ]
-      },
-      {
-        "type": "text",
-        "position": {
-          "x": 2653144,
-          "y": -3003
-        },
-        "size": {
-          "width": 3816900,
-          "height": 421500
-        },
-        "fill": {
-          "type": "solid",
-          "color": [
-            255,
-            236,
-            185
-          ]
-        },
-        "paragraphs": [
-          {
-            "runs": [
-              {
-                "text": "2. 完了済み作業",
-                "font": {
-                  "name": "Noto Sans JP",
-                  "size_pt": 20.0,
-                  "bold": true,
-                  "italic": false,
-                  "underline": false,
-                  "color": [
-                    0,
-                    0,
-                    0
-                  ]
-                }
-              }
-            ],
-            "alignment": "center",
-            "level": 0,
-            "line_spacing": {
-              "value": 1.0,
-              "type": "points"
-            }
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "slide_type": "subtitle",
-    "shapes": [
-      {
-        "type": "text",
-        "position": {
-          "x": 1191600,
-          "y": 1483850
-        },
-        "size": {
-          "width": 6760800,
-          "height": 1555800
-        },
-        "paragraphs": [
-          {
-            "runs": [
-              {
-                "text": "2.4. AIREAD_ARISE-4149 【AIRead】",
+                "text": "2.3. AIREAD_ARISE-4149 【AIRead】",
                 "font": {
                   "name": "Noto Sans JP",
                   "size_pt": 24.0,
@@ -3410,7 +2514,7 @@
           {
             "runs": [
               {
-                "text": "Mỗi lần chạy AIRead sẽ tạo ra một thư mục trên đường dẫn %USERPROFILE%\\AppData\\Local\\Temp với dung lượng khoảng 10MB. Nếu số lần chạy tăng lên, sẽ chiếm nhiều dung lượng không cần thiết.",
+                "text": "Mỗi lần chạy AIRead tạo thư mục %USERPROFILE%\\AppData\\Local\\Temp\\onnxruntime-javaxxxxxxxxxxxxxx (~10MB mỗi folder). Nếu chạy nhiều lần các folder cũ tích luỹ gây tốn dung lượng. Yêu cầu: xóa các folder temp onnxruntime còn lại sau khi hoàn tất chạy để tránh chiếm dung lượng.",
                 "font": {
                   "name": "Noto Sans JP",
                   "size_pt": 14.0
@@ -3569,7 +2673,7 @@
           {
             "runs": [
               {
-                "text": "Vấn đề hiện tại: Việc tạo ra nhiều thư mục tạm thời gây lãng phí dung lượng lưu trữ, ảnh hưởng đến hiệu suất hệ thống.",
+                "text": "Quality control: đảm bảo việc xóa không ảnh hưởng đến các tiến trình đang chạy; chỉ xóa các folder không lock/khóa bởi process.",
                 "font": {
                   "name": "Noto Sans JP",
                   "size_pt": 14.0
@@ -3585,291 +2689,6 @@
             "bullet": {
               "type": "bullet",
               "char": "●"
-            }
-          },
-          {
-            "runs": [
-              {
-                "text": "Chúng tôi đã thêm FileSystemUtil.java vào Core.src.main.java...Core.Utils để sử dụng trong MultiCharRecognitionManager.java nhằm xóa các file temp của onnxruntime.",
-                "font": {
-                  "name": "Noto Sans JP",
-                  "size_pt": 14.0
-                }
-              }
-            ],
-            "alignment": "left",
-            "level": 1,
-            "line_spacing": {
-              "value": 1.15,
-              "type": "points"
-            },
-            "bullet": {
-              "type": "bullet",
-              "char": "○"
-            }
-          },
-          {
-            "runs": [
-              {
-                "text": "Implementation chi tiết: Chúng tôi đã thực hiện việc xóa các folder onnxruntime còn trong folder temp mà không ảnh hưởng đến các tiến trình khác.",
-                "font": {
-                  "name": "Noto Sans JP",
-                  "size_pt": 14.0
-                }
-              }
-            ],
-            "alignment": "left",
-            "level": 1,
-            "line_spacing": {
-              "value": 1.15,
-              "type": "points"
-            },
-            "bullet": {
-              "type": "bullet",
-              "char": "○"
-            }
-          },
-          {
-            "runs": [
-              {
-                "text": "Configuration changes: Không có thay đổi cấu hình cụ thể trong nhiệm vụ này.",
-                "font": {
-                  "name": "Noto Sans JP",
-                  "size_pt": 14.0
-                }
-              }
-            ],
-            "alignment": "left",
-            "level": 1,
-            "line_spacing": {
-              "value": 1.15,
-              "type": "points"
-            },
-            "bullet": {
-              "type": "bullet",
-              "char": "○"
-            }
-          }
-        ]
-      },
-      {
-        "type": "text",
-        "position": {
-          "x": 2653144,
-          "y": -3003
-        },
-        "size": {
-          "width": 3816900,
-          "height": 421500
-        },
-        "fill": {
-          "type": "solid",
-          "color": [
-            255,
-            236,
-            185
-          ]
-        },
-        "paragraphs": [
-          {
-            "runs": [
-              {
-                "text": "2. 完了済み作業",
-                "font": {
-                  "name": "Noto Sans JP",
-                  "size_pt": 20.0,
-                  "bold": true,
-                  "italic": false,
-                  "underline": false,
-                  "color": [
-                    0,
-                    0,
-                    0
-                  ]
-                }
-              }
-            ],
-            "alignment": "center",
-            "level": 0,
-            "line_spacing": {
-              "value": 1.0,
-              "type": "points"
-            }
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "slide_type": "content",
-    "shapes": [
-      {
-        "type": "text",
-        "position": {
-          "x": 584875,
-          "y": 427349
-        },
-        "size": {
-          "width": 7717500,
-          "height": 421500
-        },
-        "paragraphs": [
-          {
-            "runs": [
-              {
-                "text": "2. 完了済み作業",
-                "font": {
-                  "name": "Noto Sans JP",
-                  "size_pt": 18.0,
-                  "bold": true,
-                  "color": [
-                    0,
-                    0,
-                    0
-                  ]
-                }
-              }
-            ],
-            "alignment": "left",
-            "level": 0,
-            "line_spacing": {
-              "value": 1.0,
-              "type": "points"
-            }
-          }
-        ]
-      },
-      {
-        "type": "text",
-        "position": {
-          "x": 8768388,
-          "y": 4835723
-        },
-        "size": {
-          "width": 283200,
-          "height": 246300
-        },
-        "paragraphs": [
-          {
-            "runs": [
-              {
-                "text": "3",
-                "font": {
-                  "name": "Arial",
-                  "size_pt": 10.0,
-                  "bold": false,
-                  "italic": false,
-                  "underline": false,
-                  "color": [
-                    0,
-                    0,
-                    0
-                  ]
-                }
-              }
-            ],
-            "alignment": "left",
-            "level": 0,
-            "line_spacing": {
-              "value": 1.0,
-              "type": "points"
-            }
-          }
-        ]
-      },
-      {
-        "type": "text",
-        "position": {
-          "x": 626250,
-          "y": 923775
-        },
-        "size": {
-          "width": 7891500,
-          "height": 3873600
-        },
-        "paragraphs": [
-          {
-            "runs": [
-              {
-                "text": "Vấn đề hiện tại: Việc tạo ra nhiều thư mục tạm thời gây lãng phí dung lượng lưu trữ, ảnh hưởng đến hiệu suất hệ thống.",
-                "font": {
-                  "name": "Noto Sans JP",
-                  "size_pt": 14.0
-                }
-              }
-            ],
-            "alignment": "left",
-            "level": 0,
-            "line_spacing": {
-              "value": 1.15,
-              "type": "points"
-            },
-            "bullet": {
-              "type": "bullet",
-              "char": "●"
-            }
-          },
-          {
-            "runs": [
-              {
-                "text": "Testing đã thực hiện: Đã xác minh rằng việc xóa các folder onnxruntime không gây ra lỗi cho các tiến trình đang chạy.",
-                "font": {
-                  "name": "Noto Sans JP",
-                  "size_pt": 14.0
-                }
-              }
-            ],
-            "alignment": "left",
-            "level": 1,
-            "line_spacing": {
-              "value": 1.15,
-              "type": "points"
-            },
-            "bullet": {
-              "type": "bullet",
-              "char": "○"
-            }
-          },
-          {
-            "runs": [
-              {
-                "text": "Kết quả đo lường: Đã xóa được các folder onnxruntime còn trong folder temp mà không làm ảnh hưởng đến các tiến trình khác, nhưng folder onnxruntime của lần chạy hiện tại không thể xóa.",
-                "font": {
-                  "name": "Noto Sans JP",
-                  "size_pt": 14.0
-                }
-              }
-            ],
-            "alignment": "left",
-            "level": 1,
-            "line_spacing": {
-              "value": 1.15,
-              "type": "points"
-            },
-            "bullet": {
-              "type": "bullet",
-              "char": "○"
-            }
-          },
-          {
-            "runs": [
-              {
-                "text": "Quality control: Đảm bảo rằng việc xóa không làm ảnh hưởng đến quy trình hiện tại và sẽ được xóa trong lần chạy tiếp theo.",
-                "font": {
-                  "name": "Noto Sans JP",
-                  "size_pt": 14.0
-                }
-              }
-            ],
-            "alignment": "left",
-            "level": 1,
-            "line_spacing": {
-              "value": 1.15,
-              "type": "points"
-            },
-            "bullet": {
-              "type": "bullet",
-              "char": "○"
             }
           }
         ]
@@ -4088,7 +2907,7 @@
           {
             "runs": [
               {
-                "text": "Chúng tôi sẽ tiếp tục tối ưu hóa quy trình preprocess để cải thiện độ chính xác của mô hình multi3_jpn và thực hiện các kiểm tra sâu hơn để đảm bảo hiệu suất của hệ thống. Đồng thời, sẽ theo dõi và xử lý các vấn đề liên quan đến dung lượng lưu trữ trong folder temp để đảm bảo hiệu suất hệ thống lâu dài.",
+                "text": "- AIREAD_ARISE-4157 (multi3_jpn): phân tích nguyên nhân giảm performance ở Dilate_num (94% → 90%): chạy thêm regression test cho Dilate_num, kiểm tra ordering dilation và resize (thử dilation trước resize hoặc điều chỉnh kernel/threshold). Nếu cần, bổ sung xử lý riêng cho các case số (preprocess branch) để khôi phục accuracy cho Dilate_num mà không mất lợi ích cho long_comp và 「〃」.",
                 "font": {
                   "name": "Noto Sans JP",
                   "size_pt": 14.0

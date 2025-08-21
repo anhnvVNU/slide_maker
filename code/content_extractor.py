@@ -38,8 +38,8 @@ class ContentExtractor:
         """
         Extract and reformat raw content into structured text format for slides
         """
-        system_prompt = self.settings['prompts']['content_reformatter']['system']
-        user_prompt = self.settings['prompts']['content_reformatter']['weekly_report'].format(
+        system_prompt = self.settings['prompts']['content_extracter']['system']
+        user_prompt = self.settings['prompts']['content_extracter']['weekly_report'].format(
             content=raw_content
         )
         
@@ -50,8 +50,8 @@ class ContentExtractor:
                     {"role": "system", "content": system_prompt},
                     {"role": "user", "content": user_prompt}
                 ],
-                temperature=self.settings['openai']['temperature'],
-                max_tokens=self.settings['openai']['max_tokens']
+                # temperature=self.settings['openai']['temperature'],
+                # max_tokens=self.settings['openai']['max_tokens']
             )
             
             result = response.choices[0].message.content
@@ -96,4 +96,4 @@ if __name__ == "__main__":
             if file.is_file() and file.suffix in ['.txt', '.csv', '.xlsx']:
                 print(f"\nProcessing {file.name}...")
                 result = extractor.process_file(str(file))
-                print(json.dumps(result, indent=2))
+                # print(json.dumps(result, indent=2))
