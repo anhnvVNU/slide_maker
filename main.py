@@ -21,6 +21,7 @@ sys.path.insert(0, str(code_dir))
 
 # Import the modules
 from content_extractor import ContentExtractor
+from content_formatter import ContentFormatter
 from script_generator import SlideScriptGenerator
 from master_template_builder import main as build_presentation
 
@@ -119,10 +120,10 @@ def run_content_extraction() -> Dict[str, Any]:
         logger.error(f"Content extraction failed: {str(e)}")
         return {"success": False, "error": str(e)}
 
-def run_script_generation() -> Dict[str, Any]:
-    """Run script generation step"""
+def run_content_formatting() -> Dict[str, Any]:
+    """Run content formatting step - AI parse represent.txt to structured_format.txt"""
     logger = logging.getLogger(__name__)
-    logger.info("=== STEP 2: SCRIPT GENERATION ===")
+    logger.info("=== STEP 2: CONTENT FORMATTING ===")
     
     try:
         # Check if represent.txt exists
@@ -130,6 +131,33 @@ def run_script_generation() -> Dict[str, Any]:
         if not represent_file.exists():
             logger.error("represent.txt not found. Run content extraction first.")
             return {"success": False, "error": "represent.txt not found"}
+        
+        formatter = ContentFormatter()
+        structured_content = formatter.run()
+        
+        logger.info("✓ Content formatting completed.")
+        logger.info("✓ structured_format.txt saved to output/")
+        
+        return {
+            "success": True,
+            "structured_content": structured_content
+        }
+        
+    except Exception as e:
+        logger.error(f"Content formatting failed: {str(e)}")
+        return {"success": False, "error": str(e)}
+
+def run_script_generation() -> Dict[str, Any]:
+    """Run script generation step"""
+    logger = logging.getLogger(__name__)
+    logger.info("=== STEP 3: SCRIPT GENERATION ===")
+    
+    try:
+        # Check if structured_format.txt exists
+        structured_file = Path("output/structured_format.txt")
+        if not structured_file.exists():
+            logger.error("structured_format.txt not found. Run content formatting first.")
+            return {"success": False, "error": "structured_format.txt not found"}
         
         generator = SlideScriptGenerator()
         slides = generator.run()
@@ -150,7 +178,7 @@ def run_script_generation() -> Dict[str, Any]:
 def run_presentation_build() -> Dict[str, Any]:
     """Run presentation building step"""
     logger = logging.getLogger(__name__)
-    logger.info("=== STEP 3: PRESENTATION BUILDING ===")
+    logger.info("=== STEP 4: PRESENTATION BUILDING ===")
     
     try:
         # Check if slide_script.json exists
@@ -206,7 +234,15 @@ def main():
         logger.error("Pipeline failed at content extraction step.")
         sys.exit(1)
     
-    # Step 2: Script Generation
+    # Step 2: Content Formatting (AI Parse)
+    formatting_result = run_content_formatting()
+    pipeline_results["formatting"] = formatting_result
+    
+    if not formatting_result["success"]:
+        logger.error("Pipeline failed at content formatting step.")
+        sys.exit(1)
+    
+    # Step 3: Script Generation
     script_result = run_script_generation()
     pipeline_results["script"] = script_result
     
@@ -214,7 +250,7 @@ def main():
         logger.error("Pipeline failed at script generation step.")
         sys.exit(1)
     
-    # Step 3: Presentation Building
+    # Step 4: Presentation Building
     build_result = run_presentation_build()
     pipeline_results["build"] = build_result
     
@@ -243,6 +279,7 @@ def main():
     logger.info("")
     logger.info("Output files:")
     logger.info("• output/represent.txt - Formatted content")
+    logger.info("• output/structured_format.txt - AI-parsed structured format")
     logger.info("• output/slide_script.json - Generated slides script")
     logger.info("• output/final_presentation.pptx - Final PowerPoint presentation")
     
